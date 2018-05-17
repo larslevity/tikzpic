@@ -1,0 +1,225 @@
+%% Definition der KOS
+\documentclass[11pt]{standalone}
+\input{../../tikzpic_packages.tex}
+\usepackage{tikz-3dplot}
+\begin{document}
+
+\def\deltaPlane{60}	% Angle of inclined plane
+
+\tdplotsetmaincoords{\deltaPlane}{90}   % View on walking plane
+\tdplotsetmaincoords{70}{20}		   	% nice 3d view
+
+\begin{tikzpicture}[tdplot_main_coords,
+	scale=1,
+	cs_arrow/.style={->},
+	cs_arrow_light/.style={->, gray},
+	plane/.style={fill=lightgray, opacity=.5},
+	help line/.style={thin, lightgray},
+	angle arrow/.style={<->},
+	stretch/.style={color=red!30, line width=2mm},
+	dstretch/.style={color=red!30, line width=4mm},
+	solid/.style={line width=.5mm},
+	gvec/.style={-stealth, thick},
+	coord_split/.style={densely dashed, darkgray}
+]
+
+%%% Definitions
+% Orientation
+
+\def\alpI{20} % Angle of Leg
+\def\alpII{40}% Angle of Leg
+\def\betI{80}	% Angle of Leg
+\def\betII{20}	% Angle of Leg
+\def\gamm{40}	% Angle of Belly
+
+\def\zangle{20} % z Orientation of the Robot
+
+% Geometry
+\def\hx{3}	% length of legs
+\def\hy{.5}  % change only with line width of stretch
+\def\lb{3}	% length of belly
+
+\def\gvecl{1.5}	% Length of g-vec
+
+%%% Calculations
+\def\pi{3.1416}
+\pgfmathsetmacro{\gam}{\gamm*.5}
+\pgfmathsetmacro{\rI}{\hx/\alpI*180/\pi}
+\pgfmathsetmacro{\rbI}{\hx/\betI*180/\pi}
+\pgfmathsetmacro{\rII}{\hx/\alpII*180/\pi}
+\pgfmathsetmacro{\rbII}{\hx/\betII*180/\pi}
+\pgfmathsetmacro{\rg}{\hx/\gamm*180/\pi}
+
+\pgfmathsetmacro{\deltah}{\deltaPlane*.5}
+\pgfmathsetmacro{\hyh}{.5*\hy}
+\pgfmathsetmacro{\hxh}{\hx/2}
+
+
+%%% Draw Initial Coord Sys
+\path (0,0,0) coordinate(0)node[left]{\{0\}};
+\draw[cs_arrow] (0)--++(1,0,0)node[below]{$x_0$};
+\draw[cs_arrow] (0)--++(0,1,0)node[right]{$y_0$};
+\draw[cs_arrow] (0)--++(0,0,1)node[left]{$z_0$};
+
+
+
+%%% Draw Walking Plane
+\path (3,0,0)coordinate(1)node[below]{\{1\}};
+\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
+
+\begin{scope}[tdplot_rotated_coords]
+\draw[plane] (1)--++(-10,0)--++(0,10)--++(10,0)--cycle;
+\draw[cs_arrow] (1)--++(1,0,0)node[below]{$x_1$};
+\draw[cs_arrow] (1)--++(0,1,0)node[right]{$y_1$};
+\draw[cs_arrow] (1)--++(0,0,1)node[left]{$z_1$};
+%% Define COM of Robot
+\path (1)++(-5,5)coordinate(K);
+\end{scope}
+
+
+%%% Draw Angle Delta
+\tdplotsetrotatedcoords{-90}{-90}{\deltaPlane}
+\begin{scope}[tdplot_rotated_coords]
+%\draw[cs_arrow] (1)--++(1,0,0)node[right]{$x_3$};
+%\draw[cs_arrow] (1)--++(0,1,0)node[right]{$y_3$};
+%\draw[cs_arrow] (1)--++(0,0,1)node[left]{$z_3$};
+\draw[help line] (1)++(-90-\deltaPlane:2)--++(90-\deltaPlane:4);
+\draw[angle arrow] (1)++(90-\deltaPlane:.9)arc(90-\deltaPlane:90:.9);
+\path (1)++(90-\deltah:.9)node[right]{$\delta = \deltaPlane ^\circ$};
+\end{scope}
+
+
+%%% Draw the Robot
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow] (K)--++(1,0,0)node[right]{$x_{\gamma_0}$};
+\draw[cs_arrow] (K)--++(0,1,0)node[below]{$y_{\gamma_0}$};
+\draw[cs_arrow] (K)--++(0,0,1)node[above]{$z_{\gamma_0}$};
+\path (K)node{\centerofmass};
+
+% Draw Angle Epsilon
+\draw[help line] (K)--++(0,-4);
+\draw[help line] (K)--++(-90-\zangle:4);
+\pgfmathsetmacro{\zangleh}{\zangle*.5}
+\draw[angle arrow] (K)++(-90-\zangle:3.8)arc(-90-\zangle:-90:3.8);
+\path (K)++(-90-\zangleh:3.8)node[right]{$\varepsilon$};
+
+
+
+% Belly
+\path (K)arc(-180:-180-\gam:\rg)coordinate(OM);
+\draw[solid] (OM)arc(-180-\gam:-180+\gam:\rg) coordinate(UM);
+% Leg 0
+\draw[solid] (OM)arc(-\gam+270:-\gam+270-\betI:\rbI)coordinate(BETI);
+%% Leg 1
+\draw[solid] (OM)arc(-\gam+270:-\gam+270+\alpI:\rI)coordinate(ALPI);
+% Leg 2
+\draw[solid] (UM)arc(\gam+90:\gam+90+\betII:\rbII)coordinate(BETII);
+% Leg 3
+\draw[solid] (UM)arc(\gam+90:\gam+90-\alpII:\rII)coordinate(ALPII);
+\end{scope}
+
+
+%%% Draw G-Vectors
+\draw[gvec] (BETI)--++(0,0,-\gvecl)coordinate(GVEC_BETI);
+\draw[gvec] (OM)--++(0,0,-\gvecl)coordinate(GVEC_OM);
+\draw[gvec] (K)--++(0,0,-\gvecl)coordinate(GVEC_K);
+
+%%% Draw the coords of each IMU
+
+% OM
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle-\gam}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow_light] (OM)--++(.5,0,0)node[right]{$x_{\gamma_1}$};
+\draw[cs_arrow_light] (OM)--++(0,.5,0)node[left]{$y_{\gamma_1}$};
+\draw[cs_arrow_light] (OM)--++(0,0,.5)node[above]{$z_{\gamma_1}$};
+\draw[help line] (OM)--++(-\hx,0);
+
+\pgfmathparse{cos(\deltaPlane)*\gvecl}
+\global\let\zpart\pgfmathresult
+\pgfmathparse{sin(\deltaPlane)*\gvecl}
+\global\let\xypart\pgfmathresult
+\pgfmathparse{sin(\zangle-\gam)*\xypart}
+\global\let\xpartGI\pgfmathresult
+\pgfmathparse{cos(\zangle-\gam)*\xypart}
+\global\let\ypartGI\pgfmathresult
+\draw[coord_split] (GVEC_OM)--++(0,0,\zpart)--++(0,\ypartGI,0)--++(\xpartGI,0,0);
+
+\path[tdplot_screen_coords] (10,5)node[align=left, right]{$x_{\gamma_1}=\xpartGI$ \\
+												   $y_{\gamma_1}=\ypartGI$ \\
+												   $z_{\gamma_1}=\zpart$};
+\end{scope}
+
+
+% K
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle}
+\begin{scope}[tdplot_rotated_coords]
+
+\pgfmathparse{sin(\zangle)*\xypart}
+\global\let\xpartK\pgfmathresult
+\pgfmathparse{cos(\zangle)*\xypart}
+\global\let\ypartK\pgfmathresult
+\draw[coord_split] (GVEC_K)--++(0,0,\zpart)--++(0,\ypartK,0)--++(\xpartK,0,0);
+
+\path[tdplot_screen_coords] (10,7)node[align=left, right]{$x_{\gamma_0}=\xpartK$ \\
+												   $y_{\gamma_0}=\ypartK$ \\
+												   $z_{\gamma_0}=\zpart$};
+
+\end{scope}
+
+
+
+
+% BET I
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle-\gam-\betI}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow_light] (BETI)--++(.5,0,0)node[below]{$x_{\beta_1}$};
+\draw[cs_arrow_light] (BETI)--++(0,.5,0)node[right]{$y_{\beta_1}$};
+\draw[cs_arrow_light] (BETI)--++(0,0,.5)node[above]{$z_{\beta_1}$};
+
+\draw[help line] (BETI)--++(\hx,0);
+% Calc intersection
+\pgfmathsetmacro{\lx}{tan(\betI*.5)*\rbI}
+\path (BETI)++(\lx,0)coordinate(S);
+\draw[angle arrow] (S)++(-.8,0)arc(180:180+\betI:.8);
+\pgfmathsetmacro{\betIh}{\betI*.5}
+\path (S)++(180+\betIh:.9)node[left]{$\beta_1$};
+
+\pgfmathparse{sin(\zangle-\gam-\betI)*\xypart}
+\global\let\xpartBI\pgfmathresult
+\pgfmathparse{cos(\zangle-\gam-\betI)*\xypart}
+\global\let\ypartBI\pgfmathresult
+\draw[coord_split] (GVEC_BETI)--++(0,0,\zpart)--++(0,\ypartBI,0)--++(\xpartBI,0,0);
+
+\path[tdplot_screen_coords] (10,3)node[align=left, right]{$x_{\beta_1}=\xpartBI$ \\
+												   $y_{\beta_1}=\ypartBI$ \\
+												   $z_{\beta_1}=\zpart$	};
+\end{scope}
+
+
+
+
+
+
+%%%%% CHECK
+
+% Actuator Angle
+\pgfmathsetmacro{\lBI}{sqrt(\xpartBI*\xpartBI+\ypartBI*\ypartBI)}
+\pgfmathsetmacro{\lGI}{sqrt(\xpartGI*\xpartGI+\ypartGI*\ypartGI)}
+\pgfmathsetmacro{\scalarproduct}{\xpartBI*\xpartGI+\ypartBI*\ypartGI}
+\pgfmathsetmacro{\betacalc}{acos(\scalarproduct/(\lBI*\lGI))}
+
+\path[tdplot_screen_coords] (10,1)
+	node[align=left, right]{$\beta = \arccos\left(\frac{<\bm{r}_{\gamma_1},\bm{r}_{\beta_1}>}{|\bm{r}_{\gamma_1}||\bm{r}_{\beta_1}|}\right)= \betacalc$};
+
+% Orientation Angle
+\pgfmathsetmacro{\epsiloncalc}{atan(\xpartK/\ypartK)}
+\path[tdplot_screen_coords] (10,0) node[right]{$\varepsilon = \arctan\left( \frac{x_{\gamma_0}}{y_{\gamma_0}}\right) = \epsiloncalc$};
+
+
+
+\end{tikzpicture}
+
+
+
+\end{document}

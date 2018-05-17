@@ -1,0 +1,164 @@
+%% Definition der KOS
+\documentclass[11pt]{standalone}
+\input{../tikzpic_packages.tex}
+\usepackage{tikz-3dplot}
+\begin{document}
+
+
+\tdplotsetmaincoords{70}{20}
+
+\begin{tikzpicture}[tdplot_main_coords,
+	scale=1,
+	cs_arrow/.style={->},
+	cs_arrow_light/.style={->, gray},
+	plane/.style={fill=lightgray, opacity=.5},
+	help line/.style={thin, lightgray},
+	angle arrow/.style={<->},
+	stretch/.style={color=red!30, line width=2mm},
+	dstretch/.style={color=red!30, line width=4mm},
+	solid/.style={line width=.5mm},
+	gvec/.style={-stealth, thick}
+]
+
+%%% Definitions
+% Orientation
+\def\deltaPlane{30}	% Angle of inclined plane
+\def\alpI{20} % Angle of Leg
+\def\alpII{40}% Angle of Leg
+\def\betI{70}	% Angle of Leg
+\def\betII{20}	% Angle of Leg
+\def\gamm{40}	% Angle of Belly
+
+\def\zangle{0} % z Orientation of the Robot
+% Geometry
+\def\hx{3}	% length of legs
+\def\hy{.5}  % change only with line width of stretch
+\def\lb{3}	% length of belly
+
+\def\gvecl{1.5}	% Length of g-vec
+
+%%% Calculations
+\def\pi{3.1416}
+\pgfmathsetmacro{\gam}{\gamm*.5}
+\pgfmathsetmacro{\rI}{\hx/\alpI*180/\pi}
+\pgfmathsetmacro{\rbI}{\hx/\betI*180/\pi}
+\pgfmathsetmacro{\rII}{\hx/\alpII*180/\pi}
+\pgfmathsetmacro{\rbII}{\hx/\betII*180/\pi}
+\pgfmathsetmacro{\rg}{\hx/\gamm*180/\pi}
+
+\pgfmathsetmacro{\deltah}{\deltaPlane*.5}
+\pgfmathsetmacro{\hyh}{.5*\hy}
+\pgfmathsetmacro{\hxh}{\hx/2}
+
+
+%%% Draw Initial Coord Sys
+\path (0,0,0) coordinate(0)node[left]{\{0\}};
+\draw[cs_arrow] (0)--++(1,0,0)node[below]{$x_0$};
+\draw[cs_arrow] (0)--++(0,1,0)node[right]{$y_0$};
+\draw[cs_arrow] (0)--++(0,0,1)node[left]{$z_0$};
+
+
+
+%%% Draw Walking Plane
+\path (3,0,0)coordinate(1)node[below]{\{1\}};
+\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
+
+\begin{scope}[tdplot_rotated_coords]
+\draw[plane] (1)--++(-10,0)--++(0,10)--++(10,0)--cycle;
+\draw[cs_arrow] (1)--++(1,0,0)node[below]{$x_1$};
+\draw[cs_arrow] (1)--++(0,1,0)node[right]{$y_1$};
+\draw[cs_arrow] (1)--++(0,0,1)node[left]{$z_1$};
+%% Define COM of Robot
+\path (1)++(-5,5)coordinate(K);
+\end{scope}
+
+
+%%% Draw Angle Delta
+\tdplotsetrotatedcoords{-90}{-90}{\deltaPlane}
+\begin{scope}[tdplot_rotated_coords]
+%\draw[cs_arrow] (1)--++(1,0,0)node[right]{$x_3$};
+%\draw[cs_arrow] (1)--++(0,1,0)node[right]{$y_3$};
+%\draw[cs_arrow] (1)--++(0,0,1)node[left]{$z_3$};
+\draw[help line] (1)++(-90-\deltaPlane:2)--++(90-\deltaPlane:4);
+\draw[angle arrow] (1)++(90-\deltaPlane:.9)arc(90-\deltaPlane:90:.9);
+\path (1)++(90-\deltah:.9)node[right]{$\delta = \deltaPlane ^\circ$};
+\end{scope}
+
+
+%%% Draw the Robot
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow] (K)--++(1,0,0)node[right]{$x_{\gamma_0}$};
+\draw[cs_arrow] (K)--++(0,1,0)node[below]{$y_{\gamma_0}$};
+\draw[cs_arrow] (K)--++(0,0,1)node[above]{$z_{\gamma_0}$};
+\path (K)node{\centerofmass};
+
+% Belly
+\path (K)arc(-180:-180-\gam:\rg)coordinate(OM);
+\draw[solid] (OM)arc(-180-\gam:-180+\gam:\rg) coordinate(UM);
+% Leg 0
+\draw[solid] (OM)arc(-\gam+270:-\gam+270-\betI:\rbI)coordinate(BETI);
+%% Leg 1
+\draw[solid] (OM)arc(-\gam+270:-\gam+270+\alpI:\rI)coordinate(ALPI);
+% Leg 2
+\draw[solid] (UM)arc(\gam+90:\gam+90+\betII:\rbII)coordinate(BETII);
+% Leg 3
+\draw[solid] (UM)arc(\gam+90:\gam+90-\alpII:\rII)coordinate(ALPII);
+\end{scope}
+
+
+%%% Draw the coords of each IMU
+% OM
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle-\gam}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow_light] (OM)--++(.5,0,0)node[right]{$x_{\gamma_1}$};
+\draw[cs_arrow_light] (OM)--++(0,.5,0)node[left]{$y_{\gamma_1}$};
+\draw[cs_arrow_light] (OM)--++(0,0,.5)node[above]{$z_{\gamma_1}$};
+\draw[help line] (OM)--++(-\hx,0);
+\end{scope}
+
+% BET I
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\zangle-\gam-\betI}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow_light] (BETI)--++(.5,0,0)node[below]{$x_{\beta_1}$};
+\draw[cs_arrow_light] (BETI)--++(0,.5,0)node[right]{$y_{\beta_1}$};
+\draw[cs_arrow_light] (BETI)--++(0,0,.5)node[above]{$z_{\beta_1}$};
+
+\draw[help line] (BETI)--++(\hx,0);
+% Calc intersection
+\pgfmathsetmacro{\lx}{tan(\betI*.5)*\rbI}
+\path (BETI)++(\lx,0)coordinate(S);
+\draw[angle arrow] (S)++(-.8,0)arc(180:180+\betI:.8);
+\pgfmathsetmacro{\betIh}{\betI*.5}
+\path (S)++(180+\betIh:.9)node[left]{$\beta_1$};
+\end{scope}
+
+
+
+%%% Draw G-Vectors
+\draw[gvec] (BETI)--++(0,0,-\gvecl);
+\draw[gvec] (OM)--++(0,0,-\gvecl);
+
+
+
+
+
+%\def\alphaA{10}
+%\def\betaA{20}
+%\def\gammaA{30}
+%
+%
+%\coordinate (RA) at (0,0,0);
+%\path (RA) node[left]{$\{2\}$};
+%\tdplotsetrotatedcoords{\alphaA}{\betaA}{\gammaA}
+%\draw[tdplot_rotated_coords,thick,->] (RA) --++ (1,0,0) node[below]{$x_2$};
+%\draw[tdplot_rotated_coords,thick,->] (RA) --++ (0,1,0) node[right]{$y_2$};
+%\draw[tdplot_rotated_coords,thick,->] (RA) --++ (0,0,1) node[above]{$z_2$};
+
+
+
+\end{tikzpicture}
+
+
+
+\end{document}

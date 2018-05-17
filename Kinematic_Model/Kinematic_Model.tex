@@ -1,0 +1,272 @@
+\documentclass[12pt]{standalone}
+\input{../tikzpic_packages.tex}
+
+
+
+
+
+\begin{document}
+\begin{tikzpicture}[
+scale=2,
+stretch/.style={line width=.3cm}, % change only with comination with a \h
+dstretch/.style={line width=.6cm},
+nonstretch/.style={very thick},
+dirarrow/.style={-stealth, ultra thick, darkgray}
+]
+
+\def\la{1}		% Laenge der Arme
+\def\lb{1.05}		% Laenge des Bauches
+\def\h{.15}		% Hoehe der nicht dehnbaren Schicht. Change only in combination with stretch style
+\def\R{.13}			% Radius der Hände
+
+\pgfmathsetmacro{\hh}{\h*.5}
+\pgfmathsetmacro{\Rh}{\R*.5}
+
+\def\pi{3.1416}
+
+% Define Gamme for angles:
+\def\GAM{20} %% 20 FIX: Else in Angles viel aendern!!!
+
+\path (0,0)coordinate(OR)coordinate(OL)coordinate(O);
+
+
+\foreach[count=\i] \gam/\fp/\yshift in {
+%90/1/0,
+\GAM/1/1 
+}{
+	\pgfmathsetmacro{\alp}{45 + \gam*.5}	% Winkel der rechten Arme
+	\pgfmathsetmacro{\bet}{45 - \gam*.5}	% Winkel der linken Arme
+	\ifthenelse{\gam=90}{					% Radius der rechten Arme
+		\pgfmathsetmacro{\rb}{\la}}{
+		\pgfmathsetmacro{\rb}{\la/\bet*180/\pi}}	
+	\pgfmathsetmacro{\ra}{\la/\alp*180/\pi}	% Radius der linken Arme
+
+	\pgfmathsetmacro{\signgam}{\gam/sqrt(\gam*\gam)}
+	\pgfmathsetmacro{\absgam}{\gam*\signgam}
+	\pgfmathsetmacro{\rB}{\signgam*\lb*180/\pi/\absgam}	% Radius des Bauches
+	\pgfmathsetmacro{\gamh}{\gam*.5}		% Gamma Halbe
+
+	% Check ob verschoben werden soll oder nicht (wird hier benutzt um grayen):
+	\ifthenelse{1=\yshift}{\def\xs{0} \def\ys{0} \def\col{black} \def\fcol{lightgray}}
+		{\def\xs{0} \def\ys{0} \def\col{black!50} \def\fcol{lightgray!50}}
+
+	%% Col
+	\begin{scope}[thick,\col]
+	
+	% Start oben rechts oder links, je nach Vorzeichen von Gamma:
+	\ifthenelse{0 < \fp}{
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[stretch,\fcol] (OR)++(\xs,\ys)coordinate(OR)++(180-\gamh+90:\hh)--++(180-\gamh:\ra);
+			\draw (OR) --++ (180-\gamh:\ra) coordinate(OM); }{
+			\draw[stretch,\fcol] (OR)++(\xs,\ys)coordinate(OR)++(-90+\alp-\gamh:\hh)arc(90+\alp-\gamh:90-\gamh:-\ra-\hh);
+			\draw (OR) arc (90+\alp-\gamh:90-\gamh:-\ra) coordinate(OM);}
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[stretch,\fcol] (OM)++(180+\gamh:\hh)--++(90+\gamh:\rb);
+			\draw (OM)--++ (90+\gamh:\rb) coordinate(OL); }{
+			\draw[stretch,\fcol] (OM)++(-90-\gamh:\hh)arc (-90-\gamh:-90-\gamh-\bet:\rb+\hh);
+			\draw (OM) arc (-90-\gamh:-90-\gamh-\bet:\rb) coordinate(OL);}
+	}{
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[stretch,\fcol] (OL)++(\xs,\ys)coordinate(OL)++(-\gamh-90:\hh)--++(-\gamh:\rb);
+			\draw (OL) --++ (-\gamh:\rb) coordinate(OM); }{
+			\draw[stretch,\fcol] (OL)++(\xs,\ys)coordinate(OL)++(-90-\bet-\gamh:\hh)arc(-90-\bet-\gamh:-90-\gamh:\rb+\hh);
+			\draw (OL) arc (-90-\bet-\gamh:-90-\gamh:\rb) coordinate(OM);}
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[stretch,\fcol] (OM)++(-\gamh-90:\hh)--++(-\gamh:\ra);
+			\draw (OM) --++(-\gamh:\ra) coordinate(OR); }{
+			\draw[stretch,\fcol] (OM)++(-90-\gamh:\hh)arc (-90-\gamh:-90-\gamh+\alp:\ra+\hh);
+			\draw (OM) arc (-90-\gamh:-90-\gamh+\alp:\ra) coordinate(OR);}
+	}
+	
+	% body body
+	\ifthenelse{\gam=0}{
+		\draw[dstretch,\fcol] (OM)--++(-90:\rB);
+		\draw (OM)--++(-90:\rB) coordinate(UM); }{
+		\draw[dstretch,\fcol] (OM)arc(180-\gamh:180+\gamh:\rB);
+		\draw (OM) arc (180-\gamh:180+\gamh:\rB) coordinate(UM);
+		\path (OM) arc (180-\gamh:180:\rB)coordinate(M);}
+
+	
+	% Rechter unterer Arm
+	\ifthenelse{\gam=-90}{
+		\draw[stretch,\fcol] (UM)++(\gamh+90:\hh)--++ (\gamh:\ra);
+		\draw (UM)--++ (\gamh:\ra) coordinate(UR); }{
+		\draw[stretch,\fcol] (UM)++(90+\gamh:\hh)arc (90+\gamh:90+\gamh-\alp:\ra+\hh);
+		\draw (UM) arc (90+\gamh:90+\gamh-\alp:\ra) coordinate(UR);}
+
+	
+	% Linker unterer Arm
+	\ifthenelse{\gam=90}{
+		\draw[stretch,\fcol] (UM)++(180+\gamh-90:\hh)--++ (180+\gamh:\rb);
+		\draw (UM)--++ (180+\gamh:\rb) coordinate(UL); }{
+		\draw[stretch,\fcol] (UM)++(90+\gamh:\hh)arc (90+\gamh:90+\gamh+\bet:\rb+\hh);
+		\draw (UM) arc (90+\gamh:90+\gamh+\bet:\rb) coordinate(UL);}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nachzeichnen der Kontur fuer bessere Optik
+	% Start oben rechts oder links, je nach Vorzeichen von Gamma:
+	\ifthenelse{0 < \fp}{
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[nonstretch] (OR) --++ (180-\gamh:\ra) coordinate(OM); }{
+			\draw[nonstretch] (OR) arc (90+\alp-\gamh:90-\gamh:-\ra) coordinate(OM);}
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[nonstretch] (OM)--++ (90+\gamh:\rb) coordinate(OL); }{
+			\draw[nonstretch] (OM) arc (-90-\gamh:-90-\gamh-\bet:\rb) coordinate(OL);}
+	}{
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[nonstretch] (OL) --++ (-\gamh:\rb) coordinate(OM); }{
+			\draw[nonstretch] (OL) arc (-90-\bet-\gamh:-90-\gamh:\rb) coordinate(OM);}
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[nonstretch] (OM) --++(-\gamh:\ra) coordinate(OR); }{
+			\draw[nonstretch] (OM) arc (-90-\gamh:-90-\gamh+\alp:\ra) coordinate(OR);}
+	}
+	
+	% body body
+	\ifthenelse{\gam=0}{
+		\draw[nonstretch] (OM)--++(-90:\rB); }{
+		\draw[nonstretch] (OM) arc (180-\gamh:180+\gamh:\rB);}
+	
+	% Rechter unterer Arm
+	\ifthenelse{\gam=-90}{
+		\draw[nonstretch] (UM)--++ (\gamh:\ra); }{
+		\draw[nonstretch] (UM) arc (90+\gamh:90+\gamh-\alp:\ra);}
+
+	% Linker unterer Arm
+	\ifthenelse{\gam=90}{
+		\draw[nonstretch] (UM)--++ (180+\gamh:\rb); }{
+		\draw[nonstretch] (UM) arc (90+\gamh:90+\gamh+\bet:\rb);}
+	
+%%%%%%%%%%%%%% Haende %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\ifthenelse{0<\fp}{
+		\ifthenelse{\i = 1}{
+			\def\colA{black!50}}{\def\colA{black}}
+		\def\colB{white}
+	}{
+		\def\colA{white}
+		\ifthenelse{\i = 1}{
+			\def\colB{black!50}}{\def\colB{black}}
+		\def\colA{white}
+	}
+	\draw [nonstretch,fill=\colA] (OR) ++ (\alp-\gamh:\Rh) ++ (\alp-\gamh-90:\hh) circle(\R);
+	\draw [nonstretch,fill=\colB] (OL) ++ (180-\gamh-\bet:\Rh) ++ (180-\gamh-\bet+90:\hh) circle(\R);
+	
+	\draw [nonstretch,fill=\colB] (UR) ++ (-\alp+\gamh:\Rh) ++ (-\alp+\gamh+90:\hh) circle(\R);
+	\draw [nonstretch,fill=\colA] (UL) ++ (180+\gamh+\bet:\Rh) ++ (180+\gamh+\bet-90:\hh) circle(\R);
+	
+	\end{scope}
+	
+
+
+
+%%%%% Angles
+\begin{scope}[\col]
+\ifthenelse{\yshift=1}{\def\linlmid{3.2}}{\def\linlmid{.01}}
+\def\linlinside{1.35}
+\def\linloutside{1}
+
+%% Gamma
+\draw (OM)--++(-\gamh:\linlmid);
+\draw (UM)--++(\gamh:\linlmid);
+\pgfmathsetmacro{\linlmidhalf}{.6*\linlmid}
+\draw (OM)--++(180-\gamh:\linlmidhalf);
+\draw (UM)--++(180+\gamh:\linlmidhalf);
+
+\pgfmathsetmacro{\rB}{\lb*180/\pi/\gam}	% Radius des Bauches
+\draw[stealth-stealth] (UM)++(\gamh:\rB)coordinate(S)++(180+\gamh:1)arc(180+\gamh:180-\gamh:1); 
+\ifthenelse{\yshift=1}{
+	\path (S)++(180:.85)node[]{$\gamma$};}{
+	\path (S)++(180:1.15)node[]{$\gamma$};}
+
+
+%%Alpha
+\pgfmathsetmacro{\absx}{\ra*tan(\alp*.5)}
+\pgfmathsetmacro{\alph}{\alp*.5}
+
+\draw (OR)--++(\alp-\gamh:\linloutside);
+\draw (OR)--++(180+\alp-\gamh:\linlinside);
+\ifthenelse{\yshift=1}{
+	\def\ralp{1.25}
+	\draw[stealth-stealth] (OM)++(-\gamh:\absx)coordinate(S)++(-\gamh:\ralp)arc(-\gamh:\alp-\gamh:\ralp);
+	\path (S)++(-\gamh+\alph:\ralp+.15)node[]{$\alpha_1$}; }{
+	\draw[stealth-stealth] (OM)++(-\gamh:\absx)coordinate(S)++(-\gamh:1)arc(-\gamh:\alp-\gamh:1);
+	\path (S)++(-\gamh+\alph+10:1.15)node[]{$\alpha_1$}; }
+
+\draw (UR)--++(-\alp+\gamh:\linloutside);
+\draw (UR)--++(180-\alp+\gamh:\linlinside);
+\draw[stealth-stealth] (UM)++(\gamh:\absx)coordinate(S)++(\gamh:.65)arc(\gamh:-\alp+\gamh:.65);
+\ifthenelse{\yshift=1}{
+\path (S)++(\gamh-\alph:.8)node[]{$\alpha_2$};}{
+\path (S)++(\gamh-\alph+10:.8)node[]{$\alpha_2$};}
+
+
+%% Beta
+\pgfmathsetmacro{\beth}{\bet*.5}
+\pgfmathsetmacro{\absx}{\rb*tan(\beth)}
+
+\draw (OL)--++(180-\gamh-\bet:\linloutside);
+\draw (OL)--++(-\gamh-\bet:\linlinside);
+\ifthenelse{\gam=90}{
+	\path (OM)++(180-\gamh:\absx)coordinate(S); }{
+	\draw[stealth-stealth] (OM)++(180-\gamh:\absx)coordinate(S)++(180-\gamh:1)arc(180-\gamh:180-\bet-\gamh:1);}
+\ifthenelse{\yshift=1}{
+	\path (S)++(180-\gamh-\beth:1.15)node[]{$\beta_1$};}{
+	\path (S)++(180-\gamh-\beth-14:1.15)node[]{$\beta_1$};}
+
+
+\draw (UL)--++(180+\gamh+\bet:\linloutside);
+\draw (UL)--++(+\gamh+\bet:\linlinside);
+\draw[stealth-stealth] (UM)++(180+\gamh:\absx)coordinate(S)++(180+\gamh:1)arc(180+\gamh:180+\bet+\gamh:1);
+\ifthenelse{\yshift=1}{
+	\path (S)++(180+\gamh+\beth:1.15)node[]{$\beta_2$};}{
+	\path (S)++(180+\gamh+\beth+12:1.15)node[]{$\beta_2$};}
+
+
+\end{scope}
+
+
+} % End Foreach loop
+
+
+%%%%%%%% Arrows %%%%%%%%
+\pgfmathsetmacro{\gamh}{\GAM*.5}
+\pgfmathsetmacro{\alp}{45 + \gamh}	% Winkel der rechten Arme
+\pgfmathsetmacro{\bet}{45 - \gamh}	% Winkel der linken Arme
+\def\arrowdistance{.18}
+\def\arrowlength{.6}
+
+
+\path(OL)++(180-\gamh-\bet:\arrowdistance)coordinate(OL);
+\path(OR)++(-\gamh+\alp:\arrowdistance) coordinate(OR);
+\path(UL)++(180+\gamh+\bet:\arrowdistance)coordinate(UL);
+\path(UR)++(\gamh-\alp:\arrowdistance) coordinate(UR);
+
+\draw[dirarrow] (OL)--++(180-\gamh-\bet:\arrowlength)node[near end, above right]{$\bm{r}_{\beta_1}$};
+
+\draw[dirarrow] (OR)--++(-\gamh+\alp:\arrowlength)node[near end, above left]{$\bm{r}_{\alpha_1}$};
+
+\draw[dirarrow] (UL)--++(180+\gamh+\bet:\arrowlength)node[near end, below right]{$\bm{r}_{\beta_2}$};
+
+\draw[dirarrow] (UR)--++(\gamh-\alp:\arrowlength)node[near end, below left]{$\bm{r}_{\alpha_2}$};
+
+
+\draw[dirarrow] (OM)--++(90-\gamh:\arrowlength)node[near end, right]{$\bm{r}_{\gamma_1}$};
+\draw[dirarrow] (UM)--++(270+\gamh:\arrowlength)node[near end, right]{$\bm{r}_{\gamma_2}$};
+\draw[dirarrow] (M)node{\centerofmass}--++(90:\arrowlength)node[near start, left]{$\bm{r}_{\gamma_0}$};
+
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

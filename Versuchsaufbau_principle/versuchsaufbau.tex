@@ -1,0 +1,225 @@
+%% Definition der KOS
+\documentclass[10pt]{standalone}
+\input{../tikzpic_packages.tex}
+
+
+\begin{document}
+
+\def\deltaPlane{45}	% Angle of inclined plane
+
+%\tdplotsetmaincoords{\deltaPlane}{90}   % View on walking plane
+\tdplotsetmaincoords{80}{120}		   	% nice 3d view
+
+\begin{tikzpicture}[tdplot_main_coords,
+	scale=1,
+	cs_arrow/.style={->},
+	cs_arrow_light/.style={->},
+	plane/.style={fill=lightgray!30},
+	help line/.style={thin, gray},
+	angle arrow/.style={stealth-stealth},
+	stretch/.style={color=red!30, line width=2mm},
+	dstretch/.style={color=red!30, line width=4mm},
+	solid/.style={line width=.5mm},
+	gvec/.style={-stealth, thick},
+	coord_split/.style={densely dashed, darkgray, stealth-},
+	fillmounting_top/.style={fill=blue!30},
+	fillmounting_front/.style={fill=blue!35},
+	fillmounting_side/.style={fill=blue!40},
+	filldut_top/.style={fill=red!30},
+	filldut_front/.style={fill=red!35},
+	filldut_side/.style={fill=red!40},
+	shadow/.style={gray, path fading=fade out, fill},
+	radius/.style={-stealth, thick}
+]
+
+% ........................................................
+%%% Definitions
+% ........................................................
+    \tikzfading[name=fade out, inner color=transparent!10,
+         outer color=transparent!90]
+
+
+% Orientation
+\def\betI{60}	% Angle of Leg
+\pgfmathsetmacro{\betIh}{\betI*.5}
+
+% Geometry
+\def\hx{5}	% length of legs
+\def\hy{.5}  % change only with line width of stretch
+\def\gvecl{1.6}	% Length of g-vec
+\def\axscale{.8}	% Skalierung der splitted G-vecs
+
+% 3d Geometry
+\def\hz{.7}
+\def\by{.8}
+\def\mountingdz{.1}
+\def\mountingx{1}
+\def\shadow{.3}
+
+\def\planeb{8}	% Breite Laufeebene
+\def\planeh{3.8}  % Hoehe Laufebene
+
+%%% Calculations
+\def\pi{3.1416}
+\pgfmathsetmacro{\rbI}{\hx/\betI*180/\pi}
+\pgfmathsetmacro{\rbIe}{(\hx+\by)/\betI*180/\pi}
+%\def\rbIe{6.3025}
+
+\pgfmathsetmacro{\deltah}{\deltaPlane*.5}
+\pgfmathsetmacro{\hyh}{.5*\hy}
+\pgfmathsetmacro{\hxh}{\hx/2}
+
+
+%%% Draw Initial Coord Sys
+\path (.5,\planeb,0)coordinate(0);%node[left]{\{0\}};
+\draw[help line] (0)--++(2.5,0);
+\draw[cs_arrow] (0)--++(1,0,0)node[below]{$x_0$};
+\draw[cs_arrow] (0)--++(0,1,0)node[below]{$y_0$};
+\draw[cs_arrow] (0)--++(0,0,1)node[above]{$z_0$};
+
+%%% Draw Shadow
+\path[shadow] (3+\shadow,\planeb+\shadow,-.2)--++(-\planeh-\shadow-\shadow,0)--++(0,-\planeb-\shadow-\shadow)--++(\planeh+\shadow+\shadow,0)--cycle;
+
+
+% ........................................................
+%%% Draw Walking Plane
+% ........................................................
+
+\path (3,0,0)coordinate(1);
+\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
+
+\begin{scope}[tdplot_rotated_coords]
+\draw[plane] (1)--++(-\planeh,0)--++(0,\planeb)--++(\planeh,0)coordinate(2)--cycle;
+%\draw[] (1)--++(-5,0)--++(0,10)--++(5,0)coordinate(2)--cycle;
+%% Define COM of Robot
+\path (1)++(-1.3,2)coordinate(K);
+\end{scope}
+
+%%% Draw Angle Delta
+\tdplotsetrotatedcoords{-90}{-90}{\deltaPlane}
+\begin{scope}[tdplot_rotated_coords]
+\draw[angle arrow] (2)++(-90-\deltaPlane:1.2)arc(270-\deltaPlane:270:1.2);
+\path (2)++(-90-\deltah:1.3)node[right]{$\delta$};
+\end{scope}
+
+
+
+% ........................................................
+%%% Draw the Robot
+% ........................................................
+
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90}
+\begin{scope}[tdplot_rotated_coords]
+
+% MOUNTING
+\path[fillmounting_side] (K)++(0,\mountingdz)coordinate(MBUR)--++(0,0,\hz+\mountingdz)coordinate(MTUR)--++(0,-\by-\mountingdz-\mountingdz)coordinate(MTLR)--++(0,0,-\hz-\mountingdz)coordinate(MBLR)--cycle;
+\path[fillmounting_front] (MBLR)--++(-\mountingx,0)--++(0,0,\hz+\mountingdz)coordinate(MTLL)--(MTLR)--cycle;
+\path[fillmounting_top] (MTLL)--(MTLR)--(MTUR)--++(-\mountingx,0)--cycle;
+
+% DUT
+\path[filldut_top] (K)++(0,0,\hz)arc(270:270+\betI:\rbI)--++(-90+\betI:\by)arc(270+\betI:270:\rbIe)--++(0,\by);
+
+\path (K)++(0,-\by)coordinate(LL)++(0,0,\hz)coordinate(LU); % Init LastLower & LastUpper
+\foreach \dp in {.05,.1,..., 1.01}{
+	\path (K)++(0,-\by)arc(270:270+\betI:\rbIe)coordinate[pos=\dp](L);
+	\path[filldut_side] (LU)--(LL)--(L)--++(0,0,\hz)--cycle;
+	\path (L)coordinate(LL) ++ (0,0,\hz)coordinate(LU);
+}
+% Nicht dehnbare Schicht
+\draw[solid] (K)++(0,0,\hz)coordinate(K)arc(270:270+\betI:\rbI)coordinate(BETI);
+% Define Pos of IMU Coord Sys
+\path (K)++(0,-\by)coordinate(K);
+\path(BETI)++(-90+\betI:\by)coordinate(BETI);
+
+\end{scope}
+
+
+
+% ........................................................
+%%% Draw the RADIUS
+% ........................................................
+
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90}
+\begin{scope}[tdplot_rotated_coords]
+\draw [help line] (K)++(0,\by)--++(0,\rbI)coordinate(S)--++(0,.2);
+\draw [help line] (S)++(90+\betI:.2)--++(-90+\betI:\rbI+.2);
+\draw [angle arrow] (S)++(-90+\betI:.8)arc(-90+\betI:-90:.8);
+\path (S)++(-90+\betIh:.9)node[below]{$\alpha$};
+\draw[radius] (S)--++(-90+\betIh+10:\rbI)node[pos=.6, right]{$R$};
+
+\end{scope}
+
+
+% ........................................................
+%%% Draw G-Vectors & B-Vectors
+% ........................................................
+
+\draw[gvec] (BETI)--++(0,0,-\gvecl)coordinate(GVEC_BETI)node[near end, right]{$\bm{g}$};
+\draw[gvec] (K)--++(0,0,-\gvecl)coordinate(GVEC_K)node[near end, right]{$\bm{g}$};
+
+\draw[gvec] (4,8.5,5.2)--++(0,1.5,.5)node[midway, above]{$\bm{H}$};
+\draw[gvec] (3,1,5)--++(0,0,-\gvecl)node[midway, right]{$\bm{g}$};
+
+
+% ........................................................
+%%% Draw the coords of each IMU
+% ........................................................
+
+\pgfmathparse{cos(\deltaPlane)*\gvecl}
+\global\let\zpart\pgfmathresult
+\pgfmathparse{sin(\deltaPlane)*\gvecl}
+\global\let\xypart\pgfmathresult
+\pgfmathparse{sin(0)*\xypart}
+\global\let\xpartGI\pgfmathresult
+\pgfmathparse{cos(0)*\xypart}
+\global\let\ypartGI\pgfmathresult
+
+
+% K (Aufhaengung)
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90}
+\begin{scope}[tdplot_rotated_coords]
+\draw[help line] (K)--++(\hx,0);
+\draw[cs_arrow_light] (K)--++(1,0,0)node[above right]{$x_1$};
+\draw[cs_arrow_light] (K)--++(0,1,0)node[above]{$y_1$};
+\draw[cs_arrow_light] (K)--++(0,0,1)node[above]{$z_1$};
+\path (K)node[below right]{$\{1\}$};
+\pgfmathparse{sin(0)*\xypart}
+\global\let\xpartK\pgfmathresult
+\pgfmathparse{cos(0)*\xypart}
+\global\let\ypartK\pgfmathresult
+\draw[coord_split] (GVEC_K)--++(0,0,\zpart)coordinate(H)node[midway, sloped, below, scale=\axscale]{$a_{z,1}$};
+\draw[coord_split] (H)--++(0,\ypartK,0)coordinate(H)node[midway, sloped, above, scale=\axscale]{$a_{y,1}$};
+\draw[coord_split] (H)--++(\xpartK,0,0);
+\end{scope}
+
+% BET I (Ende DUT)
+\tdplotsetrotatedcoords{0}{\deltaPlane}{90+\betI}
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow_light] (BETI)--++(1,0,0)node[above]{$x_{2}$};
+\draw[cs_arrow_light] (BETI)--++(0,1,0)node[left]{$y_{2}$};
+\draw[cs_arrow_light] (BETI)--++(0,0,1)node[above]{$z_{2}$};
+\path (BETI)node[below right]{$\{2\}$};
+
+%\draw[help line] (BETI)--++(-\hx,0);
+% Calc intersection
+\pgfmathsetmacro{\lx}{tan(\betI*.5)*\rbIe}
+\draw[help line] (BETI)--++(-\lx,0)coordinate(S)--++(-.2,0);
+\draw[angle arrow] (S)++(.8,0)arc(0:-\betI:.8);
+
+\path (S)++(-\betIh:.9)node[right]{$\alpha$};
+
+\pgfmathparse{sin(\betI)*\xypart}
+\global\let\xpartBI\pgfmathresult
+\pgfmathparse{cos(\betI)*\xypart}
+\global\let\ypartBI\pgfmathresult
+\draw[coord_split] (GVEC_BETI)--++(0,0,\zpart)coordinate(H)node[midway, sloped, below, scale=\axscale]{$a_{z,2}$};
+\draw[coord_split] (H)--++(0,\ypartBI,0)coordinate(H)node[midway, sloped, below, scale=\axscale]{$a_{y,2}$};
+\draw[coord_split] (H)--++(\xpartBI,0,0)node[midway, sloped, above, scale=\axscale]{$a_{x,2}$};
+\end{scope}
+
+% ........................................................
+\end{tikzpicture}
+% ........................................................
+
+
+\end{document}

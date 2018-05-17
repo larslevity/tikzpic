@@ -1,0 +1,189 @@
+\documentclass[12pt]{standalone}
+\input{../tikzpic_packages.tex}
+
+
+
+
+
+\begin{document}
+\begin{tikzpicture}[
+scale=2,
+stretch/.style={line width=.3cm}, % change only with comination with a \h
+dstretch/.style={line width=.6cm},
+nonstretch/.style={very thick},
+dirarrow/.style={-stealth, ultra thick, darkgray}
+]
+
+\def\la{1}		% Laenge der Arme
+\def\lb{1.05}		% Laenge des Bauches
+\def\h{.15}		% Hoehe der nicht dehnbaren Schicht. Change only in combination with stretch style
+\def\R{.13}			% Radius der Hände
+
+\pgfmathsetmacro{\hh}{\h*.5}
+\pgfmathsetmacro{\Rh}{\R*.5}
+
+\def\pi{3.1416}
+
+\def\XSHIFT{2.5}
+
+\path (0,0)coordinate(OR)coordinate(OL)coordinate(O);
+
+\path (-.8,-4)coordinate(picAnchor);
+
+\foreach[count=\i] \gam/\fp/\yshift in {
+-89/1/1,
+10/1/1,
+90/1/1,
+90/-1/1,
+20/-1/1,
+-89/-1/1
+}{
+
+	
+	%% Calc robots coords
+	\pgfmathsetmacro{\alp}{45 + \gam*.5}	% Winkel der rechten Arme
+	\pgfmathsetmacro{\bet}{45 - \gam*.5}	% Winkel der linken Arme
+	\ifthenelse{\gam=90}{					% Radius der rechten Arme
+		\pgfmathsetmacro{\rb}{\la}}{
+		\pgfmathsetmacro{\rb}{\la/\bet*180/\pi}}	
+	\pgfmathsetmacro{\ra}{\la/\alp*180/\pi}	% Radius der linken Arme
+
+	\pgfmathsetmacro{\signgam}{\gam/sqrt(\gam*\gam)}
+	\pgfmathsetmacro{\absgam}{\gam*\signgam}
+	\pgfmathsetmacro{\rB}{\signgam*\lb*180/\pi/\absgam}	% Radius des Bauches
+	\pgfmathsetmacro{\gamh}{\gam*.5}		% Gamma Halbe
+
+	% Check ob verschoben werden soll oder nicht (wird hier benutzt um grayen):
+	\ifthenelse{1=\yshift}{\def\xs{\XSHIFT} \def\ys{0} \def\col{black} \def\fcol{red!30}}
+		{\def\xs{\XSHIFT} \def\ys{0} \def\col{black!50} \def\fcol{lightgray!50}}
+	\ifnum\i=1\def\xs{0}\fi
+	%% Col
+	\begin{scope}[thick,\col]
+	
+	% Start oben rechts oder links, je nach Vorzeichen von Gamma:
+	\ifthenelse{0 < \fp}{
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[stretch,\fcol] (OR)++(\xs,\ys)coordinate(OR)++(180-\gamh+90:\hh)--++(180-\gamh:\ra);
+			\draw (OR) --++ (180-\gamh:\ra) coordinate(OM); }{
+			\draw[stretch,\fcol] (OR)++(\xs,\ys)coordinate(OR)++(-90+\alp-\gamh:\hh)arc(90+\alp-\gamh:90-\gamh:-\ra-\hh);
+			\draw (OR) arc (90+\alp-\gamh:90-\gamh:-\ra) coordinate(OM);}
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[stretch,\fcol] (OM)++(180+\gamh:\hh)--++(90+\gamh:\rb);
+			\draw (OM)--++ (90+\gamh:\rb) coordinate(OL); }{
+			\draw[stretch,\fcol] (OM)++(-90-\gamh:\hh)arc (-90-\gamh:-90-\gamh-\bet:\rb+\hh);
+			\draw (OM) arc (-90-\gamh:-90-\gamh-\bet:\rb) coordinate(OL);}
+	}{
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[stretch,\fcol] (OL)++(\xs,\ys)coordinate(OL)++(-\gamh-90:\hh)--++(-\gamh:\rb);
+			\draw (OL) --++ (-\gamh:\rb) coordinate(OM); }{
+			\draw[stretch,\fcol] (OL)++(\xs,\ys)coordinate(OL)++(-90-\bet-\gamh:\hh)arc(-90-\bet-\gamh:-90-\gamh:\rb+\hh);
+			\draw (OL) arc (-90-\bet-\gamh:-90-\gamh:\rb) coordinate(OM);}
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[stretch,\fcol] (OM)++(-\gamh-90:\hh)--++(-\gamh:\ra);
+			\draw (OM) --++(-\gamh:\ra) coordinate(OR); }{
+			\draw[stretch,\fcol] (OM)++(-90-\gamh:\hh)arc (-90-\gamh:-90-\gamh+\alp:\ra+\hh);
+			\draw (OM) arc (-90-\gamh:-90-\gamh+\alp:\ra) coordinate(OR);}
+	}
+	
+	% body body
+	\ifthenelse{\gam=0}{
+		\draw[dstretch,\fcol] (OM)--++(-90:\rB);
+		\draw (OM)--++(-90:\rB) coordinate(UM); }{
+		\draw[dstretch,\fcol] (OM)arc(180-\gamh:180+\gamh:\rB);
+		\draw (OM) arc (180-\gamh:180+\gamh:\rB) coordinate(UM);
+		\path (OM) arc (180-\gamh:180:\rB)coordinate(M);}
+
+	
+	% Rechter unterer Arm
+	\ifthenelse{\gam=-90}{
+		\draw[stretch,\fcol] (UM)++(\gamh+90:\hh)--++ (\gamh:\ra);
+		\draw (UM)--++ (\gamh:\ra) coordinate(UR); }{
+		\draw[stretch,\fcol] (UM)++(90+\gamh:\hh)arc (90+\gamh:90+\gamh-\alp:\ra+\hh);
+		\draw (UM) arc (90+\gamh:90+\gamh-\alp:\ra) coordinate(UR);}
+
+	
+	% Linker unterer Arm
+	\ifthenelse{\gam=90}{
+		\draw[stretch,\fcol] (UM)++(180+\gamh-90:\hh)--++ (180+\gamh:\rb);
+		\draw (UM)--++ (180+\gamh:\rb) coordinate(UL); }{
+		\draw[stretch,\fcol] (UM)++(90+\gamh:\hh)arc (90+\gamh:90+\gamh+\bet:\rb+\hh);
+		\draw (UM) arc (90+\gamh:90+\gamh+\bet:\rb) coordinate(UL);}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nachzeichnen der Kontur fuer bessere Optik
+	% Start oben rechts oder links, je nach Vorzeichen von Gamma:
+	\ifthenelse{0 < \fp}{
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[nonstretch] (OR) --++ (180-\gamh:\ra) coordinate(OM); }{
+			\draw[nonstretch] (OR) arc (90+\alp-\gamh:90-\gamh:-\ra) coordinate(OM);}
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[nonstretch] (OM)--++ (90+\gamh:\rb) coordinate(OL); }{
+			\draw[nonstretch] (OM) arc (-90-\gamh:-90-\gamh-\bet:\rb) coordinate(OL);}
+	}{
+		% Linker oberer Arm
+		\ifthenelse{\gam=90}{
+			\draw[nonstretch] (OL) --++ (-\gamh:\rb) coordinate(OM); }{
+			\draw[nonstretch] (OL) arc (-90-\bet-\gamh:-90-\gamh:\rb) coordinate(OM);}
+		% Rechter oberer Arm
+		\ifthenelse{\gam=-90}{
+			\draw[nonstretch] (OM) --++(-\gamh:\ra) coordinate(OR); }{
+			\draw[nonstretch] (OM) arc (-90-\gamh:-90-\gamh+\alp:\ra) coordinate(OR);}
+	}
+	
+	% body body
+	\ifthenelse{\gam=0}{
+		\draw[nonstretch] (OM)--++(-90:\rB); }{
+		\draw[nonstretch] (OM) arc (180-\gamh:180+\gamh:\rB);}
+	
+	% Rechter unterer Arm
+	\ifthenelse{\gam=-90}{
+		\draw[nonstretch] (UM)--++ (\gamh:\ra); }{
+		\draw[nonstretch] (UM) arc (90+\gamh:90+\gamh-\alp:\ra);}
+
+	% Linker unterer Arm
+	\ifthenelse{\gam=90}{
+		\draw[nonstretch] (UM)--++ (180+\gamh:\rb); }{
+		\draw[nonstretch] (UM) arc (90+\gamh:90+\gamh+\bet:\rb);}
+	
+%%%%%%%%%%%%%% Haende %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\ifthenelse{0<\fp}{
+		\ifthenelse{\i = 1}{
+			\def\colA{black!50}}{\def\colA{black}}
+		\def\colB{white}
+	}{
+		\def\colA{white}
+		\ifthenelse{\i = 1}{
+			\def\colB{black!50}}{\def\colB{black}}
+		\def\colA{white}
+	}
+	\draw [nonstretch,fill=\colA] (OR) ++ (\alp-\gamh:\Rh) ++ (\alp-\gamh-90:\hh) circle(\R);
+	\draw [nonstretch,fill=\colB] (OL) ++ (180-\gamh-\bet:\Rh) ++ (180-\gamh-\bet+90:\hh) circle(\R);
+	
+	\draw [nonstretch,fill=\colB] (UR) ++ (-\alp+\gamh:\Rh) ++ (-\alp+\gamh+90:\hh) circle(\R);
+	\draw [nonstretch,fill=\colA] (UL) ++ (180+\gamh+\bet:\Rh) ++ (180+\gamh+\bet-90:\hh) circle(\R);
+	
+	\end{scope}
+
+
+	%% Insert gecko picture
+	\path (picAnchor)node[above]{\includegraphics[width=6cm]{gecko_adjust_0\i.png}}++(\XSHIFT,0)coordinate(picAnchor);
+
+} % End Foreach loop
+
+
+
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

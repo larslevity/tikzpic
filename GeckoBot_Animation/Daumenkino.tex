@@ -1,0 +1,178 @@
+
+
+
+\documentclass{beamer}
+\usepackage{scalefnt}
+
+\usetheme{plain}
+
+\usepackage{tikz}
+\usepackage{ifthen}
+
+\begin{document}
+
+\def\la{1}		% Laenge der Arme
+\def\lb{1.2}		% Laenge des Bauches
+
+\def\N{8}		% Anzahl Chambers
+\def\h{.1}		% Hoehe der Chambers
+
+
+\def\pi{3.1416}
+
+\begin{frame}{}
+	\begin{flushright}
+	\begin{tikzpicture}[overlay,remember picture, scale=1]
+		\path (0,0)coordinate(OR)coordinate(OL);
+		\path [help lines, step=.2cm] (-2,-2) grid (0.2,1.6);
+	\end{tikzpicture}
+	\end{flushright}
+\end{frame}
+
+
+\foreach[count=\i] \gam/\fp in {1/1, 20/1 40/1, 60/1, 80/1, 
+								80/-1, 60/-1, 40/-1, 20/-1, 1/-1, -20/-1, -40/-1,-60/-1, -80/-1,
+								-80/1, -60/1, -40/1, -20/1, 1/1, 20/1 40/1, 60/1, 80/1, 
+								80/-1, 60/-1, 40/-1, 20/-1, 1/-1, -20/-1, -40/-1,-60/-1, -80/-1,
+								-80/1, -60/1, -40/1, -20/1, 1/1
+								}{
+%\foreach[count=\i] \gam/\fp in {1/1, 40/1}{
+    \begin{frame}{}
+    \begin{flushright}
+    \begin{tikzpicture}[overlay,remember picture, scale=1]
+    	
+    	% Bounding Box
+    	\path [help lines, step=.2cm,gray!30] (-2,-2) grid (0.2,1.6);
+
+		\pgfmathsetmacro{\alp}{45 + \gam*.5}	% Winkel der rechten Arme
+		\pgfmathsetmacro{\bet}{45 - \gam*.5}	% Winkel der linken Arme
+		\pgfmathsetmacro{\ra}{\la/\alp*180/\pi}	% Radius der rechten Arme
+		\pgfmathsetmacro{\rb}{\la/\bet*180/\pi}	% Radius der rechten Arme
+		\pgfmathsetmacro{\signgam}{\gam/sqrt(\gam*\gam)}
+		\pgfmathsetmacro{\absgam}{\gam*\signgam}
+		\pgfmathsetmacro{\rB}{\signgam*\lb*180/\pi/\absgam}	% Radius des Bauches
+		\pgfmathsetmacro{\gamh}{\gam*.5}		% Gamma Halbe
+		
+		% Start oben rechts oder links, je nach Vorzeichen von Gamma:
+		\ifthenelse{0 < \fp}{
+			% Rechter oberer Arm
+			\draw (OR) arc (90+\alp-\gamh:90-\gamh:-\ra) coordinate(OM);
+			% Linker oberer Arm
+			\draw (OM) arc (-90-\gamh:-90-\gamh-\bet:\rb) coordinate(OL);
+		}{
+			% Linker oberer Arm
+			\draw (OL) arc (-90-\bet-\gamh:-90-\gamh:\rb) coordinate(OM);
+			% Rechter oberer Arm
+			\draw (OM) arc (-90-\gamh:-90-\gamh+\alp:\ra) coordinate(OR);
+		}
+		
+		% Bauch Bauch
+		\draw (OM) arc (180-\gamh:180+\gamh:\rB) coordinate(UM);
+		
+		% Rechter unterer Arm
+		\draw (UM) arc (90+\gamh:90+\gamh-\alp:\ra) coordinate(UR);
+		% Linker unterer Arm
+		\draw (UM) arc (90+\gamh:90+\gamh+\bet:\rb) coordinate(UL);
+		
+	%%%%%%%%%%%%%%%%%%%%%% Perlen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{scope}[help lines]
+		
+		% Links -- alles mit beta
+		\foreach \chamber in {1, 2, ..., \N}{
+			\pgfmathsetmacro{\dangle}{\bet/(\N*2)}	
+			\pgfmathsetmacro{\angle}{\chamber*\bet/\N}
+			\pgfmathsetmacro{\blast}{\bet}
+	
+			% Links Unten
+			\path (UM) arc (90+\gamh:90+\gamh+\angle:\rb) coordinate(cul);
+			\draw (cul) ++ (90+\gamh+\angle:\h) coordinate(col) 
+						arc (90+\gamh+\angle:90+\gamh+\angle-\dangle:\rb+\h)coordinate(cor) 
+						++ (90+\gamh+\angle-\dangle:-\h) coordinate(cur);
+			\draw (cul) to[out=90+\gamh+\angle + \blast, in = -90+\gamh+\angle - \blast] (col);
+			\draw (cur) to[out=90+\gamh+\angle - \blast, in = -90+\gamh+\angle + \blast] (cor);
+			
+			% Links Oben
+			\path (OM) arc (-90-\gamh:-90-\gamh-\angle:\rb) coordinate(cul);
+			\draw (cul) ++ (-90-\gamh-\angle:\h) coordinate(col) 
+						arc (-90-\gamh-\angle:-90-\gamh-\angle+\dangle:\rb+\h)coordinate(cor) 
+						++ (-90-\gamh-\angle+\dangle:-\h) coordinate(cur);
+			\draw (cul) to[out=-90-\gamh-\angle - \blast, in = +90-\gamh-\angle + \blast] (col);
+			\draw (cur) to[out=-90-\gamh-\angle + \blast, in = +90-\gamh-\angle - \blast] (cor);
+			
+		}
+		% Rechts -- alles mit alpha
+		\foreach \chamber in {1, 2, ..., \N}{
+			\pgfmathsetmacro{\dangle}{\alp/(\N*2)}	
+			\pgfmathsetmacro{\angle}{\chamber*\alp/\N}
+			\pgfmathsetmacro{\blast}{\alp}
+	
+			% Rechts Unten
+			\path (UM) arc (90+\gamh:90+\gamh-\angle:\ra) coordinate(cul);
+			\draw (cul) ++ (90+\gamh-\angle:\h) coordinate(col) 
+						arc (90+\gamh-\angle: 90+\gamh-\angle+\dangle:\ra+\h)coordinate(cor)
+						++ (90+\gamh-\angle+\dangle:-\h) coordinate(cur);
+			\draw (cul) to[out=90+\gamh-\angle - \blast, in = -90+\gamh-\angle + \blast] (col);
+			\draw (cur) to[out=90+\gamh-\angle + \blast, in = -90+\gamh-\angle - \blast] (cor);
+			
+			% Rechts Oben
+			\path (OM) arc (-90-\gamh:-90-\gamh+\angle:\ra) coordinate(cul);
+			\draw (cul) ++ (-90-\gamh+\angle:\h) coordinate(col) 
+						arc (-90-\gamh+\angle: -90-\gamh+\angle-\dangle:\ra+\h)coordinate(cor)
+						++ (-90-\gamh+\angle-\dangle:-\h) coordinate(cur);
+			\draw (cul) to[out=-90-\gamh+\angle + \blast, in = 90-\gamh+\angle - \blast] (col);
+			\draw (cur) to[out=-90-\gamh+\angle - \blast, in = 90-\gamh+\angle + \blast] (cor);	
+		}
+		
+		%% Bauch \draw (OM) arc (180-\gamh:180+\gamh:\rB) coordinate(UM);
+			\foreach \chamber in {1, 2, 3, ..., 7}{
+			\pgfmathsetmacro{\dangle}{\gam/(\N*2)}	
+			\pgfmathsetmacro{\angle}{\chamber*\gam/\N}
+			
+	
+			% Bauch links
+			\ifthenelse{0>\gam}{\def\blast{0}}{\def\blast{\gam}}
+	
+			\path (OM) arc (180-\gamh:180-\gamh+\angle:\rB) coordinate(cul);
+			\draw (cul) ++ (180-\gamh+\angle:\h) coordinate(col) 
+						arc (180-\gamh+\angle: 180-\gamh+\angle-\dangle:\rB+\h)coordinate(cor)
+						++ (180-\gamh+\angle-\dangle:-\h) coordinate(cur);
+			\draw (cul) to[out=180-\gamh+\angle + \blast, in = -\gamh+\angle - \blast] (col);
+			\draw (cur) to[out=190-\gamh+\angle - \blast, in = -\gamh+\angle + \blast] (cor);
+			
+			% Bauch rechts
+			\ifthenelse{0<\gam}{\def\blast{0}}{\def\blast{\gam}}
+				% Means: Wenn Bauch nach rechts biegt (gam>0). Soll rechter Bauch einen \blast von 0 haben.
+	
+			\path (OM) arc (180-\gamh:180-\gamh+\angle:\rB) coordinate(cul);
+			\draw (cul) ++ (180-\gamh+\angle:-\h) coordinate(col) 
+						arc (180-\gamh+\angle: 180-\gamh+\angle-\dangle:\rB+\h)coordinate(cor)
+						++ (180-\gamh+\angle-\dangle:\h) coordinate(cur);
+			\draw (cul) to[out=180-\gamh+\angle - \blast, in = -\gamh+\angle + \blast] (col);
+			\draw (cur) to[out=190-\gamh+\angle + \blast, in = -\gamh+\angle - \blast] (cor);
+		}
+		
+		\end{scope}
+		
+	%%%%%%%%%%%%%% Haende %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\def\R{.1}			% Radius der Hände
+		
+		\ifthenelse{0<\fp}{	
+			\def\colA{gray}
+			\def\colB{white}
+		}{
+			\def\colA{white}
+			\def\colB{gray}
+		}
+		\draw[fill=\colA] (OR) ++ (\alp-\gamh:\R) circle(\R);
+		\draw[fill=\colB] (OL) ++ (180-\gamh-\bet:\R) circle(\R);
+		
+		\draw[fill=\colB] (UR) ++ (-\alp+\gamh:\R) circle(\R);
+		\draw[fill=\colA] (UL) ++ (180+\gamh+\bet:\R) circle(\R);
+
+    \end{tikzpicture}
+    \end{flushright}
+    \end{frame}
+} % End foreach loop
+
+
+\end{document}
