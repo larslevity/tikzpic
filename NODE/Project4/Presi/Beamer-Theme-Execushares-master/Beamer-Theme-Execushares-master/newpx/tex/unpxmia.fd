@@ -1,0 +1,31 @@
+%Filename: unpxmia.fd
+%Created by: tex px-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{unpxmia.fd}
+   [2013/03/24 Fontinst v1.933 font definitions for U/npxmia.]
+
+\expandafter\ifx\csname npxmath@scaled\endcsname\relax
+  \let\npxmath@@scaled\@empty%
+\else
+  \edef\npxmath@@scaled{s*[\csname npxmath@scaled\endcsname]}%
+\fi
+
+\DeclareFontFamily{U}{npxmia}{\skewchar \font =127}
+
+\DeclareFontShape{U}{npxmia}{m}{it}{
+   <-> \npxmath@@scaled zplmia
+}{}
+
+\DeclareFontShape{U}{npxmia}{b}{it}{
+   <-> \npxmath@@scaled zplbmia
+}{}
+
+\DeclareFontShape{U}{npxmia}{m}{sl}{<->ssub * npxmia/m/it}{}
+\DeclareFontShape{U}{npxmia}{bx}{it}{<->ssub * npxmia/b/it}{}
+\DeclareFontShape{U}{npxmia}{b}{sl}{<->ssub * npxmia/b/it}{}
+\DeclareFontShape{U}{npxmia}{bx}{sl}{<->ssub * npxmia/b/sl}{}
+
+\endinput

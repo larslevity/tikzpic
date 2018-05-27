@@ -1,0 +1,73 @@
+% This file was created by matlab2tikz.
+% Minimal pgfplots version: 1.3
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\documentclass[tikz]{standalone}
+\usepackage{pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usepackage{amsmath}
+
+\begin{document}
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{1.00000,1.00000,0.00000}%
+\definecolor{mycolor3}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor4}{rgb}{0.92900,0.69400,0.12500}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=5.610429cm,
+height=4.5cm,
+at={(0cm,0cm)},
+scale only axis,
+xmin=0,
+xmax=14.5453878355797,
+xmajorgrids,
+ymin=-3.80053127076276,
+ymax=7.67155687697674,
+ymajorgrids,
+title style={font=\bfseries},
+title={Time: 1.50},
+axis x line* = middle, axis y line* = middle,
+]
+\addplot [color=mycolor1,mark size=6.0pt,only marks,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+13.9999813643002	-1.1926781259719e-05\\
+};
+\addplot [color=mycolor3,solid,forget plot]
+  table[row sep=crcr]{%
+13.9999813643002	-1.1926781259719e-05\\
+14.5453878355797	-0.741495992833387\\
+};
+\addplot [color=black,dotted,mark=asterisk,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0	1\\
+7.4109846876187e-323	1\\
+0.716503622907548	1.34363975253288\\
+1.29900353309915	1.60989777913454\\
+2.25957449508967	2.01625141176067\\
+3.52406709726449	2.48121300437086\\
+4.97721190936501	2.90017008655819\\
+6.51643413593714	3.1803298717344\\
+8.06749594663007	3.2499646561439\\
+9.58052973880803	3.05505260398466\\
+11.0218924333283	2.55400491430434\\
+12.3676592107273	1.71411895440217\\
+13.5995864637011	0.509816576425401\\
+13.9999813643002	-1.1926781259719e-05\\
+};
+\addplot [color=mycolor4,solid,forget plot]
+  table[row sep=crcr]{%
+0	1\\
+7.26928049719032	4.61252159904737\\
+};
+\node[right, align=left, inner sep=0mm, text=black]
+at (axis cs:7.26928049719032,4.61252159904737,0) {$\text{ }\eta\text{: [14.5, 7.2]}$};
+\end{axis}
+\end{tikzpicture}%
+\end{document}

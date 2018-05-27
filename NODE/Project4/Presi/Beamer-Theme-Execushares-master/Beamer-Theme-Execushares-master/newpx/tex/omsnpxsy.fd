@@ -1,0 +1,28 @@
+%Filename: omsnpxsy.fd
+%Created by: tex px-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{omsnpxsy.fd}
+   [2013/03/24 Fontinst v1.933 font definitions for OMS/npxsy.]
+
+\expandafter\ifx\csname npxmath@scaled\endcsname\relax
+  \let\npxmath@@scaled\@empty%
+\else
+  \edef\npxmath@@scaled{s*[\csname npxmath@scaled\endcsname]}%
+\fi
+
+\DeclareFontFamily{OMS}{npxsy}{\skewchar \font =120}
+
+\DeclareFontShape{OMS}{npxsy}{m}{n}{
+   <-> \npxmath@@scaled zplsy
+}{}
+
+\DeclareFontShape{OMS}{npxsy}{b}{n}{
+   <-> \npxmath@@scaled zplbsy
+}{}
+
+\DeclareFontShape{OMS}{npxsy}{bx}{n}{<->ssub * npxsy/b/n}{}
+
+\endinput

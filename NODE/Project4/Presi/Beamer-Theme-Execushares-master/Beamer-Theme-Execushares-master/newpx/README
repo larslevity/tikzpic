@@ -1,0 +1,177 @@
+This package, based initially on pxfonts, provides many fixes and enhancements to that package, splitting it in two parts---newpxtext and newpxmath---which may be run independently of one another. It provides scaling, improved metrics, and other options. For proper operation, the packages require that the packages newtxmath, pxfonts and TeXGyrePagella be installed and their map files enabled. The text package now relies on an extension of the TeXGyrePagella Type1 fonts that is provided with this package. The accompanying MANIFEST-newpx.txt provides details of the extension as requested by GUST-FONT-LICENSE.txt
+
+Current version: 1.25 2015-04-27
+
+This material is subject to the LaTeX Project Public License. See http://www.ctan.org/license/lppl1.3
+for the details of that license.
+
+Changes in version 1.25
+1. Moved ntx-*th-*.enc files to newtx so that newtx does not have any dependence on newpx.
+2. Corrected newpx.map, adding entries that were previously in newpxtext.map, and removing the latter.
+
+Changes in version 1.24
+1. Added kerning entries between {V, W, Y} and {c, s, z} including accented forms.
+2. Added otf files to package.
+
+Changes in version 1.233
+Ther only change is to zplr.pfb, which had a couple of glyphs which misbehaved when using Apple's LCD font smoothing. The new version does not have such problems.
+
+Changes in version 1.232
+1. Corrected definitions of \textsquare and \openbox in newtxmath. (Thanks, Jean-François Burnol.)
+2. Added a new macro, \useproportional, to newpxtext.sty. It works analogously to \useosf, and may be useful if working with babel, where the option proportional to newpxtext should not be used if loading a math font.
+
+Changes in version 1.231
+Corrected definition of \tosfstyle in newpxtext.sty.
+
+Changes in version 1.23
+1. Reorganized 7 bit AMS math fonts A and B to occupy just one 8 bit font, perhaps reducing the number of math families in use. Math output should be unchanged.
+2. Modified the default definition of \hbar, in case option noamssymbols was specified.
+3. Version 1.43 or higher of newtx is required to be installed and enabled.
+
+Changes in version 1.22
+1. Kernings modified for some small caps and punctuation characters.
+2. Added possibility of word spacing changes with options tighter, looser, spacing, stretch and shrink.
+3. Added code to newtxtext.sty to detect use of babel and modify behavior accordingly.
+
+Changes in version 1.211
+Corrected errors in bfseries entries in *zplsups.fd. (Thanks Andrew Cashner.)
+
+Changes in version 1.21
+1. Corrected entries in newpx.map that were causing problems using largesc option in latex+dvips mode.
+2. Corrected font definition files for ts1 so they now point to the correct tfm files.
+
+Changes in version 1.201
+Coorected handling of 'proportional' figure option.
+
+Changes in version 1.2
+1. Major upgrade to text fonts and support files, taking advantage of more parts of TeXGyrePagella and its extension, TeXGyrePagellaX. Extensions include:
+2. Option "largesc" for larger small caps, same xheight as Adobe Palatino Small Caps.
+3. Superior figures and letters in all styles via {\sustyle ...} or \textsu{}.
+4. Four figure styles available. Default is tabular, lining. Other choices are proportional (or p), oldstyle (or  osf.)
+5. New "theorem font" that mixes italic text with upright punctuation and figures, meant as a better font for "plain" theoremstyle theorem text. Option "theoremfont" to newpxtext sets this provided the appropriate package (eg, amsthm) has been loaded before newpxtext, otherwise plain has to be defined in your preamble along the lines specified in newpxtext.sty.
+6. New option "babel" to newpxtext tries to work around problems with babel and \AtEndPreamble, but requires use of \useosf rather than simpler option "osf".
+7. In newpxmath, corrected \varkappa and \varkappaup.
+
+Changes in version 1.13
+Added "frenchmath" option to newpxmath, so that Greek letters are upright and math italic capitals are replaced by upright capitals.
+
+Changes in version 1.122
+Corrected packaging errors in both main tree and tds.
+
+Changes in version 1.121
+Minor correction to tfm/vf for zpl[b]mi1 (math italic with alternate form of g.)
+
+Changes in version 1.12
+1. In tandem with newtxmath 1.23 (required), added macros and glyphs for mathaccents \widearc and \wideOarc. See the documentation in newtx for further details.
+2. Added code to newpxtext.sty so that option osf does not affect math use of lining figures, making \useosf unnecessary but harmless. (Thanks to Pablo González for this fine suggestion.)
+
+Changes in version 1.11
+1. In tandem with newtxmath 1.22 (required), modified extendable parens to look more like fixed sizes.
+2. Modified some symbol font metrics.
+
+Changes in version 1.10
+1. In tandem with newtx 1.21, corrected some issues with bold delimiters under bigdelims option.
+2. Added a few symbols that, because of non-standard names, were missing from previous versions due to encoding issues.
+
+Changes in version 1.09
+In tandem with newtx 1.20, corrected some issues with extensible delimiters introduced inadvertently in newtx 1.18.
+
+Changes in version 1.081
+Small metric changes so that + and - in math mode have identical sizes.
+
+Changes in version 1.08
+1. Changed the default sans serif font from the pxfonts version of Helvetica (or a clone) to the TeX-Gyre Heros family, which is more developed. (In particular, its textasteriskcentered is much better.)
+2. Changed a part of the footnote macro to prevent a subsequent space, adding instead a smaller horizontal space to prevent the footnote marker in the footer from colliding with its text.
+3. Added a new option helvratio to allow changes in the scale for sans serif. If omitted, it defaults to .94 so that if, in effect, scaled=s, helvetica will be scaled to 94*s.
+
+Changes in version 1.071
+1. Corrected some encoding errors in symbol fonts, so \langle and \rangle work as expected.
+
+Changes in version 1.07
+1. Corrected some misbehaviors with bigdelims.
+2. Added new math accents and macros in parallel to the newtx package where they are described in detail.
+
+Changes in version 1.061
+A number of metric changes, plus correction of < and > in math mode under bigdelims option.
+
+Changes in version 1.06
+1. Added a modified equal sign for use in math mode. The text font version did not match existing glyphs that use it as an extension glyph, as in long double arrows.
+2. Modified the fontdimen parameters for several math fonts to correspond better to existing glyph shapes.
+
+Changes in version 1.051:
+Small changes to newpxtext.sty to correct handling of footnote markers in minipages and add a new option, defaultsups, which forces the package to ignore its own footnote markers.
+
+
+Changes in version 1.05:
+1. Corrected two errors in newpxmath.sty involving definitions of math delimiters <,>.
+2. Added 4 new math glyphs as alternate forms of existing glyphs: \forallAlt, \existsAlt, \nexistsAlt, \emptysetAlt. See newtxdoc.pdf (NOT newpxdoc.pdf) for details.
+3. Changed definition of \varnothing to load from lettersA instead of AMSb.
+
+Changes in version 1.04:
+1. Many changes to lettersA and largesymbols following the corresponding changes in the newtxmath package. Version 1.14 of the latter package must be enabled foro this package to function correctly.
+2. Many changes to newpxmath.sty to bring it into greater conformity with the amsmath package, which it now requires.
+
+Changes in version 1.03:
+Corrected an issue with scaling newpxmath.
+
+Changes in version 1.02
+Minor changes except that version 1.01 inadvertently shipped without the final corrections to the math extension metrics.
+
+Changes in version 1.01:
+Aside from some minor changes, the math extension fonts are drawn from newtx version 1.11 which is substantially changed from the prior version, and which must be installed for proper math font rendering.
+
+Installation:
+
+Mac OS X: To install, open a Terminal window and cd to inside the downloaded TDS folder.
+
+Method A (recommended): type
+
+sudo cp -Rfp * /usr/local/texlive/texmf-local
+
+then
+
+sudo mktexlsr
+
+then
+
+sudo -H updmap-sys --enable Map=newpx.map
+
+Method B: If you insist on making your font installations in your home folder, potentially making your personal installation become out of sync with updates to TeXLive, use instead
+
+(i) if you checked Update for All Users in TeXLive utility
+
+cp -Rfp * ~/Library/texmf
+
+then
+
+updmap --enable Map=newpx.map
+
+(ii) otherwise
+
+cp -Rfp * ~/Library/texmf
+
+then
+
+sudo updmap-sys --enable Map=newpx.map
+
+Linux: Very similar to Mac OS X.
+
+MikTeX: Copy the newpx.tds.zip to the root of the folder you use for personal additions to the TeX trees, open a command window, chdir to that folder, and type
+
+unzip newtx.tds.zip
+initexmf --update-fndb
+initexmf --edit-config-file updmap
+
+The latter command should open updmap.cfg in your default editor, commonly Notepad. Add the line 
+
+Map newpx.map 
+
+to updmap.cfg, save and close. Then, in the command window, type
+
+initexmf --mkmaps
+
+You can ignore error messages that may occur here. This should result in a properly enabled newpx.
+
+Please send comments and bug reports or suggestions for improvement to
+
+msharpe at ucsd dot edu

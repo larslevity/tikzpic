@@ -1,0 +1,30 @@
+\ProvidesFile{ot1zplosf.fd}[2015/01/17 v1.0 font definition file for OT1/zpl/osf]
+
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \globallet\zpl@scaled\@empty%
+\fi
+\def\zpl@lsfx{}
+\def\zpl@makelsfx{\ifzpl@largesc\def\zpl@lsfx{l}\fi}
+\ifdefined\zpl@largescfalse \zpl@makelsfx\fi
+\ifdefined\zpl@spacing \else\global\let\zpl@spacing\@empty\fi
+
+\DeclareFontFamily{OT1}{zplosf}{\zpl@spacing}
+\DeclareFontShape{OT1}{zplosf}{b}{sc}{<-> \zpl@scaled zpl-Bold-osf-sc\zpl@lsfx-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{b}{n}{<-> \zpl@scaled zpl-Bold-osf-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{b}{scit}{<-> \zpl@scaled zpl-BoldItalic-osf-sc\zpl@lsfx-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{b}{it}{<-> \zpl@scaled zpl-BoldItalic-osf-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{m}{sc}{<-> \zpl@scaled zpl-Regular-osf-sc\zpl@lsfx-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{m}{n}{<-> \zpl@scaled zpl-Regular-osf-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{m}{scit}{<-> \zpl@scaled zpl-Italic-osf-sc\zpl@lsfx-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{m}{it}{<-> \zpl@scaled zpl-Italic-osf-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{bx}{sc}{<->ssub * zplosf/b/sc}{}
+\DeclareFontShape{OT1}{zplosf}{bx}{n}{<->ssub * zplosf/b/n}{}
+\DeclareFontShape{OT1}{zplosf}{bx}{scit}{<->ssub * zplosf/b/scit}{}
+\DeclareFontShape{OT1}{zplosf}{bx}{it}{<->ssub * zplosf/b/it}{}
+\DeclareFontShape{OT1}{zplosf}{m}{sl}{<-> \zpl@scaled zpl-Italic-osf-th-ot1}{}
+\DeclareFontShape{OT1}{zplosf}{b}{sl}{<->ssub * zplosf/b/it}{}
+\DeclareFontShape{OT1}{zplosf}{bx}{sl}{<->ssub * zplosf/b/it}{}
+\DeclareFontShape{OT1}{zplosf}{b}{scsl}{<->ssub * zplosf/b/scit}{}
+\DeclareFontShape{OT1}{zplosf}{bx}{scsl}{<->ssub * zplosf/b/scit}{}
+\DeclareFontShape{OT1}{zplosf}{m}{scsl}{<->ssub * zplosf/m/scit}{}
+\endinput

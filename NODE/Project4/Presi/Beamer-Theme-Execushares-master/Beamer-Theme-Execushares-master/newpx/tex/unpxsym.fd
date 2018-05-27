@@ -1,0 +1,28 @@
+%Filename: unpxsym.fd
+%Created by: tex px-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{unpxsym.fd}
+   [2015/03/21 Fontinst v1.933 font definitions for U/npxsym.]
+
+\expandafter\ifx\csname npxmath@scaled\endcsname\relax
+  \let\npxmath@@scaled\@empty%
+\else
+  \edef\npxmath@@scaled{s*[\csname npxmath@scaled\endcsname]}%
+\fi
+
+\DeclareFontFamily{U}{npxsym}{}
+
+\DeclareFontShape{U}{npxsym}{m}{n}{
+   <-> \npxmath@@scaled zplsym
+}{}
+
+\DeclareFontShape{U}{npxsym}{b}{n}{
+   <-> \npxmath@@scaled zplbsym
+}{}
+
+\DeclareFontShape{U}{npxsym}{bx}{n}{<->ssub * npxsym/b/n}{}
+
+\endinput

@@ -1,0 +1,19 @@
+\documentclass[10pt]{article}
+\input{PGFTikZ.tex} % load the packages and a few user defined functions
+
+\pgfplotsset{
+    legend entry/.initial=,
+    every axis plot post/.code={%
+        \pgfkeysgetvalue{/pgfplots/legend entry}\tempValue
+        \ifx\tempValue\empty
+            \pgfkeysalso{/pgfplots/forget plot}%
+        \else
+            \expandafter\addlegendentry\expandafter{\tempValue}%
+        \fi
+    },
+}
+
+\begin{document}
+\input{soe_solved_ode113_100.tex}
+
+\end{document}

@@ -1,0 +1,54 @@
+\ProvidesFile{unpxss.fd}
+	[2013/03/25 v1.0]
+\expandafter\ifx\csname zpl@helvscaled\endcsname\relax
+  \let\zpl@helvscaled\@empty%
+\fi
+
+\DeclareFontFamily{U}{npxss}{\hyphenchar \font\m@ne}
+\DeclareFontShape{U}{npxss}{m}{n}{	%regular
+     <-> \zpl@helvscaled txss%
+}{}
+\DeclareFontShape{U}{npxss}{m}{sc}{	%cap & small cap
+     <-> \zpl@helvscaled txsssc%
+}{}
+\DeclareFontShape{U}{npxss}{m}{sl}{	%slanted
+     <-> \zpl@helvscaled txsssl%
+}{}
+\DeclareFontShape{U}{npxss}{m}{it}{	%italic
+     <->ssub * npxss/m/sl%
+}{}
+\DeclareFontShape{U}{npxss}{m}{ui}{	%unslanted italic
+     <->ssub * npxss/m/sl%
+}{}
+\DeclareFontShape{U}{npxss}{b}{n}{	%bold
+     <-> \zpl@helvscaled txbss%
+}{}
+\DeclareFontShape{U}{npxss}{b}{sc}{	%bold cap & small cap
+     <-> \zpl@helvscaled txbsssc%
+}{}
+\DeclareFontShape{U}{npxss}{b}{sl}{	%bold slanted
+     <-> \zpl@helvscaled txbsssl%
+}{}
+\DeclareFontShape{U}{npxss}{b}{it}{	%bold italic
+     <->ssub * npxss/b/sl%
+}{}
+\DeclareFontShape{U}{npxss}{b}{ui}{	%bold unslanted italic
+     <->ssub * npxss/b/sl%
+}{}
+\DeclareFontShape{U}{npxss}{bx}{n}{	%bold extended
+     <->ssub * npxss/b/n%
+}{}
+\DeclareFontShape{U}{npxss}{bx}{sc}{	%bold extended cap & small cap
+     <->ssub * npxss/b/sc%
+}{}
+\DeclareFontShape{U}{npxss}{bx}{sl}{	%bold extended slanted
+     <->ssub * npxss/b/sl%
+}{}
+\DeclareFontShape{U}{npxss}{bx}{it}{	%bold extended italic
+     <->ssub * npxss/b/sl%
+}{}
+\DeclareFontShape{U}{npxss}{bx}{ui}{	%bold extended unslanted italic
+     <->ssub * npxss/b/sl%
+}{}
+
+\endinput

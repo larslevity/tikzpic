@@ -1,0 +1,54 @@
+\ProvidesFile{ts1npxtt.fd}
+	[2013/03/25 v1.0]
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \let\zpl@scaled\@empty%
+\fi
+
+\DeclareFontFamily{TS1}{npxtt}{}
+\DeclareFontShape{TS1}{npxtt}{m}{n}{	%medium
+     <-> \zpl@scaled tcxtt%
+}{}
+\DeclareFontShape{TS1}{npxtt}{m}{sc}{	%cap & small cap
+     <->ssub * npxtt/m/n%
+}{}
+\DeclareFontShape{TS1}{npxtt}{m}{sl}{	%slanted
+     <-> \zpl@scaled tcxsl%
+}{}
+\DeclareFontShape{TS1}{npxtt}{m}{it}{	%italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{TS1}{npxtt}{m}{ui}{   	%unslanted italic
+     <->ssub * npxtt/m/it%
+}{}
+\DeclareFontShape{TS1}{npxtt}{bx}{n}{	%bold extended
+     <-> \zpl@scaled tcxbtt%
+}{}
+\DeclareFontShape{TS1}{npxtt}{bx}{sc}{	%bold extended cap & small cap
+     <->ssub * npxtt/bx/n%
+}{}
+\DeclareFontShape{TS1}{npxtt}{bx}{sl}{	%bold extended slanted
+     <-> \zpl@scaled tcxbttsl%
+}{}
+\DeclareFontShape{TS1}{npxtt}{bx}{it}{	%bold extended italic
+     <->ssub * npxtt/bx/sl%
+}{}
+\DeclareFontShape{TS1}{npxtt}{bx}{ui}{  	%bold extended unslanted italic
+     <->ssub * npxtt/bx/it%
+}{}
+\DeclareFontShape{TS1}{npxtt}{b}{n}{	%bold
+     <->ssub * npxtt/bx/n%
+}{}
+\DeclareFontShape{TS1}{npxtt}{b}{sc}{	%bold cap & small cap
+     <->ssub * npxtt/bx/sc%
+}{}
+\DeclareFontShape{TS1}{npxtt}{b}{sl}{	%bold slanted
+     <->ssub * npxtt/bx/sl%
+}{}
+\DeclareFontShape{TS1}{npxtt}{b}{it}{   	%bold italic
+     <->ssub * npxtt/bx/it%
+}{}
+\DeclareFontShape{TS1}{npxtt}{b}{ui}{   	%bold unslanted italic
+     <->ssub * npxtt/bx/ui%
+}{}
+
+\endinput

@@ -1,0 +1,20 @@
+\documentclass[•]{standalone}
+\usepackage{tikz}
+
+\begin{document}
+\begin{tikzpicture}
+
+
+\draw[fill=blue] (2,0) circle(.1);
+\draw[help lines] (0,0)ellipse(2 and .7);
+\begin{scope}[rotate=60]
+\draw[fill=red] (-2,0) circle(.2);
+\draw[help lines] (0,0)ellipse(2 and .7);
+\end{scope}
+\begin{scope}[rotate=120]
+\draw[fill=purple] (2,0) circle(.15);
+\draw[help lines] (0,0)ellipse(2 and .7);
+\end{scope}
+\draw[fill=yellow] (0,0)circle(.5)node{E-10};
+\end{tikzpicture}
+\end{document}

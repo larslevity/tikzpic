@@ -1,0 +1,25 @@
+\ProvidesFile{ts1zpltosf.fd}[2015/01/18 v1.0 fd file for TS1/zpltosf]
+
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \globallet\zpl@scaled\@empty%
+\fi
+\ifdefined\zpl@spacing \else\global\let\zpl@spacing\@empty\fi
+
+\DeclareFontFamily{TS1}{zpltosf}{\zpl@spacing}
+\DeclareFontShape{TS1}{zpltosf}{b}{n}{<-> \zpl@scaled ts1-qplb}{}
+\DeclareFontShape{TS1}{zpltosf}{b}{it}{<-> \zpl@scaled ts1-qplbi}{}
+\DeclareFontShape{TS1}{zpltosf}{m}{n}{<-> \zpl@scaled ts1-qplr}{}
+\DeclareFontShape{TS1}{zpltosf}{m}{it}{<-> \zpl@scaled ts1-qplri}{}
+\DeclareFontShape{TS1}{zpltosf}{bx}{n}{<->ssub * zpltosf/b/n}{}
+\DeclareFontShape{TS1}{zpltosf}{bx}{it}{<->ssub * zpltosf/b/it}{}
+\DeclareFontShape{TS1}{zpltosf}{b}{sl}{<->sub * zpltosf/b/it}{}
+\DeclareFontShape{TS1}{zpltosf}{m}{sl}{<->sub * zpltosf/m/it}{}
+\DeclareFontShape{TS1}{zpltosf}{m}{sc}{<->ssub * zpltosf/m/n}{}
+\DeclareFontShape{TS1}{zpltosf}{m}{scit}{<->ssub * zpltosf/m/it}{}
+\DeclareFontShape{TS1}{zpltosf}{b}{sc}{<->ssub * zpltosf/b/n}{}
+\DeclareFontShape{TS1}{zpltosf}{b}{scit}{<->ssub * zpltosf/b/it}{}
+\DeclareFontShape{TS1}{zpltosf}{bx}{sc}{<->ssub * zpltosf/b/n}{}
+\DeclareFontShape{TS1}{zpltosf}{bx}{scit}{<->ssub * zpltosf/b/it}{}
+\DeclareFontShape{TS1}{zpltosf}{m}{sl}{<->ssub * zpltosf/m/it}{}
+\DeclareFontShape{TS1}{zpltosf}{bx}{sl}{<->ssub * zpltosf/b/it}{}
+\endinput

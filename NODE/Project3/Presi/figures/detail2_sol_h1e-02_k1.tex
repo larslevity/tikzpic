@@ -1,0 +1,140 @@
+% This file was created by matlab2tikz v0.4.7 running on MATLAB 8.4.
+% Copyright (c) 2008--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% Minimal pgfplots version: 1.3
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+\documentclass[tikz]{standalone}
+\usepackage{pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usepackage{amsmath}
+
+\begin{document}
+%
+% defining custom colors
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+\definecolor{mycolor6}{rgb}{0.30100,0.74500,0.93300}%
+\definecolor{mycolor7}{rgb}{0.63500,0.07800,0.18400}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=5.9cm,
+height=4.5cm,
+scale only axis,
+every outer x axis line/.append style={white!15!black},
+every x tick label/.append style={font=\color{white!15!black}},
+xmin=10.64,
+xmax=10.72,
+xmajorgrids,
+every outer y axis line/.append style={white!15!black},
+every y tick label/.append style={font=\color{white!15!black}},
+ymin=59.8,
+ymax=61.4,
+ymajorgrids,
+axis x line*=bottom,
+axis y line*=left,
+legend style={draw=white!15!black,fill=white,legend cell align=left},
+]
+\addplot [color=mycolor1,solid,forget plot]
+  table[row sep=crcr]{%
+10.64	60.9861604034827\\
+10.81	58.382332253197\\
+};
+\addplot [color=mycolor2,solid,forget plot]
+  table[row sep=crcr]{%
+10.64	10.8875452472796\\
+10.81	8.28275175107223\\
+};
+\addplot [color=mycolor3,solid,forget plot]
+  table[row sep=crcr]{%
+10.64	0.000139297997035264\\
+10.81	0.000186975606054082\\
+};
+\addplot [color=mycolor4,solid,forget plot]
+  table[row sep=crcr]{%
+10.64	59.540839445194\\
+10.81	63.5003583261685\\
+};
+\addplot [color=mycolor5,solid,forget plot]
+  table[row sep=crcr]{%
+10.64	9.44071994923926\\
+10.81	10.0667431896233\\
+};
+\addplot [color=mycolor6,solid,forget plot]
+  table[row sep=crcr]{%
+10.64	9.24335011047046\\
+10.81	9.86739498160197\\
+};
+\addplot [color=mycolor1,dashed,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	60.9777790460228\\
+10.8099999999998	58.3737831245993\\
+};
+\addplot [color=mycolor2,dashed,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	10.879165754313\\
+10.8099999999998	8.27420461152972\\
+};
+\addplot [color=mycolor3,dashed,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	0.000139325939431163\\
+10.8099999999998	0.000186981985219442\\
+};
+\addplot [color=mycolor4,dashed,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	59.5535687544933\\
+10.8099999999998	63.5133421494949\\
+};
+\addplot [color=mycolor5,dashed,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	9.44273282310151\\
+10.8099999999998	10.0687963177676\\
+};
+\addplot [color=mycolor6,dashed,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	9.24536691378064\\
+10.8099999999998	9.86945230968032\\
+};
+\addplot [color=mycolor1,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	60.5407376000234\\
+10.8099999999998	57.9263822744309\\
+};
+\addplot [color=mycolor2,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	10.4422500412123\\
+10.8099999999998	7.82694336991662\\
+};
+\addplot [color=mycolor3,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	0.00014570232907055\\
+10.8099999999998	0.000198277223790031\\
+};
+\addplot [color=mycolor4,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	60.2172822090576\\
+10.8099999999998	64.1927639558563\\
+};
+\addplot [color=mycolor5,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	9.54766926421663\\
+10.8099999999998	10.1762126952641\\
+};
+\addplot [color=mycolor6,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+10.6399999999998	9.35054844430279\\
+10.8099999999998	9.9771366090485\\
+};
+\end{axis}
+\end{tikzpicture}%
+\end{document}

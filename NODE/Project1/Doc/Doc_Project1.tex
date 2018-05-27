@@ -1,0 +1,217 @@
+\documentclass[11pt,a4paper,oneside]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{tikz}
+
+\pgfplotsset{
+    legend entry/.initial=,
+    every axis plot post/.code={%
+        \pgfkeysgetvalue{/pgfplots/legend entry}\tempValue
+        \ifx\tempValue\empty
+            \pgfkeysalso{/pgfplots/forget plot}%
+        \else
+            \expandafter\addlegendentry\expandafter{\tempValue}%
+        \fi
+    },
+}
+
+
+\usepackage[lmargin = 2cm,rmargin=2cm, tmargin = 2cm,bmargin=2cm]{geometry}
+
+% Listings options
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{zebg}{rgb}{1,1,.8} %elfenbeinfarbig
+
+\lstset{language=Matlab, numbers=left, numberstyle=\tiny, basicstyle=\footnotesize,showstringspaces=false,%
+ numberblanklines=false, frame=single, backgroundcolor=\color{zebg},xleftmargin=0cm, linewidth=1.11\linewidth}
+
+
+
+\author{Lars Schiller}
+\title{Simulation of a wolf population by the
+E-10-Simulation GmbH}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction and task description}
+In 2011, wolves where sighted in Luneburg Heath for the first time (after quite a long
+period). The E-10-Simulation GmbH was asked by the Ministry of Food, Agriculture and
+Consumerism of Lower Saxony to forecast the development of the wolf population over
+the next 15 years.
+
+The E-10-Simulation GmbH asks all interested students to submit a simulation proposal.
+The main task consists of modelling the development of the population mathematically,
+choosing a suitable solver for the simulation, writing a corresponding software program
+and evaluating the results. Further technical details and specifications are listed in the
+attachment.
+
+
+\section{Mathematical model of the wolf population}
+
+From the Task Sheet it is known, that the population size of the wolves in Luneburg Heath in the year 2011 is equal to 20. This yields to equation~\ref{eq:init}:
+\begin{equation}
+w(t_0) = w_0 = 20 \qquad,\quad t_0 = 2011.
+\label{eq:init}
+\end{equation}
+Furthermore it is known, that the growth rate of a wolf population is proportional to the current population with respect to a constant factor. Due to a limited amount of food, the growth rate will be also proportional to $1-b*w$.  This yields to equation~\ref{eq:prop1} and equation~\ref{eq:prop2}:
+
+\begin{equation}
+\dot{w} \sim a\cdot w \qquad,\quad a = 0.055,
+\label{eq:prop1}
+\end{equation}
+
+\begin{equation}
+\dot{w} \sim 1-b\cdot w \qquad,\quad b = \frac{1}{250}.
+\label{eq:prop2}
+\end{equation}
+
+In order to obtain a differential equation which describes the behaviour of the wolf population adequate, and therefore fulfils  equation~\ref{eq:prop1} and \ref{eq:prop2}, one can simply multiply the both restrictions, which corresponds with a logical \texttt{AND}-connector. This yields to the following ordinary differential equation (ODE):
+\begin{equation}
+\dot{w} = \left(aw\right)\left(1-bw\right).
+\label{eq:ODE}
+\end{equation}
+
+In the following section this ODE will be solved by different numerical methods.
+
+
+\section{Solutions of the mathematical model obtained by different numerical methods}
+
+The following different numerical methods are used to solve the ODE:
+\begin{enumerate}
+    \item the Simple \textit{Euler}-Method,
+    \item the advanced \textit{Euler}-Method and
+    \item the \textit{Runge-Kutta}-Method.
+\end{enumerate}
+
+\subsection{Simple \textit{Euler}-Method}
+This is the most simple method to solve an ODE with initial condition. It is based on the \textit{Taylor}-series expansion. The \textit{Taylor}-series expansion says, a function $f(x)$ can be described around a working point $x_0$ as the sum of its derivatives, with the following rule
+\begin{eqnarray}
+        Tf(x)\bigg|_{x_0} &=&    \sum\limits_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n \\
+        &=& f(x_0) + f^{(1)}(x_0)(x-x_0) + \frac{1}{2}f^{(2)}(x_0)(x-x_0)^2 + \cdots + \frac{1}{\infty!}f^{(\infty)}(x_0)(x-x_0)^\infty , \label{eq:taylor}
+\end{eqnarray}
+where $f^{(n)}$ denotes the $n$-th derivative of $f$ with respect to $x$.
+For an initial value problem with the form 
+$$y' = f(x,y) \quad , \quad y(x_0) = y_0$$
+the linearised (only the first derivative is respected) and discretized version of equation~\ref{eq:taylor} is the following:
+\begin{equation}
+    y_{n+1} = y_n + \frac{\delta}{\delta x}y(x_n)\cdot \underbrace{ \big(x_{n+1}-x_n\big) }_{\textnormal{step size: } h_n} = y_n + f(x_n,y_n) \cdot  h_n.
+    \label{eq:taylor_lin}
+\end{equation}
+Since the first derivative of $f$ is given and we also know the initial value, equation~\ref{eq:taylor_lin} can be used within a \texttt{while}-loop to calculate the values of the desired function. The only thing we don't know is the step size. The most simple way is to set the step size to a constant value:
+$$h_n=h_0 .$$
+The solution depends strongly on this step size $h_0$. In figure~\ref{fig:ODEsol} the blue curve represents the result of this method.
+
+\subsection{Advanced \textit{Euler}-Method}
+The main idea of this method is equal to the simple \textit{Euler}-Method. Based on the linearised \textit{Taylor} series expansion, the solution is calculated recursively. But this time we change the step size individually, with respect to the changes in the right hand side of the ode. Therefore the changes of step size will be proportional to the second derivative of the desired function. In every calculation step the next value of the solution is calculated with the current step size (like the simple \textit{Euler}-method) and stored in $y_{n+1}$. Furthermore the its calculated by doing two steps with half the current step size (like doing the simple \textit{Euler} twice) and stored in $\tilde{y}_{n+1}$. The difference of these two values is an good estimator for the local error we do. Therefore the local error estimator $\varphi$ is defined:
+\begin{equation}
+\varphi(x_n,y_n,h_n) = 2(\tilde{y}_{n+1}-y_{n+1})
+\end{equation}
+If the local error is great the step size decreases, and if its small the step size increases.
+
+Another important feature of the advanced \textit{Euler}-method is the usage of a linear combination of the both calculated values ($y_{n+1}$ and $\tilde{y}_{n+1}$) as the next value of the solution $\hat{y}_{n+1}$. Therefore the order of the method is increased. The local error of the simple \textit{Euler}-method is a function of $h_n^2$. In comparison to that the advanced method holds a local error $\hat{\varepsilon}_n = \mathcal O (h_n^3)$.
+ The mathematical explanation for this can be found in the lecture Script on page~15ff.
+The principle scheme of the advanced \textit{Euler}-method is represent in figure~\ref{fig:adv_euler} and the solution of the given problem calculated with this method is represented by the red curve in figure~\ref{fig:ODEsol}.
+
+\begin{figure}
+\begin{center}
+
+\begin{tikzpicture}[]
+
+\begin{axis}[%
+width = .8\textwidth,
+separate axis lines,
+ticklabel style={% gilt für x und y
+    /pgf/number format/.cd,
+    use comma,% Komma als Dezimaltrenner
+    1000 sep = {}% keine Tausendertrennung 
+  },
+xmin=-1,
+xmax=2.4,
+xlabel={$x$},
+xmajorgrids,
+ymin=0,
+ymax=3.7,
+ylabel={$y(x)$},
+ymajorgrids,
+legend style={at={(.03,.97)},anchor=north west,draw=white!15!black,fill=white,legend cell align=left}
+]
+\addplot[samples = 100,legend entry = {analytical solution $y = \exp(x)$}]{exp(x)};
+
+\addplot[thick,mark = o, color = red,legend entry = simple \textit {Euler}-method] coordinates {(0,1) (1,1+1*1)};
+\draw[|<->|] (axis cs:0,2.8)--(axis cs: 1,2.8)node[midway,below]{$h_n$};
+
+% Adv Euler
+\addplot[mark = x, color = blue!50!green] coordinates {(0,1) (.5,1.5) (1,1.5+1.5*.5)};
+\draw[red,|<->|] (axis cs: 1.1,0)--(axis cs: 1.1,2)node[near end,right]{$y_{n+1} = y_n + f(x_n,y_n)\cdot h_n$};
+
+
+\draw[help lines] (axis cs:0,1)--(axis cs: .5,1)(axis cs: .5,1.5)--(axis cs: 1,1.5);
+\draw[blue!50!green,|<->|] (axis cs: 0.5,0)--(axis cs: .5,1.5)node[near start,left]{$\tilde{y}_{n+\frac{1}{2}} = y_n + f(x_n,y_n)\cdot \frac{h_n}{2}$};
+\draw[blue!70!green,|<->|](axis cs: .9,0)--(axis cs: .9,2.25)node[pos=.35,left]{$\tilde{y}_{n+1} = \tilde{y}_{n+\frac{1}{2}} + f(x_{n+\frac{1}{2}},\tilde{y}_{n+\frac{1}{2}})\cdot \frac{h_n}{2}$};
+%help lines
+\draw[blue!70!green,dotted] (axis cs: 1,2.25)--(axis cs: .8,2.25);
+
+\addplot[thick,mark = x, color = blue,legend entry = advanced \textit{Euler}-method] coordinates {(0,1) (1,2*2.25-2)};
+\draw[blue,|<->|](axis cs: 1,0)--(axis cs: 1,2.5)node[pos=.9,right]{$\hat{y}_{n+1} = 2\cdot \tilde{y}_{n+1} - y_{n+1}$};
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{principle scheme of the advanced \textit{Euler}-Method by means of the initial value problem: $\dot{y}=y, y(0)=1$}
+\label{fig:adv_euler}
+\end{figure}
+
+
+\subsection{\textit{Runge-Kutta}-Method}
+
+This solver is implemented by the Mathwork guys. I hope to understand the mathematics of \texttt{ode45} within this lecture.
+The result of this solver is represented by the green curve in figure~\ref{fig:ODEsol} and will be used as an reference for the exact solution in the evaluation.
+
+
+
+\begin{figure}
+\input{OdeSolved.tex}
+\caption{Solutions of the ODE (step size of simple \textit{Euler}-method: $h_0=.5$)}
+\label{fig:ODEsol}
+\end{figure}
+
+
+
+
+\section{Description and evaluation of the results}
+
+The results of all solvers are reasonable. First the wolf population grows slowly and than faster and faster, which corresponds perfectly with the constraint given in equation~\ref{eq:prop1}. When the upper limit of the population (250) is almost reached, the slope begins to decrease, which is demand by the constraint given in equation~\ref{eq:prop2}. 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|ccc}
+criteria & Simple \textit{Euler} ($h_0=.5$) & Advanced \textit{Euler} & \texttt{ode45} \\
+\hline
+supporting points & 29 & 21 & 45 \\
+calculation time [sec] & 0.0057 & 0.0061 & 0.1710 \\
+global error & -2.97  & 0.20 & (reference) 
+
+\end{tabular}
+
+\caption{Evaluation of the results}
+\label{tab:eva}
+\end{table}
+
+In table~\ref{tab:eva} some evaluation criteria are listed. The calculation time of the simple \textit{Euler}-method and the advanced one are nearly the same. In figure~\ref{fig:ODEsol} one can see that the solution of advanced \textit{Euler} almost perfectly fits the one of \texttt{ode45}, which can be treated as exact solution. The solution of the simple method is not that exact. Its too inert to realize the changes. Furthermore the advanced method needs less supporting points than the simple method. Therefore the storage space which is needed will be much smaller. 
+
+In summary one can say the advanced \textit{Euler}-method gives much more qualitative results, needs less storage space and the computational effort is at least for this case not really greater than the one of the simple method.
+
+
+
+\end{document} 

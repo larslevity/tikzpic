@@ -1,0 +1,54 @@
+\ProvidesFile{t1npxtt.fd}
+	[2000/12/14 v1.0]
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \let\zpl@scaled\@empty%
+\fi
+
+\DeclareFontFamily{T1}{npxtt}{\hyphenchar \font\m@ne}
+\DeclareFontShape{T1}{npxtt}{m}{n}{	%medium
+     <-> \zpl@scaled t1xtt%
+}{}
+\DeclareFontShape{T1}{npxtt}{m}{sc}{	%cap & small cap
+     <-> \zpl@scaled t1xttsc%
+}{}
+\DeclareFontShape{T1}{npxtt}{m}{sl}{	%slanted
+     <-> \zpl@scaled t1xttsl%
+}{}
+\DeclareFontShape{T1}{npxtt}{m}{it}{	%italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{T1}{npxtt}{m}{ui}{   	%unslanted italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{T1}{npxtt}{bx}{n}{	%bold extended
+     <-> \zpl@scaled t1xbtt%
+}{}
+\DeclareFontShape{T1}{npxtt}{bx}{sc}{	%bold extended cap & small cap
+     <-> \zpl@scaled t1xbttsc%
+}{}
+\DeclareFontShape{T1}{npxtt}{bx}{sl}{	%bold extended slanted
+     <-> \zpl@scaled t1xbttsl%
+}{}
+\DeclareFontShape{T1}{npxtt}{bx}{it}{	%bold extended italic
+     <->ssub * npxtt/bx/sl%
+}{}
+\DeclareFontShape{T1}{npxtt}{bx}{ui}{  	%bold extended unslanted italic
+     <->ssub * npxtt/bx/sl%
+}{}
+\DeclareFontShape{T1}{npxtt}{b}{n}{	%bold
+     <->ssub * npxtt/bx/n%
+}{}
+\DeclareFontShape{T1}{npxtt}{b}{sc}{	%bold cap & small cap
+     <->ssub * npxtt/bx/sc%
+}{}
+\DeclareFontShape{T1}{npxtt}{b}{sl}{	%bold slanted
+     <->ssub * npxtt/bx/sl%
+}{}
+\DeclareFontShape{T1}{npxtt}{b}{it}{   	%bold italic
+     <->ssub * npxtt/bx/it%
+}{}
+\DeclareFontShape{T1}{npxtt}{b}{ui}{   	%bold unslanted italic
+     <->ssub * npxtt/bx/ui%
+}{}
+
+\endinput

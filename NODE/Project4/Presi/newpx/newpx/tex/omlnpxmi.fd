@@ -1,0 +1,39 @@
+%Filename: omlnpxmi.fd
+%Created by: tex px-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{omlnpxmi.fd}
+   [2013/03/21 Fontinst v1.933 font definitions for OML/npxmi.]
+
+\expandafter\ifx\csname npxmath@scaled\endcsname\relax
+  \let\npxmath@@scaled\@empty%
+\else
+  \edef\npxmath@@scaled{s*[\csname npxmath@scaled\endcsname]}%
+\fi
+
+\DeclareFontFamily{OML}{npxmi}{\skewchar \font =127}
+
+\ifx\X@s@v@rg\undefined
+\DeclareFontShape{OML}{npxmi}{m}{it}{
+   <-> \npxmath@@scaled zplmi
+}{}
+\DeclareFontShape{OML}{npxmi}{b}{it}{
+   <-> \npxmath@@scaled zplbmi
+}{}
+\else
+\DeclareFontShape{OML}{npxmi}{m}{it}{
+   <-> \npxmath@@scaled zplmi1
+}{}
+\DeclareFontShape{OML}{npxmi}{b}{it}{
+   <-> \npxmath@@scaled zplbmi1
+}{}
+\fi
+
+\DeclareFontShape{OML}{npxmi}{m}{sl}{<->ssub * npxmi/m/it}{}
+\DeclareFontShape{OML}{npxmi}{bx}{it}{<->ssub * npxmi/b/it}{}
+\DeclareFontShape{OML}{npxmi}{b}{sl}{<->ssub * npxmi/b/it}{}
+\DeclareFontShape{OML}{npxmi}{bx}{sl}{<->ssub * npxmi/b/sl}{}
+
+\endinput

@@ -1,0 +1,8 @@
+\defaultfontfeatures[TeXGyrePagellaX]
+  {
+  Extension = .otf ,
+  UprightFont = TeXGyrePagellaX-Regular,
+  BoldFont = TeXGyrePagellaX-Bold,
+  ItalicFont = TeXGyrePagellaX-Italic,
+  BoldItalicFont = TeXGyrePagellaX-BoldItalic
+  }

@@ -1,0 +1,30 @@
+\ProvidesFile{ly1zplosf.fd}[2015/01/17 v1.0 font definition file for LY1/zpl/osf]
+
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \globallet\zpl@scaled\@empty%
+\fi
+\def\zpl@lsfx{}
+\def\zpl@makelsfx{\ifzpl@largesc\def\zpl@lsfx{l}\fi}
+\ifdefined\zpl@largescfalse \zpl@makelsfx\fi
+\ifdefined\zpl@spacing \else\global\let\zpl@spacing\@empty\fi
+
+\DeclareFontFamily{LY1}{zplosf}{\zpl@spacing}
+\DeclareFontShape{LY1}{zplosf}{b}{sc}{<-> \zpl@scaled zpl-Bold-osf-sc\zpl@lsfx-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{b}{n}{<-> \zpl@scaled zpl-Bold-osf-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{b}{scit}{<-> \zpl@scaled zpl-BoldItalic-osf-sc\zpl@lsfx-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{b}{it}{<-> \zpl@scaled zpl-BoldItalic-osf-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{m}{sc}{<-> \zpl@scaled zpl-Regular-osf-sc\zpl@lsfx-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{m}{n}{<-> \zpl@scaled zpl-Regular-osf-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{m}{scit}{<-> \zpl@scaled zpl-Italic-osf-sc\zpl@lsfx-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{m}{it}{<-> \zpl@scaled zpl-Italic-osf-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{bx}{sc}{<->ssub * zplosf/b/sc}{}
+\DeclareFontShape{LY1}{zplosf}{bx}{n}{<->ssub * zplosf/b/n}{}
+\DeclareFontShape{LY1}{zplosf}{bx}{scit}{<->ssub * zplosf/b/scit}{}
+\DeclareFontShape{LY1}{zplosf}{bx}{it}{<->ssub * zplosf/b/it}{}
+\DeclareFontShape{LY1}{zplosf}{m}{sl}{<-> \zpl@scaled zpl-Italic-osf-th-ly1}{}
+\DeclareFontShape{LY1}{zplosf}{b}{sl}{<->ssub * zplosf/b/it}{}
+\DeclareFontShape{LY1}{zplosf}{bx}{sl}{<->ssub * zplosf/b/it}{}
+\DeclareFontShape{LY1}{zplosf}{b}{scsl}{<->ssub * zplosf/b/scit}{}
+\DeclareFontShape{LY1}{zplosf}{bx}{scsl}{<->ssub * zplosf/b/scit}{}
+\DeclareFontShape{LY1}{zplosf}{m}{scsl}{<->ssub * zplosf/m/scit}{}
+\endinput

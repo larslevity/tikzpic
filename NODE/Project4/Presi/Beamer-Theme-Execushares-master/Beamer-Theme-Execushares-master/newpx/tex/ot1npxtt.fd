@@ -1,0 +1,54 @@
+\ProvidesFile{ot1npxtt.fd}
+	[2000/12/14 v1.0]
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \let\zpl@scaled\@empty%
+\fi
+
+\DeclareFontFamily{OT1}{npxtt}{\hyphenchar \font\m@ne}
+\DeclareFontShape{OT1}{npxtt}{m}{n}{	%rebular
+     <-> \zpl@scaled txtt%
+}{}
+\DeclareFontShape{OT1}{npxtt}{m}{sc}{	%cap & small cap
+     <-> \zpl@scaled txttsc%
+}{}
+\DeclareFontShape{OT1}{npxtt}{m}{sl}{	%slanted
+     <-> \zpl@scaled txttsl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{m}{it}{	%italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{m}{ui}{	%unslanted italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{b}{n}{	%bold
+     <-> \zpl@scaled txbtt%
+}{}
+\DeclareFontShape{OT1}{npxtt}{b}{sc}{	%bold cap & small cap
+     <-> \zpl@scaled txbttsc%
+}{}
+\DeclareFontShape{OT1}{npxtt}{b}{sl}{	%bold slanted
+     <-> \zpl@scaled txbttsl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{b}{it}{	%bold italic
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{b}{ui}{	%bold unslanted italic
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{bx}{n}{	%bold extended
+     <->ssub * npxtt/b/n%
+}{}
+\DeclareFontShape{OT1}{npxtt}{bx}{sc}{	%bold extended cap & small cap
+     <->ssub * npxtt/b/sc%
+}{}
+\DeclareFontShape{OT1}{npxtt}{bx}{sl}{	%bold extended slanted
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{bx}{it}{	%bold extended italic
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{OT1}{npxtt}{bx}{ui}{	%bold extended unslanted italic
+     <->ssub * npxtt/b/sl%
+}{}
+
+\endinput

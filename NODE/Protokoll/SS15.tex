@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\author{***}
+\title{Numerics of ordinary differential equations - oral exam SS15}
+
+\begin{document}
+\maketitle
+
+\section{Einschrittverfahren}
+\begin{itemize}
+\item Kennen Sie ein einfaches Verfahren um eine DGL zu lösen?
+\item Illustrieren Sie die Vorgehensweise des expl. Euler-Verfahrens.
+\item Wir haben zwei unterschiedliche Arten von Fehlern besprochen. Wo kann man diese Fehler in Ihrer Skizze sehen?
+\item Wie haben wir diese Fehler genannt? \textit{Lokaler und globaler Fehler}
+\item Ist es denn ein gutes Verfahren?
+\item Wie kann man Konvergenz nachweisen?
+\item Was ist Stabilität?
+\item Was ist Konsistenz?
+\item Mit welchem Satz lässt sich Stabilität und Konsistenz in Konvergenz überführen?
+\item Welcher Art von Fehler wird verwendet um Konsistenz nachzuweisen? Welche für Konvergenz?
+\item Wie legt sich die Fehlerordung eines Verfahrens fest?
+\item Wie lassen sie Verfahren höherer Ordung konstruieren?
+\item Wie lassen sich die Koeffizienten des Butcher Schemas ermitteln?
+
+
+\end{itemize}
+
+\section{Mehrschrittverfahren}
+\begin{itemize}
+\item Wie sieht ein Mehrschrittverfahren allgemein aus?
+\item Wie lässt sich hier Stabilität nachweisen?
+\item Wie ist der Lösungsansatz für $y$, um auf die charakteristische Gleichung zu kommen? $y_{n+1} = \lambda y_n = \lambda \lambda^n y_0$
+\item Wie sieht die Testgleichung aus?
+\item Welche zwei Bedingungen müssen für $\lambda_i$ gelten, damit das Verfahren stabil ist?
+\item Wäre ein Verfahren mit der char. Gleichung : $(\lambda -1)^2 = 0$ stabil ?
+\item Wie lässt sich hier Konsistenz nachweisen?
+\item Ein Verfahren der mit der nachgewiesenen Ordnung 5 liefert angewandt auf eine DGL nur noch Ergebnisse der Fehlerordnung 2. Woran könnte das liegen?
+
+
+
+\end{itemize}
+
+\end{document}

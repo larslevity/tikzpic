@@ -1,0 +1,231 @@
+\NeedsTeXFormat{LaTeX2e}
+
+% Based originally on Young Ryu's pxfonts.sty, v.1.1.1
+%
+% Changes from original pxfonts.sty by Michael Sharpe, msharpe at ucsd dot edu;
+% Text and math versions now separate. 
+% Added scaled keyword and osf option;
+% Modified the definition of \k to bypass problem with grouping.
+% Text is now directed to an extension of TeXGyrePagella rather than ppl.
+
+\def\fileversion{1.25}
+\def\filedate{2015/04/27}
+\ProvidesPackage{newpxtext}[\filedate\space v\fileversion]
+
+\message{`newpxtext' v\fileversion, \filedate\space Text macros taking advantage of TeXGyre Pagella and its extensions (msharpe)}
+\RequirePackage{fontaxes}% so we can have [bold] italic small caps
+
+\let\orig@footnote=\thefootnote
+\let\orig@makefnmark=\@makefnmark
+\RequirePackage{xkeyval,etoolbox}
+\renewcommand*{\rmdefault}{zpltlf} % the default until end of preamble
+\def\useosf{\edef\zpl@figurestyle{osf}}
+\@onlypreamble\useosf
+\def\useproportional{\edef\zpl@figurealign{}}
+\@onlypreamble\useproportional
+
+\newif\ifzpl@defaultsups
+\newif\ifzpl@adobesc % we don't use this exc. in fd, but may in future
+\newif\ifzpl@scosf
+\newif\ifzpl@largesc
+\newif\ifzpl@babel
+\ifdefined\bbl@tempa \zpl@babeltrue\fi
+\define@key{zpl}{babel}[true]{%
+\csname zpl@babel#1\endcsname}
+\define@boolkey{zpl}{defaultsups}[true]{%
+\csname zpl@defaultsups#1\endcsname}
+\define@boolkey{zpl}{largesc}[true]{%
+\csname zpl@largesc#1\endcsname}
+\newif\ifzpl@thrm
+\define@key{zpl}{helvratio}[0.94]{\def\zpl@helvratio{#1}}
+\define@key{zpl}{scaled}[1.0]{\def\zpl@scaled{s*[#1]}%
+\def\zpl@scale{#1}}
+%
+\def\zpl@spc{.25em}
+\def\zpl@stretch{.2em}
+\def\zpl@shrink{.1em}
+\define@key{zpl}{spacing}[.25em]{\gdef\zpl@spc{#1}}
+\define@key{zpl}{stretch}[.2em]{\gdef\zpl@stretch{#1}}
+\define@key{zpl}{shrink}[.1em]{\gdef\zpl@shrink{#1}}
+
+\DeclareOption{lining}{\edef\zpl@figurestyle{lf}}
+\DeclareOption{lf}{\edef\zpl@figurestyle{lf}}
+\DeclareOption{theoremfont}{\zpl@thrmtrue}
+\DeclareOption{oldstyle}{\useosf}
+\DeclareOption{osf}{\useosf}
+\DeclareOption{tabular}{\edef\zpl@figurealign{t}}
+\DeclareOption{p}{\useproportional}
+\DeclareOption{proportional}{\useproportional}
+\DeclareOption{scosf}{\zpl@scosftrue}
+\DeclareOption{tighter}{%
+\gdef\zpl@spc{.25em}\gdef\zpl@stretch{.125em}\gdef\zpl@shrink{.1em}}
+\DeclareOption{looser}{%
+\gdef\zpl@spc{.3em}\gdef\zpl@stretch{.2em}\gdef\zpl@shrink{.1em}
+}
+\ExecuteOptions{lining,tabular}
+\DeclareOption*{%
+  \begingroup
+  \edef\x{\endgroup
+    \noexpand\setkeys{zpl}{\CurrentOption}}%
+  \x}
+%\def\zpl@style{x}% default is lining figures
+\setkeys{zpl}{helvratio} % set this first, at least to default
+\setkeys{zpl}{scaled} % get at least default
+\ProcessOptions*
+\def\zpl@spacing{%
+	\fontdimen2\font=\zpl@spc
+	\fontdimen3\font=\zpl@stretch
+	\fontdimen4\font=\zpl@shrink
+}
+	 
+\@tempdima=\zpl@scale\p@\@tempdima=\zpl@helvratio\@tempdima%
+\edef\qhv@scale{\strip@pt\@tempdima}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{textcomp}
+\def\oldstylenums#1{{\fontencoding{TS1}\selectfont #1}}
+
+\DeclareRobustCommand{\sustyle}{%
+  \not@math@alphabet\sustyle\relax
+  \fontfamily{zplsups}\selectfont}
+
+%\def\@makefnmark{\ifx \thefootnote\orig@footnote \hbox{\sustyle\hspace*{.04em}\@thefnmark}\else\orig@makefnmark\fi}
+\ifzpl@defaultsups %
+\else
+  \def\f@@tn@te{footnote}
+  \def\@makefnmark{%
+    \ifx\@mpfn\f@@tn@te%
+      \ifx\thefootnote\orig@footnote%
+        \hbox{\sustyle\hspace*{.05em}\@thefnmark\hspace*{.05em}}%
+      \else%
+        \orig@makefnmark%
+      \fi
+    \else%
+      \orig@makefnmark%
+    \fi}
+\fi
+\ifzpl@scosf %
+\DeclareRobustCommand{\textsc}[1]{%
+{\fontfamily{zpl\zpl@figurealign osf}\scshape\selectfont #1}%
+}\fi% use OsF in small caps
+
+\DeclareRobustCommand{\lfstyle}{%
+  \not@math@alphabet\lfstyle\relax
+  \fontfamily{zpllf}\selectfont %
+}% to get lf
+\DeclareRobustCommand{\tlfstyle}{%
+  \not@math@alphabet\tlfstyle\relax
+  \fontfamily{zpltlf}\selectfont %
+}% to get tlf
+\DeclareRobustCommand{\osfstyle}{%
+  \not@math@alphabet\osfstyle\relax
+  \fontfamily{zplosf}\selectfont %
+}% to get osf
+\DeclareRobustCommand{\tosfstyle}{%
+  \not@math@alphabet\tosfstyle\relax
+  \fontfamily{zpltosf}\selectfont %
+}% to get tosf
+\DeclareRobustCommand{\textlf}[1]{%
+  {\lfstyle #1}%
+}% to get lf
+\DeclareRobustCommand{\texttlf}[1]{%
+  {\tlfstyle #1}%
+}% to get tlf
+\DeclareRobustCommand{\textosf}[1]{%
+  {\osfstyle #1}%
+}% to get osf
+\DeclareRobustCommand{\texttosf}[1]{%
+  {\tosfstyle #1}%
+}% to get tosf
+\DeclareRobustCommand{\textsu}[1]{%
+  {\sustyle #1}%
+}% to get sup style
+
+\ifzpl@thrm
+	\ifdefined\newtheoremstyle
+	\newtheoremstyle{plain}
+	{\topsep}   % ABOVESPACE
+    {\topsep}   % BELOWSPACE
+    {\slshape}  % BODYFONT--\slshape is defined to be \itshape with upright figures and punctuation
+    {}       % INDENT (empty value is the same as 0pt)
+    {\bfseries} % HEADFONT--you may want to add \tlfstyle so the number is tab lining, regardless of text figure selection
+    {.}         % HEADPUNCT
+    {5pt plus 1pt minus 1pt} % HEADSPACE
+    {}          % CUSTOM-HEAD-SPEC\newtheorem{thm}{Theorem}[section]
+    \fi%
+\fi		
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Text Serif (TGPagellaX) %
+%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text Sans Serif (based on Helvetica) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\renewcommand*{\sfdefault}{npxss}
+\renewcommand*{\sfdefault}{qhv}
+%\show\qhv@scale
+%\show\zpl@helvratio
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text (Monospaced) Typewriter %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand*{\ttdefault}{npxtt}
+
+\def\re@DeclareTextSymbol#1#2#3{%
+   \let#1=\undefined
+   \DeclareTextSymbol{#1}{#2}{#3}}
+   
+\def\re@DeclareMathSymbol#1#2#3#4{%
+    \let#1=\undefined
+    \DeclareMathSymbol{#1}{#2}{#3}{#4}}
+
+\re@DeclareTextSymbol{\L}{OT1}{138}
+\re@DeclareTextSymbol{\l}{OT1}{170}
+\re@DeclareTextSymbol{\textdollar}{OT1}{36}
+\re@DeclareTextSymbol{\textsterling}{OT1}{163}
+\re@DeclareMathSymbol{\mathsterling}{\mathord}{operators}{163}
+
+\DeclareTextComposite{\r}{OT1}{A}{197}
+\DeclareTextComposite{\r}{OT1}{a}{229}
+
+% ring accent, eg \r{A}
+\re@DeclareTextSymbol{\textcent}{OT1}{162}
+\re@DeclareMathSymbol{\mathcent}{\mathord}{operators}{162}
+
+%%% Modification of T1 and LY1 encoding related stuff
+%%%
+
+% ogonek accent
+\def\T@n@@nc@d@ng{T1}
+\def\T@n@@nc@d@ngM@cr@M@d{%
+\DeclareTextCommand{\k}{T1}[1]{{\ooalign{\hidewidth\char12\crcr##1}}}%
+}
+
+\def\LY@n@@nc@d@ng{LY1}
+\def\LY@n@@nc@d@ngM@cr@M@d{%
+\DeclareTextCommand{\k}{LY1}[1]{{\ooalign{\hidewidth\char7\crcr##1}}}%
+}
+
+\AtBeginDocument{%
+\ifx\encodingdefault\T@n@@nc@d@ng\T@n@@nc@d@ngM@cr@M@d\fi%
+\ifx\encodingdefault\LY@n@@nc@d@ng\LY@n@@nc@d@ngM@cr@M@d\fi%
+}
+
+\ifzpl@babel
+    \renewcommand*{\rmdefault}{zpl\zpl@figurealign%
+\zpl@figurestyle}
+    \normalfont
+\else
+    \AtEndPreamble{%
+\renewcommand*{\rmdefault}{zpl\zpl@figurealign%
+\zpl@figurestyle}
+    \normalfont}
+\fi
+
+\endinput
+

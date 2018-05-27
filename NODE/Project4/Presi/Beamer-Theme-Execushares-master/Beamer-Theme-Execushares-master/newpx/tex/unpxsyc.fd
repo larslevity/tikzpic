@@ -1,0 +1,28 @@
+%Filename: unpxsyc.fd
+%Created by: tex px-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{unpxsyc.fd}
+   [2013/03/24 Fontinst v1.933 font definitions for U/npxsyc.]
+
+\expandafter\ifx\csname npxmath@scaled\endcsname\relax
+  \let\npxmath@@scaled\@empty%
+\else
+  \edef\npxmath@@scaled{s*[\csname npxmath@scaled\endcsname]}%
+\fi
+
+\DeclareFontFamily{U}{npxsyc}{}
+
+\DeclareFontShape{U}{npxsyc}{m}{n}{
+   <-> \npxmath@@scaled zplsyc
+}{}
+
+\DeclareFontShape{U}{npxsyc}{b}{n}{
+   <-> \npxmath@@scaled zplbsyc
+}{}
+
+\DeclareFontShape{U}{npxsyc}{bx}{n}{<->ssub * npxsyc/b/n}{}
+
+\endinput

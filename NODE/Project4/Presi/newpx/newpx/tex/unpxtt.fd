@@ -1,0 +1,54 @@
+\ProvidesFile{unpxtt.fd}
+	[2013/03/25 v1.0]
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \let\zpl@scaled\@empty%
+\fi
+
+\DeclareFontFamily{U}{npxtt}{\hyphenchar \font\m@ne}
+\DeclareFontShape{U}{npxtt}{m}{n}{	%rebular
+     <-> \zpl@scaled txtt%
+}{}
+\DeclareFontShape{U}{npxtt}{m}{sc}{	%cap & small cap
+     <-> \zpl@scaled txttsc%
+}{}
+\DeclareFontShape{U}{npxtt}{m}{sl}{	%slanted
+     <-> \zpl@scaled txttsl%
+}{}
+\DeclareFontShape{U}{npxtt}{m}{it}{	%italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{U}{npxtt}{m}{ui}{	%unslanted italic
+     <->ssub * npxtt/m/sl%
+}{}
+\DeclareFontShape{U}{npxtt}{b}{n}{	%bold
+     <-> \zpl@scaled txbtt%
+}{}
+\DeclareFontShape{U}{npxtt}{b}{sc}{	%bold cap & small cap
+     <-> \zpl@scaled txbttsc%
+}{}
+\DeclareFontShape{U}{npxtt}{b}{sl}{	%bold slanted
+     <-> \zpl@scaled txbttsl%
+}{}
+\DeclareFontShape{U}{npxtt}{b}{it}{	%bold italic
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{U}{npxtt}{b}{ui}{	%bold unslanted italic
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{U}{npxtt}{bx}{n}{	%bold extended
+     <->ssub * npxtt/b/n%
+}{}
+\DeclareFontShape{U}{npxtt}{bx}{sc}{	%bold extended cap & small cap
+     <->ssub * npxtt/b/sc%
+}{}
+\DeclareFontShape{U}{npxtt}{bx}{sl}{	%bold extended slanted
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{U}{npxtt}{bx}{it}{	%bold extended italic
+     <->ssub * npxtt/b/sl%
+}{}
+\DeclareFontShape{U}{npxtt}{bx}{ui}{	%bold extended unslanted italic
+     <->ssub * npxtt/b/sl%
+}{}
+
+\endinput

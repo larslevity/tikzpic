@@ -1,0 +1,62 @@
+\ProvidesFile{ot1zplsups.fd}[2015/01/17 v1.0]
+\expandafter\ifx\csname zpl@scaled\endcsname\relax
+  \let\zpl@scaled\@empty%
+\fi
+
+\DeclareFontFamily{OT1}{zplsups}{}
+\DeclareFontShape{OT1}{zplsups}{m}{n}{	%medium
+     <-> \zpl@scaled zplsups-Regular-ot1%
+}{}
+\DeclareFontShape{OT1}{zplsups}{m}{it}{	%italic
+     <-> \zpl@scaled zplsups-Italic-ot1%
+}{}
+\DeclareFontShape{OT1}{zplsups}{b}{n}{	%bold 
+     <-> \zpl@scaled zplsups-Bold-ot1%
+}{}
+\DeclareFontShape{OT1}{zplsups}{b}{it}{   	%bold italic
+     <-> \zpl@scaled zplsups-BoldItalic-ot1%
+}{}
+
+\DeclareFontShape{OT1}{zplsups}{m}{sc}{	%cap & small cap
+     <-> ssub * zplsups/m/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{m}{sl}{	%slanted
+     <-> ssub * zplsups/m/it%
+}{}
+\DeclareFontShape{OT1}{zplsups}{m}{scit}{	%italic
+     <-> ssub * zplsups/m/it%
+}{}
+\DeclareFontShape{OT1}{zplsups}{m}{ui}{   	%unslanted italic
+     <-> ssub * zplsups/m/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{bx}{sc}{	%bold extended cap & small cap
+     <-> ssub * zplsups/b/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{bx}{sl}{	%bold extended slanted
+     <-> ssub * zplsups/b/it%
+}{}
+\DeclareFontShape{OT1}{zplsups}{bx}{it}{	%bold extended italic
+     <-> ssub * zplsups/b/it%
+}{}
+\DeclareFontShape{OT1}{zplsups}{bx}{scit}{	%bold extended italic
+     <-> ssub * zplsups/b/it%
+}{}
+\DeclareFontShape{OT1}{zplsups}{bx}{ui}{  	%bold extended unslanted italic
+     <-> ssub * zplsups/b/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{bx}{n}{	%bold extended
+     <-> ssub * zplsups/b/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{b}{sc}{	%bold cap & small cap
+     <-> ssub * zplsups/b/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{b}{sl}{	%bold slanted
+     <-> ssub * zplsups/b/it%
+}{}
+\DeclareFontShape{OT1}{zplsups}{b}{ui}{   	%bold unslanted italic
+     <-> ssub * zplsups/b/n%
+}{}
+\DeclareFontShape{OT1}{zplsups}{b}{scit}{   	%bold italic
+     <-> ssub * zplsups/b/it%
+}{}
+\endinput

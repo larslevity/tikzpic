@@ -1,0 +1,27 @@
+%Filename: unpxexa.fd
+%Created by: tex px-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{unpxexa.fd}
+   [2013/03/24 Fontinst v1.933 font definitions for U/npxexa.]
+
+\expandafter\ifx\csname npxmath@scaled\endcsname\relax
+  \let\npxmath@@scaled\@empty%
+\else
+  \edef\npxmath@@scaled{s*[\csname npxmath@scaled\endcsname]}%
+\fi
+\DeclareFontFamily{U}{npxexa}{}
+
+\DeclareFontShape{U}{npxexa}{m}{n}{
+   <-> \npxmath@@scaled zplexa
+}{}
+
+\DeclareFontShape{U}{npxexa}{b}{n}{
+   <-> \npxmath@@scaled zplbexa
+}{}
+
+\DeclareFontShape{U}{npxexa}{bx}{n}{<->ssub * npxexa/b/n}{}
+
+\endinput

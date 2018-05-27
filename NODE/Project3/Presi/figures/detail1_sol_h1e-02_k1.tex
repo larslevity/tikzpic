@@ -1,0 +1,158 @@
+% This file was created by matlab2tikz v0.4.7 running on MATLAB 8.4.
+% Copyright (c) 2008--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% Minimal pgfplots version: 1.3
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+\documentclass[tikz]{standalone}
+\usepackage{pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usepackage{amsmath}
+
+\begin{document}
+%
+% defining custom colors
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+\definecolor{mycolor6}{rgb}{0.30100,0.74500,0.93300}%
+\definecolor{mycolor7}{rgb}{0.63500,0.07800,0.18400}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=5.9cm,
+height=4.5cm,
+scale only axis,
+every outer x axis line/.append style={white!15!black},
+every x tick label/.append style={font=\color{white!15!black}},
+xmin=11.2,
+xmax=11.5,
+xmajorgrids,
+every outer y axis line/.append style={white!15!black},
+every y tick label/.append style={font=\color{white!15!black}},
+ymin=-.3,
+ymax=2,
+ymajorgrids,
+axis x line*=bottom,
+axis y line*=left,
+legend style={draw=white!15!black,fill=white,legend cell align=left},
+]
+\addplot [color=mycolor1,solid,forget plot]
+  table[row sep=crcr]{%
+11.14	53.2076877343035\\
+11.31	50.5088656900395\\
+11.47	48.1058119118275\\
+};
+\addplot [color=mycolor2,solid,forget plot]
+  table[row sep=crcr]{%
+11.14	3.10659519149249\\
+11.31	0.410236865262352\\
+11.47	1.34636802097158e-07\\
+};
+\addplot [color=mycolor3,solid,forget plot]
+  table[row sep=crcr]{%
+11.14	0.000509813620754281\\
+11.31	0.00384013229457263\\
+11.47	1.986927869472\\
+};
+\addplot [color=mycolor4,solid,forget plot]
+  table[row sep=crcr]{%
+11.14	71.36841513331\\
+11.31	75.4684956587568\\
+11.47	77.0647851854825\\
+};
+\addplot [color=mycolor5,solid,forget plot]
+  table[row sep=crcr]{%
+11.14	11.3105448053832\\
+11.31	11.9560643101869\\
+11.47	10.5668830984508\\
+};
+\addplot [color=mycolor6,solid,forget plot]
+  table[row sep=crcr]{%
+11.14	11.107849677853\\
+11.31	11.7549663000495\\
+11.47	12.3683314463098\\
+};
+\addplot [color=mycolor1,dashed,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	53.1989305716021\\
+11.3099999999998	50.500083988194\\
+11.4699999999998	48.0984299180845\\
+};
+\addplot [color=mycolor2,dashed,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	3.0978417250668\\
+11.3099999999998	0.401542542238598\\
+11.4699999999998	-7.15723558516856e-05\\
+};
+\addplot [color=mycolor3,dashed,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	0.00051124533280111\\
+11.3099999999998	0.00392487009726847\\
+11.4699999999998	1.99413453785562\\
+};
+\addplot [color=mycolor4,dashed,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	71.381712835172\\
+11.3099999999998	75.4817452484252\\
+11.4699999999998	77.0680447258394\\
+};
+\addplot [color=mycolor5,dashed,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	11.3126463265312\\
+11.3099999999998	11.9580887145353\\
+11.4699999999998	10.5616179687867\\
+};
+\addplot [color=mycolor6,dashed,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	11.1099573881643\\
+11.3099999999998	11.7570809525635\\
+11.4699999999998	12.3704804500868\\
+};
+\addplot [color=mycolor1,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	52.7395940818362\\
+11.3099999999998	50.0400722403342\\
+11.4699999999998	47.7127202988076\\
+};
+\addplot [color=mycolor2,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	2.63874177535691\\
+11.3099999999998	0.0129070243354758\\
+11.4699999999998	-3.54915947452854e-20\\
+};
+\addplot [color=mycolor3,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	0.00060093900334294\\
+11.3099999999998	0.0750731820070425\\
+11.4699999999998	2.37401614715755\\
+};
+\addplot [color=mycolor4,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	72.0791321623097\\
+11.3099999999998	76.1085799775946\\
+11.4699999999998	77.2340975322179\\
+};
+\addplot [color=mycolor5,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	11.4228449194518\\
+11.3099999999998	11.997504793852\\
+11.4699999999998	10.2826796062602\\
+};
+\addplot [color=mycolor6,dotted,thick,forget plot]
+  table[row sep=crcr]{%
+11.1399999999998	11.2205393675267\\
+11.3099999999998	11.8681011798844\\
+11.4699999999998	12.4832228615235\\
+};
+\end{axis}
+\end{tikzpicture}%
+\end{document}
