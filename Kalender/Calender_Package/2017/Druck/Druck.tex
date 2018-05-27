@@ -1,0 +1,20 @@
+%% Calender
+
+\documentclass[landscape,a0,final] {a0poster}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{calc,calendar}
+\usepackage[top=1cm, bottom=1cm, left=1cm, right=1cm]{geometry}
+\usepackage{ifthen}
+\usepackage[german]{babel}
+
+\begin{document}
+
+\def\invroottwo{0.7071067811865475}
+\pgfmathsetmacro{\scale}{\invroottwo*.9755}
+
+\includegraphics[scale=\scale,angle=90]{Calender_2017.pdf}
+\includegraphics[scale=\scale,angle=90]{Kalendario.pdf}
+
+
+\end{document}

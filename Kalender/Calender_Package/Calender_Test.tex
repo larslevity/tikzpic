@@ -1,0 +1,96 @@
+%% Calender
+
+\documentclass[landscape,a0,final] {a0poster}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{calc,calendar}
+\usepackage[top=1cm, bottom=0.2cm, left=1cm, right=1cm]{geometry}
+\usepackage{ifthen}
+\usepackage[german]{babel}
+
+\begin{document}
+\centering
+\begin{tikzpicture}[
+		transform shape,
+		every day/.style={anchor=mid}
+		]
+
+
+\tikzstyle{kasten} = [minimum height = 3cm, minimum width = 3.5cm,draw, opacity=.5]
+\tikzstyle{entry} = [draw = none,minimum height = 0cm,minimum width = 0cm]
+
+% Some Definitions:
+\def\yearstart{2017}
+\def\monthstart{10}
+\def\xs{29}
+\def\ys{28}
+\def\col{orange!30} % Colour for holidays
+\def\holiday{\node[kasten,gray,fill=\col] at (0,0){};}
+\def\weekday{\node[kasten,gray] at (0,0){};}
+\def\saturday{\node[kasten,gray,fill=green!10] at (0,0){};}
+\newcommand{\birthday}[1]{\node[] at (0,1){\tiny \textbf{* #1}};}
+
+%% Background Picture
+\path [remember picture, overlay, opacity=.5] (current page.center)++(-5,-80)node{\includegraphics[width=120cm]{Picture2.jpg}};
+
+
+
+
+%
+% Loop for each month
+\pgfmathtruncatemacro{\monthplustwelve}{\monthstart + 11}
+\foreach[count=\i] \monthvar in {\monthstart,...,\monthplustwelve}
+{	
+	% Utils for calendar from i.e. 1.10.2017-30.9.2018
+	\pgfmathtruncatemacro{\month}{mod(\monthvar, 12)}
+	\ifnum\month=0\def\month{12}\fi
+	\ifthenelse{\monthvar<13}{\def\year{\yearstart}}{\pgfmathtruncatemacro{\year}{\yearstart+1}}
+
+	% Calc the Coords where the months are located:
+	\pgfmathtruncatemacro{\x}{floor(mod(\i-1,4))*\xs}
+	\pgfmathtruncatemacro{\y}{floor((\i-1)/4)*-\ys}
+		
+	% Draw the calendar:	
+	\calendar(\month) at (\x,\y)  [dates=\year-\month-01 to \year-\month-last,
+		day xshift = 3.8cm,
+		day yshift = 3.8cm,
+		week list,
+		month label above left,
+		month text = \textit{\month-\year},
+		] % Some important days:
+		if (Sunday) {\holiday}
+		if (Saturday) {\saturday}
+			else 	{\weekday}
+		% Some holidays and birthdays:			
+		if (equals=\year-01-01) {
+					\holiday \node[entry] at (0,-1){\tiny New Years Eve};}
+		if (equals=\year-05-01) {
+					\holiday \node[entry] at (0,-1){\tiny Maiwanderung};}
+		if (equals=\year-10-03) {
+					\holiday \node[entry] at (0,-1){\tiny Ost $<3$ West};}
+		if (equals=\year-12-25) {
+					\holiday \node[entry] at (0,-1){\tiny Weihnacht$^1$};}
+		if (equals=\year-12-26) {
+					\holiday \node[entry] at (0,-1){\tiny Weihnacht$^2$};}					
+		% Birthdays
+		if (equals=\year-01-30) {\birthday{Janniboy}}
+		if (equals=\year-03-12) {\birthday{Marius}}
+		if (equals=\year-03-17) {\birthday{Johonnen}}
+		if (equals=\year-04-04) {\birthday{Mama Schiller}}
+		if (equals=\year-04-28) {\birthday{Sareika}}
+		if (equals=\year-05-05) {\birthday{Jonschi}}
+		if (equals=\year-06-17) {\birthday{Helen Nüter}}
+		if (equals=\year-06-23) {\birthday{Lotti}}
+		if (equals=\year-07-28) {\birthday{Stutzi}}
+		if (equals=\year-08-30) {\birthday{Lars}}
+		if (equals=\year-09-21) {\birthday{T.HeBestreit}}
+		if (equals=\year-10-25) {\birthday{Veronika Gabel}}
+		if (equals=\year-11-11) {\birthday{Lena Stef.}}
+		if (equals=\year-11-22) {\birthday{Scharrenberg}}
+		if (equals=\year-12-11) {\birthday{Mütze}}
+	;
+}
+
+
+\end{tikzpicture}
+\end{document}
