@@ -1,0 +1,146 @@
+\documentclass[12pt]{standalone}
+
+\input{../../tikzpic_packages.tex}
+
+
+\begin{document}
+\begin{tikzpicture}[scale=.3]
+
+\def\pathO{(.5,0)--++(0,-1)--++(.5,0)--++(0,1)--++(1,0) --++ (0,-1)coordinate(UL) --++ (1,0)coordinate(UR) --++ (0,1) --++ (1,0) --++ (0,1) --++ (1,0) --++ (0,-1) --++(1,0)--++ (0,-1) --++ (1,0) --++(0,1)  --++ (1,0)--++(0,-1)--++(.5,0)--++(0,1) --++ (.5,0)}
+\def\pathI{(-1,-2) --++ (0,3) --++ (1,0) -- (0,0) --++(1,0)--++ \pathO --++(1,0) --++ (0,1)--++(1,0)--++(0,-3) --cycle} 
+
+\def\pathIII{(0,2) --++ (-9,0) --++(-0,-2)}
+\def\pathII{(0,0) --++ (0,10)--++(11,0) --++ (0,-10)--++(-1,0) --++ \pathIII --cycle }
+
+\fill[gray!20] \pathI;
+\fill[gray!40] \pathII;
+
+
+%% Elastosil
+\fill[red!50] (1,0)--++\pathO--++ \pathIII;
+
+% Luftblase
+\draw[blue!30, fill=blue!20] (UL)--++(0,.7)arc(180:0:.5)--++(0,-.7)--cycle;
+
+%% Konturen
+\draw[very thick] \pathI;
+\draw[very thick] \pathII;
+
+
+
+
+%% Schnitt
+\draw [dashdotted, very thick] (3.5,-4) --++(0,16);
+\draw [-stealth, very thick] (2,-3)--++(1.5,0);
+\draw [-stealth, very thick] (2,11)--++(1.5,0);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\begin{scope}[xshift = 17cm]
+
+\def\patha{(-2,9)--++(2,0)--(0,0)--++(1,0)--++(0,-1)coordinate(UL)--++(1,0)coordinate(UR)--++(0,1)--++(1,0)--++(0,9)--++(2,0)}
+\def\pathaa {\patha --++(0,-11)--++(-7,0)}
+
+\def\pathb{(-2,10) --++(3,0)--++(0,-8)--++(1,0)--++(0,8)--++(3,0)}
+
+%% Elastosil
+\fill[red!50] (-2,10)--\patha--++(0,1);
+
+%% Form
+\fill[gray!20] \pathaa;
+\fill[gray!40] \pathb;
+
+
+% Luftblase
+\draw[blue!30, fill=blue!20] (UL)--++(0,.7)arc(180:0:.5)--++(0,-.7)--cycle;
+
+
+%% Konturen
+\draw[very thick] \patha ++(0,-11)--++(-7,0);
+\draw[very thick] \pathb --++(-7,0);
+
+
+
+\end{scope}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Nach der Evakuierung 				%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\begin{scope}[xshift=35cm]
+
+\draw[line width=.1cm, -triangle 60, gray] (-9,4)--++(5,0)node[midway, above=.5cm, black]{Evakuierung};
+
+\def\pathO{(.5,0)--++(0,-1)--++(.5,0)--++(0,1)--++(1,0) --++ (0,-1)coordinate(UL) --++ (1,0)coordinate(UR) --++ (0,1) --++ (1,0) --++ (0,1) --++ (1,0) --++ (0,-1) --++(1,0)--++ (0,-1) --++ (1,0) --++(0,1)  --++ (1,0)--++(0,-1)--++(.5,0)--++(0,1) --++ (.5,0)}
+\def\pathI{(-1,-2) --++ (0,3) --++ (1,0) -- (0,0) --++(1,0)--++ \pathO --++(1,0) --++ (0,1)--++(1,0)--++(0,-3) --cycle} 
+
+\def\pathIII{(0,2) --++ (-9,0) --++(-0,-2)}
+\def\pathII{(0,0) --++ (0,10)--++(11,0) --++ (0,-10)--++(-1,0) --++ \pathIII --cycle }
+
+\fill[gray!20] \pathI;
+\fill[gray!40] \pathII;
+
+
+%% Elastosil
+\fill[red!50] (1,0)--++\pathO--++ \pathIII;
+
+% Luftblase
+\draw[blue!30, fill=blue!20] (UR)++(.1-1.22,3)--++(0,-.1)arc(140:400:.8)--++(0,.1)--cycle;
+
+
+
+%% Konturen
+\draw[very thick] \pathI;
+\draw[very thick] \pathII;
+
+
+
+
+%% Schnitt
+\draw [dashdotted, very thick] (3.5,-4) --++(0,16);
+\draw [-stealth, very thick] (2,-3)--++(1.5,0);
+\draw [-stealth, very thick] (2,11)--++(1.5,0);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\begin{scope}[xshift = 17cm]
+
+\def\patha{(-2,9)--++(2,0)--(0,0)--++(1,0)--++(0,-1)coordinate(UL)--++(1,0)coordinate(UR)--++(0,1)--++(1,0)--++(0,9)--++(2,0)}
+\def\pathaa {\patha --++(0,-11)--++(-7,0)}
+
+\def\pathb{(-2,10) --++(3,0)--++(0,-8)--++(1,0)--++(0,8)--++(3,0)}
+
+%% Elastosil
+\fill[red!50] (-2,10)--\patha--++(0,1);
+
+%% Form
+\fill[gray!20] \pathaa;
+\fill[gray!40] \pathb;
+
+
+% Luftblase
+\draw[blue!30, fill=blue!20] (UR)++(.1-1.22,3)--++(0,-.1)arc(140:400:.8)--++(0,.1)--cycle;
+
+
+
+%% Konturen
+\draw[very thick] \patha ++(0,-11)--++(-7,0);
+\draw[very thick] \pathb --++(-7,0);
+
+
+
+\end{scope}
+\end{scope}
+
+
+
+\end{tikzpicture}
+\end{document}
