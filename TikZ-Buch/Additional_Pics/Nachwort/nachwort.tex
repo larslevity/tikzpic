@@ -1,0 +1,25 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 19.07.16 : 1550 - 1556
+% ges = 6 min
+
+\begin{document}
+\begin{tikzpicture}[scale=4]
+
+
+\path (0,0) node(A)[draw, align=center]{unbewusste \\ Unfähigkeit};
+\path (1,0) node(B)[draw, align=center]{bewusste \\ Unfähigkeit};
+\path (2,0) node(C)[draw, align=center]{bewusstes \\ Können};
+\path (3,0) node(D)[draw, align=center]{unbewusstes \\ Können};
+
+\draw[-latex, very thick] (A)--(B)node[midway, below=1]{Bewusstmachung};
+\draw[-latex, very thick] (B)--(C)node[midway, below=1]{Lernen};
+\draw[-latex, very thick] (C)--(D)node[midway, below=1]{Gewöhnung};
+
+
+
+\end{tikzpicture}
+\end{document}
+

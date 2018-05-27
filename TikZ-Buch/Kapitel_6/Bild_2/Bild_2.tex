@@ -1,0 +1,52 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 20.01.16 : 1620 - 1700
+% ges = 40 min
+
+\begin{document}
+\begin{tikzpicture}[
+edge from parent fork down,
+every node/.style={rectangle, draw, align=center},
+Grp/.style={minimum width = 3.5cm, minimum height = 1.2cm, align = left},
+A/.style={rotate=90, minimum width = 2.4cm, minimum height = 1.1cm, align = left},
+B/.style={rotate=90, draw = none},
+level 1/.append style={level distance=2cm,sibling distance=4cm},
+level 2/.append style={level distance=2.9cm,sibling distance=1.3cm},
+level 3/.append style={level distance=3.3cm,sibling distance=.7cm},
+]
+
+
+\node[draw=none]{~}
+	child { node[Grp]{Funktion}
+		child{ node[A] {Einstell- \\ genauigkeit}}
+		child{ node[A] {Wiederhol- \\ genauigkeit}}
+		child{ node[A] {Verschleiß- \\ sicherheit}}
+	}
+	child { node[Grp]{niedrige Kosten}
+		child{ node[A] {Herstell- \\ kosten}
+			child { node[B]{Teilelieferant}}
+			child { node[B]{Montage}}
+		}
+		child{ node[A] {Betriebs- \\ kosten}}	
+	}
+	child { node[Grp]{Markt}
+		child{ node[A] {Markt- \\ größe}}
+		child{ node[A] {Markt- \\ trend}}
+		child{ node[A] {geringe \\ Konkurrenz}}	
+	}
+	child { node[Grp]{Unternehmensziele}
+		child{ node[A] {Firmen- \\ Programm}}
+		child{ node[A] {Kapazitäts- \\ auslastung}
+			child { node[B]{Fertigung}}
+			child { node[B]{Entwicklung}}
+		}	
+	}
+	;
+
+\path [fill=white] (-1,0)rectangle(1,-.98);
+
+
+\end{tikzpicture}
+\end{document}

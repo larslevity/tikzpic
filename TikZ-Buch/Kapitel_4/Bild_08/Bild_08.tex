@@ -1,0 +1,229 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 31.01.16 : 0120-0220
+% ges = 60 min
+
+\newcommand{\te}[1]{#1}
+
+\begin{document}
+\begin{tikzpicture}[scale=1]
+
+
+\def\a{1}
+\def\b{5}
+\def\c{1.5}
+\pgfmathsetmacro{\one}{0}
+\pgfmathsetmacro{\two}{\a}
+\pgfmathsetmacro{\three}{\a+\b}
+\pgfmathsetmacro{\four}{\a+\b+\c}
+\pgfmathsetmacro{\five}{\a+\b+\c+\c}
+\pgfmathsetmacro{\six}{\a+\b+\c+\c+\c}
+\pgfmathsetmacro{\seven}{\a+\b+\c+\c+\c+\c}
+\pgfmathsetmacro{\eight}{\a+\b+\c+\c+\c+\c+\c}
+\pgfmathsetmacro{\nine}{\a+\b+\c+\c+\c+\c+\c+\c}
+\pgfmathsetmacro{\ten}{\a+\b+\c+\c+\c+\c+\c+\c+\c}
+\pgfmathsetmacro{\eleven}{\a+\b+\c+\c+\c+\c+\c+\c+\c+\c}
+\pgfmathsetmacro{\twelve}{\a+\b+\c+\c+\c+\c+\c+\c+\c+\c+\c}
+
+\def\y{.8}
+\pgfmathsetmacro{\yD}{2*\y}
+\pgfmathsetmacro{\yh}{.5*\y}
+\pgfmathsetmacro{\yT}{3*\y}
+
+%% cut
+\pgfmathsetmacro{\yy}{-\y*9}
+\path[clip] (-.1,.1)rectangle(\twelve+\c+.1,\yy-.1);
+
+
+% Zeile 1
+\pgfmathsetmacro{\yy}{0}
+\foreach \x/\dx/\t in {
+\one/\eight/Funktionsträger aufgelistet,
+\eight/\c+\c+\c+\c+\c/ geordnet nach Rang
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right]{\t};
+}
+
+% Zeile 2
+\pgfmathsetmacro{\yy}{-\y*1}
+\foreach \x/\dx/\t in {
+\one/\a/\te{Pos- \\ Nr.},
+\two/\b/\te{Bennenung},
+\five/\c/ \te{Einzel- \\ kosten \\ $hl$\euro},
+\eleven/\c/ \te{ABC \\ Gruppe},
+\twelve/\c/ \te{Pos- \\ Nr.}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\yT);
+\path (\x,\yy)--++(0,-\yD)node[midway,right,align=left]{\t};
+}
+% Zeile 2.1
+\pgfmathsetmacro{\yy}{-\y*1}
+\foreach \x/\dx/\t in {
+\three/\c+\c/\te{Anzahl},
+\six/\c+\c+\c+\c/\te{Kosten im Produkt},
+\ten/\c/ \te{Anzahl}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right,align=left]{\t};
+}
+% Zeile 2.2
+\pgfmathsetmacro{\yy}{-\y*2}
+\foreach \x/\dx/\t in {
+\nine/\c+\c/\te{kumuliert}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\yh);
+\path (\x,\yy)--++(0,-\yh)node[midway,right,align=left]{\t};
+}
+% Zeile 2.3
+\pgfmathsetmacro{\yy}{-\y*2}
+\foreach \x/\dx/\t in {
+\three/\c/\te{$n$},
+\four/\c/\te{\%},
+\six/\c/\te{$n\cdot hl$\euro},
+\seven/\c/\te{\%},
+\eight/\c/\te{\%}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\yD);
+\path (\x,\yy)--++(0,-\y)node[midway,right,align=left]{\t};
+}
+% Zeile 2.4
+\pgfmathsetmacro{\yy}{-\y*2-\yh}
+\foreach \x/\dx/\t in {
+\nine/\c/\te{\%},
+\ten/\c/\te{\%}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y-\yh);
+\path (\x,\yy)--++(0,-\y)node[midway,right,align=left]{\t};
+}
+% Zeile 2.5
+\pgfmathsetmacro{\yy}{-\y*4}
+\foreach \x/\dx/\t in {
+\one/\a/ \circled{1},
+\two/\b/ \circled{2},
+\three/\c/ \circled{3},
+\four/\c/ \circled{4},
+\five/\c/ \circled{5},
+\six/\c/ \circled{6},
+\seven/\c/ \circled{7},
+\eight/\c/ \circled{8},
+\nine/\c/ \circled{9},
+\ten/\c/ \circled{10},
+\eleven/\c/ \circled{11},
+\twelve/\c/ \circled{12},
+}{
+\path (\x+\dx,\yy)--++(0,\y)node[midway,left,align=left]{\t};
+}
+
+
+% Zeile 3
+\pgfmathsetmacro{\yy}{-\y*4}
+\foreach \x/\dx/\t in {
+\one/\a/ \hw{1},
+\two/\b/ \hw{Deckel},
+\three/\c/ \hw{3},
+\four/\c/ \hw{30},
+\five/\c/ \hw{3},
+\six/\c/ \hw{9.0},
+\seven/\c/ \hw{18},
+\eight/\c/ \hw{76},
+\nine/\c/ \hw{76},
+\ten/\c/ \hw{10},
+\eleven/\c/ \hw{A},
+\twelve/\c/ \hw{2}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right]{\t};
+}
+
+
+% Zeile 4
+\pgfmathsetmacro{\yy}{-\y*5}
+\foreach[count=\i] \x/\dx/\t in {
+\one/\a/ \hw{2},
+\two/\b/ \hw{Gehäuse},
+\three/\c/ \hw{1},
+\four/\c/ \hw{10},
+\five/\c/ \hw{38},
+\six/\c/ \hw{38.0},
+\seven/\c/ \hw{76},
+\eight/\c/ \hw{18},
+\nine/\c/ \hw{94},
+\ten/\c/ \hw{40},
+\eleven/\c/ \hw{B},
+\twelve/\c/ \hw{1}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right]{\t};
+}
+
+% Zeile 5
+\pgfmathsetmacro{\yy}{-\y*6}
+\foreach \x/\dx/\t in {
+\one/\a/ \hw{3},
+\two/\b/ \hw{Schraube + Monatge},
+\three/\c/ \hw{6},
+\four/\c/ \hw{60},
+\five/\c/ \hw{0.50},
+\six/\c/ \hw{3.50},
+\seven/\c/ \hw{6},
+\eight/\c/ \hw{6},
+\nine/\c/ \hw{100},
+\ten/\c/ \hw{100},
+\eleven/\c/ \hw{C},
+\twelve/\c/ \hw{3}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right]{\t};
+}
+
+
+% Zeile 6
+\pgfmathsetmacro{\yy}{-\y*7}
+\foreach \x/\dx/\t in {
+\one/\a/ \hw{~},
+\two/\b/ \hw{~},
+\three/\c/ \hw{~},
+\four/\c/ \hw{~},
+\five/\c/ \hw{~},
+\six/\c/ \hw{~},
+\seven/\c/ \hw{~},
+\eight/\c/ \hw{~},
+\nine/\c/ \hw{~},
+\ten/\c/ \hw{~},
+\eleven/\c/ \hw{~},
+\twelve/\c/ \hw{~}
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right]{\t};
+}
+
+% Zeile 7
+\pgfmathsetmacro{\yy}{-\y*8}
+\foreach \x/\dx/\t in {
+\two/\b/ Summe,
+\three/\c/ $N=$,
+\four/\c/ 100,
+\six-.5/\c+.5/ $H=$\hw{50.0},
+\seven/\c/ 100,
+\eight/\c/ 100
+}{
+\draw (\x,\yy)rectangle++(\dx,-\y);
+\path (\x,\yy)--++(0,-\y)node[midway,right]{\t};
+}
+
+%% Cut
+\draw[decorate,decoration={zigzag, amplitude=.1cm,segment length= 4.6cm},fill=white] (-.1,\yy+\yh+.1)--++(\twelve+\c+1.2,0)--++(0,-.2)--++(-\twelve-\c-1.2,0);
+
+
+%% Thick Lines
+\draw[very thick] (\eight,0)--++(0,-\y);
+\draw[very thick] (\eight,-\y-\y)--(\eight,\yy-\y);
+\draw[very thick] (0,-\y-\y-\y-\y)--++(\twelve+\c,0);
+\draw[very thick] (0,\yy)--++(\twelve+\c,0);
+
+
+\end{tikzpicture}
+\end{document}

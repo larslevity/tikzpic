@@ -1,0 +1,43 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 11.1.16 : 1605-1630
+% ges = 25 min
+
+\begin{document}
+
+\newcommand{\Circled}[2]{\tikz\node[rectangle, rounded corners=.2cm, draw,minimum height = 0cm, minimum width = 0cm, #2]{#1};}
+
+
+\begin{tikzpicture}[
+edge from parent fork down,
+every node/.style={rectangle, draw, align=center},
+Grp/.style={minimum width = 2.5cm, minimum height = 4.cm, align = left},
+level 1/.append style={level distance=6cm,sibling distance=3.5cm},
+level 2/.append style={level distance=3cm,sibling distance=2.5cm},
+]
+
+
+\node[align=center]{ Leitung \\ Produktentwicklung \\ \Circled{Entwicklungsleiter}{}}
+	child { node[Grp]{Forschung \\ \\   \\ \\  \tikz \draw[solid](0,0)circle(.3); \\ \\ ~} }
+	child { node[Grp]{Entwicklungs- \\ konstruktion \\ \\ \\     \tikz \draw[solid](0,0)circle(.3); \\ \\ ~}}
+	child { node[Grp]{Musterbau \\ \\  \\ \\   \tikz \draw[solid](0,0)circle(.3); \\ \\ ~}}
+	child { node[Grp]{Versuch \\ \\   \\ \\  \tikz \draw[solid](0,0)circle(.3); \\ \\ ~}}
+	child { node[Grp]{Auftrags- \\ konstruktion \\    \\ \\ \tikz \draw[solid](0,0)circle(.3); \\ \\ ~}}
+	;
+
+
+\draw[dashed] (-11.5,-5.7)node[below right, align = left, draw = none]{\Circled{Projektltr. K11}{solid}  \\Projekt K11}--++(21,0)--++(.8,-.8)--++(-.8,-.8)--++(-21,0)--++(0,1.6);
+
+\draw[thick, latex-latex, dashed] (-1.6,-.45)-|++(-9,-5.5)node[draw=none,pos=.35,above]{Kompetenz};
+
+\draw[rounded corners] (-3.5,-5.65)rectangle++(1.2,.5);
+\draw[-latex,dashed] (-2.9,-5.65)|-++(-1.1,-.73);
+
+\draw (-7.4,-6.7)-- (-5,-8.5)node[below,draw=none]{Mitarbeiter auf Zeit};
+\draw (-4.4,-6.7)-- (-5,-8.5);
+
+
+\end{tikzpicture}
+\end{document}

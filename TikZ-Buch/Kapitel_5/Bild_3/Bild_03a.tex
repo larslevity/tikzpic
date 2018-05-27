@@ -1,0 +1,19 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 12.02.16 : 0100 - 0105
+% ges = 5 min
+
+\begin{document}
+\begin{tikzpicture}[scale=1]
+
+\draw (-0.5,0)rectangle++(3,-.5)node[midway]{Aufgabe};
+\foreach \y in {.5,1,...,3}{
+\draw (0,-\y)rectangle++(2,-.5)node[midway]{$\downarrow$};
+}
+\draw (-.5,-3.5)rectangle++(3,-.5)node[midway]{Lösung};
+
+
+\end{tikzpicture}
+\end{document}

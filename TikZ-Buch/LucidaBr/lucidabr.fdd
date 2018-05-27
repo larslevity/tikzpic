@@ -1,0 +1,316 @@
+% \iffalse
+% lucidabr.fdd - generate math-related .fd files for Lucida.
+%%
+%% Copyright 1995, 1996 Sebastian Rahtz
+%% Copyright 1997 Sebastian Rahtz, David Carlisle
+%% Copyright 2005 TeX Users Group
+%%
+%% This file is part of the lucidabr package.
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2003/12/01 or later.
+%%
+%% This work has the LPPL maintenance status "maintained".
+%% 
+%% The Current Maintainer of this work is the TeX Users Group;
+%% (http://tug.org/lucida).
+%%
+%% The list of all files belonging to the lucidabr package is
+%% given in the file `manifest.txt'. 
+%%
+%% The list of derived (unpacked) files belonging to the distribution 
+%% and covered by LPPL is defined by the unpacking scripts (with 
+%% extension .ins) which are part of the distribution.
+%%
+%<*dtx>
+          \ProvidesFile{lucidabr.fdd}
+%</dtx>
+%<LY1hlh>\ProvidesFile{ly1hlh.fd}
+%<LY1hls>\ProvidesFile{ly1hls.fd}
+%<LY1hlst>\ProvidesFile{ly1hlst.fd}
+%<LY1hlct>\ProvidesFile{ly1hlct.fd}
+%<LY1hlx>\ProvidesFile{ly1hlx.fd}
+%<LY1hlce>\ProvidesFile{ly1hlce.fd}
+%<LY1hlcw>\ProvidesFile{ly1hlcw.fd}
+%<LY1hlcf>\ProvidesFile{ly1hlcf.fd}
+%<LY1hlcn>\ProvidesFile{ly1hcn.fd}
+%<OMLhlcm>\ProvidesFile{omlhlcm.fd}
+%<OMShlcy>\ProvidesFile{omshlcy.fd}
+%<OMXhlcv>\ProvidesFile{omxhlcv.fd}
+%<LMRhlcm>\ProvidesFile{lmrhlcm.fd}
+%<OMLhlh>\ProvidesFile{omlhlh.fd}
+%<OMShlh>\ProvidesFile{omshlh.fd}
+%<driver>\ProvidesFile{lucidayy.drv}
+% \fi
+%         \ProvidesFile{lucidabr.fdd}
+ [2005/11/28 v4.3 %
+%<LY1hlh> Lucida Bright
+%<LY1hls> Lucida Bright Sans
+%<LY1hlst> Lucida Bright Sans Typewriter
+%<LY1hlct> Lucida Bright Typewriter
+%<LY1hlx> Lucida Fax
+%<LY1hlce> Lucida Calligraphy
+%<LY1hlcw> Lucida Handwriting
+%<LY1hlcf> Lucida Black Letter
+%<LY1hlcn> Lucida Casual
+%<OMLhlcm> Lucida New Math Italic
+%<OMShlcy> Lucida New Math Symbols
+%<OMXhlcv> Lucida New Math Extension
+%<LMRhlcm> Lucida New Math Arrows
+%<OMLhlh> Lucida Bright
+%<OMShlh> Lucida Bright
+%<yy> (Y&Y Names)
+ (SPQR/DPC/TUG)]
+% \iffalse
+%<*driver>
+\documentclass{ltxdoc}
+\DocInput{lucidabr.fdd}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{140}
+%
+% \GetFileInfo{lucida.dtx}
+%
+% \begin{document}
+% \title{The \textsf{lucidabr} fd files\thanks{This file
+%        has version number \fileversion, last
+%        revised \filedate.}}
+% \author{Sebastian Rahtz, David Carlisle}
+% \date{\filedate}
+%
+% \maketitle
+%
+% \StopEventually{}
+%
+% \section{Text Font description files}
+%
+%
+%    \begin{macrocode}
+\providecommand\DeclareLucidaFontShape[6]{%
+   \DeclareFontShape{#1}{#2}{#3}{#4}{<->#5}{#6}}
+%    \end{macrocode}
+%
+% \subsection{Lucida Bright font description files}
+%    \begin{macrocode}
+%<*LY1hlh>
+\DeclareFontFamily{LY1}{hlh}{}
+\DeclareLucidaFontShape{LY1}{hlh}{m}{n}{lbr}{}
+\DeclareLucidaFontShape{LY1}{hlh}{m}{it}{lbi}{}
+\DeclareLucidaFontShape{LY1}{hlh}{m}{sl}{lbsl}{}
+\DeclareLucidaFontShape{LY1}{hlh}{m}{sc}{lbrsc}{}
+\DeclareLucidaFontShape{LY1}{hlh}{b}{n}{lbd}{}
+\DeclareLucidaFontShape{LY1}{hlh}{b}{it}{lbdi}{}
+\DeclareLucidaFontShape{LY1}{hlh}{b}{sc}{lbdsc}{}
+\DeclareFontShape{LY1}{hlh}{b} {sl}{<->ssub * hlh/b/it}{}
+\DeclareFontShape{LY1}{hlh}{bx}{n} {<->ssub * hlh/b/n}{}
+\DeclareFontShape{LY1}{hlh}{bx}{it}{<->ssub * hlh/b/it}{}
+\DeclareFontShape{LY1}{hlh}{bx}{sl}{<->ssub * hlh/b/it}{}
+\DeclareFontShape{LY1}{hlh}{bx}{sc}{<->ssub * hlh/b/sc}{}
+%</LY1hlh>
+%    \end{macrocode}
+%
+% \subsection{Lucida Sans font description files}
+%    \begin{macrocode}
+%<*LY1hls>
+\DeclareFontFamily{LY1}{hls}{}
+\DeclareLucidaFontShape{LY1}{hls}{m}{n}{lsr}{}
+\DeclareLucidaFontShape{LY1}{hls}{m}{it}{lsi}{}
+\DeclareLucidaFontShape{LY1}{hls}{b}{n}{lsd}{}
+\DeclareLucidaFontShape{LY1}{hls}{b}{it}{lsdi}{}
+\DeclareLucidaFontShape{LY1}{hls}{ub}{n}{lsb}{}
+\DeclareLucidaFontShape{LY1}{hls}{ub}{it}{lsbi}{}
+\DeclareFontShape{LY1}{hls}{m}{sl}{<->ssub * hls/m/it}{}
+\DeclareFontShape{LY1}{hls}{m}{sc}{<->ssub * hls/m/n}{}
+\DeclareFontShape{LY1}{hls}{b}{sc}{<->ssub * hls/m/sc}{}
+\DeclareFontShape{LY1}{hls}{bx}{sc}{<->ssub * hls/b/sc}{}
+\DeclareFontShape{LY1}{hls}{b}{sl}{<->ssub * hls/b/it}{}
+\DeclareFontShape{LY1}{hls}{bx}{n}{<->ssub * hls/ub/n}{}
+\DeclareFontShape{LY1}{hls}{bx}{it}{<->ssub * hls/ub/it}{}
+\DeclareFontShape{LY1}{hls}{bx}{sl}{<->ssub * hls/ub/it}{}
+%</LY1hls>
+%    \end{macrocode}
+%
+% \subsection{Lucida Bright Typewriter  font description files}
+%    \begin{macrocode}
+%<*LY1hlst>
+\DeclareFontFamily{LY1}{hlst}{\hyphenchar \font\m@ne}%
+\DeclareLucidaFontShape{LY1}{hlst}{m}{n}{lstr}{}
+\DeclareFontShape{LY1}{hlst}{m}{sc}{<->ssub * hlst/m/n}{}
+\DeclareLucidaFontShape{LY1}{hlst}{m}{it}{lsto}{}
+\DeclareFontShape{LY1}{hlst}{m}{sl}{<->ssub * hlst/m/it}{}
+\DeclareLucidaFontShape{LY1}{hlst}{b}{n}{lstb}{}
+\DeclareLucidaFontShape{LY1}{hlst}{b}{it}{lstbo}{}
+\DeclareFontShape{LY1}{hlst}{b}{sc} {<->ssub * hlst/m/sc}{}
+\DeclareFontShape{LY1}{hlst}{b}{sl} {<->ssub * hlst/b/it}{}
+\DeclareFontShape{LY1}{hlst}{m}{sl} {<->ssub * hlst/m/it}{}
+\DeclareFontShape{LY1}{hlst}{bx}{n} {<->ssub * hlst/b/n}{}
+\DeclareFontShape{LY1}{hlst}{bx}{it}{<->ssub * hlst/b/it}{}
+\DeclareFontShape{LY1}{hlst}{bx}{sc}{<->ssub * hlst/b/sc}{}
+\DeclareFontShape{LY1}{hlst}{bx}{sl}{<->ssub * hlst/m/sl}{}
+%</LY1hlst>
+%    \end{macrocode}
+% \subsection{Lucida Bright Serif Typewriter  font description files}
+%    \begin{macrocode}
+%<*LY1hlct>
+\DeclareFontFamily{LY1}{hlct}{\hyphenchar \font\m@ne}%
+\DeclareLucidaFontShape{LY1}{hlct}{m}{n}{lbtr}{}
+\DeclareFontShape{LY1}{hlct}{m}{sc}{<->ssub * hlct/m/n}{}
+\DeclareLucidaFontShape{LY1}{hlct}{m}{it}{lbto}{}
+\DeclareFontShape{LY1}{hlct}{m}{sl}{<->ssub * hlct/m/it}{}
+\DeclareLucidaFontShape{LY1}{hlct}{b}{n}{lbtb}{}
+\DeclareLucidaFontShape{LY1}{hlct}{b}{it}{lbtbo}{}
+\DeclareFontShape{LY1}{hlct}{b}{sc}{<->ssub * hlct/m/sc}{}
+\DeclareFontShape{LY1}{hlct}{b}{sl}{<->ssub * hlct/b/it}{}
+\DeclareFontShape{LY1}{hlct}{m}{sl}{<->ssub * hlct/m/it}{}
+\DeclareFontShape{LY1}{hlct}{bx}{n}{<->ssub * hlct/b/n}{}
+\DeclareFontShape{LY1}{hlct}{bx}{it}{<->ssub * hlct/b/it}{}
+\DeclareFontShape{LY1}{hlct}{bx}{sc}{<->ssub * hlct/b/sc}{}
+\DeclareFontShape{LY1}{hlct}{bx}{sl}{<->ssub * hlct/m/sl}{}
+%</LY1hlct>
+%    \end{macrocode}
+%
+% \subsection{Lucida Fax  font description files}
+%    \begin{macrocode}
+%<*LY1hlx>
+\DeclareFontFamily{LY1}{hlx}{}
+\DeclareLucidaFontShape{LY1}{hlx}{m}{n}{lfr}{}
+\DeclareLucidaFontShape{LY1}{hlx}{b}{n}{lfd}{}
+\DeclareLucidaFontShape{LY1}{hlx}{m}{it}{lfi}{}
+\DeclareLucidaFontShape{LY1}{hlx}{b}{it}{lfdi}{}
+%</LY1hlx>
+%    \end{macrocode}
+%
+% \subsection{Lucida Calligraphic  font description files}
+%    \begin{macrocode}
+%<*LY1hlce>
+\DeclareFontFamily{LY1}{hlce}{}
+\DeclareLucidaFontShape{LY1}{hlce}{m}{it}{lbc}{}
+\DeclareFontShape{LY1}{hlce}{m}{n}{<-> ssub * hlce/m/it}{}
+\DeclareFontShape{LY1}{hlce}{b}{n}{<-> ssub * hlce/m/it}{}
+\DeclareFontShape{LY1}{hlce}{b}{it}{<-> ssub * hlce/m/it}{}
+%</LY1hlce>
+%    \end{macrocode}
+%
+% \subsection{Lucida Handwriting font description files}
+%    \begin{macrocode}
+%<*LY1hlcw>
+\DeclareFontFamily{LY1}{hlcw}{}
+\DeclareLucidaFontShape{LY1}{hlcw}{m}{it}{lbh}{}
+\DeclareFontShape{LY1}{hlcw}{m}{n}{<-> ssub * hlcw/m/it}{}
+\DeclareFontShape{LY1}{hlcw}{b}{n}{<-> ssub * hlcw/m/it}{}
+\DeclareFontShape{LY1}{hlcw}{b}{it}{<-> ssub * hlcw/m/it}{}
+%</LY1hlcw>
+%    \end{macrocode}
+%
+% \subsection{Lucida Black Letter  font description files}
+%    \begin{macrocode}
+%<*LY1hlcf>
+\DeclareFontFamily{LY1}{hlcf}{}
+\DeclareLucidaFontShape{LY1}{hlcf}{m}{n}{lbl}{}
+\DeclareFontShape{LY1}{hlcf}{m}{it}{<-> ssub * hlcf/m/n}{}
+\DeclareFontShape{LY1}{hlcf}{b}{n}{<-> ssub * hlcf/m/n}{}
+\DeclareFontShape{LY1}{hlcf}{b}{it}{<-> ssub * hlcf/m/n}{}
+%</LY1hlcf>
+%    \end{macrocode}
+%
+% \subsection{Lucida Casual  font description files}
+%    \begin{macrocode}
+%<*LY1hlcn>
+\DeclareFontFamily{LY1}{hlcn}{}
+\DeclareLucidaFontShape{LY1}{hlcn}{m}{n}{lbkr}{}
+\DeclareFontShape{LY1}{hlcn}{m}{b}{<-> ssub * hlcn/m/n}{}
+\DeclareLucidaFontShape{LY1}{hlcn}{m}{it}{lbki}{}
+\DeclareFontShape{LY1}{hlcn}{b}{it}{<-> ssub * hlcn/m/it}{}
+%</LY1hlcn>
+%    \end{macrocode}
+%
+% \section{Maths fonts font description files}
+%
+% \subsection{Lucida Math Italics font description files}
+%    \begin{macrocode}
+%<*OMLhlcm>
+\DeclareFontFamily{OML}{hlcm}{\skewchar\font=127}
+%<yy>\DeclareLucidaFontShape{OML}{hlcm}{m}{n}{lbmr}{}
+%<kb>\DeclareLucidaFontShape{OML}{hlcm}{m}{n}{hlcrm}{} 
+%<yy>\DeclareLucidaFontShape{OML}{hlcm}{b}{n}{lbmd}{}
+%<kb>\DeclareLucidaFontShape{OML}{hlcm}{b}{n}{hlcdm}{}
+%<yy>\DeclareLucidaFontShape{OML}{hlcm}{m}{it}{lbmo}{}
+%<kb>\DeclareLucidaFontShape{OML}{hlcm}{m}{it}{hlcrima}{}
+%<yy>\DeclareLucidaFontShape{OML}{hlcm}{b}{it}{lbmdo}{}
+%<kb>\DeclareLucidaFontShape{OML}{hlcm}{b}{it}{hlcdima}{}
+%<yy>\DeclareLucidaFontShape{OML}{hlcm}{m}{itx}{lbmi}{}
+%<kb>\DeclareLucidaFontShape{OML}{hlcm}{m}{itx}{hlcrim}{}
+%<yy>\DeclareLucidaFontShape{OML}{hlcm}{b}{itx}{lbmdi}{}
+%<kb>\DeclareLucidaFontShape{OML}{hlcm}{b}{itx}{hlcdim}{}
+%</OMLhlcm>
+%    \end{macrocode}
+%
+% \subsection{Lucida Math Italics font description files}
+%    \begin{macrocode}
+%<*OMLhlh>
+\DeclareFontFamily{OML}{hlh}{}
+\DeclareFontShape{OML}{hlh}{m}{n}    {<-> ssub * hlcm/m/n}{}
+\DeclareFontShape{OML}{hlh}{m}{it}   {<-> ssub * hlcm/m/n}{}
+\DeclareFontShape{OML}{hlh}{m}{sl}   {<-> ssub * hlcm/m/n}{}
+\DeclareFontShape{OML}{hlh}{m}{sc}   {<-> ssub * hlcm/m/n}{}
+\DeclareFontShape{OML}{hlh}{bx}{n}   {<-> ssub * hlcm/b/n}{}
+\DeclareFontShape{OML}{hlh}{bx}{it}  {<-> ssub * hlcm/b/n}{}
+\DeclareFontShape{OML}{hlh}{bx}{sl}  {<-> ssub * hlcm/b/n}{}
+\DeclareFontShape{OML}{hlh}{bx}{sc}  {<-> ssub * hlcm/b/n}{}
+%</OMLhlh>
+%    \end{macrocode}
+%
+% \subsection{Lucida Math Symbols font description files}
+%    \begin{macrocode}
+%<*OMShlh>
+\DeclareFontFamily{OMS}{hlh}{\skewchar\font=48}
+\DeclareFontShape{OMS}{hlh}{m}{n}    {<-> ssub * hlcy/m/n}{}
+\DeclareFontShape{OMS}{hlh}{m}{it}   {<-> ssub * hlcy/m/n}{}
+\DeclareFontShape{OMS}{hlh}{m}{sl}   {<-> ssub * hlcy/m/n}{}
+\DeclareFontShape{OMS}{hlh}{m}{sc}   {<-> ssub * hlcy/m/n}{}
+\DeclareFontShape{OMS}{hlh}{bx}{n}   {<-> ssub * hlcy/b/n}{}
+\DeclareFontShape{OMS}{hlh}{bx}{it}  {<-> ssub * hlcy/b/n}{}
+\DeclareFontShape{OMS}{hlh}{bx}{sl}  {<-> ssub * hlcy/b/n}{}
+\DeclareFontShape{OMS}{hlh}{bx}{sc}  {<-> ssub * hlcy/b/n}{}
+%</OMShlh>
+%    \end{macrocode}
+%
+% \subsection{LucidaNewMath-Symbols  font description files}
+%    \begin{macrocode}
+%<*OMShlcy>
+\DeclareFontFamily{OMS}{hlcy}{\skewchar\font=48}
+%<yy>\DeclareLucidaFontShape{OMS}{hlcy}{m}{n}{lbms}{}
+%<kb>\DeclareLucidaFontShape{OMS}{hlcy}{m}{n}{hlcry}{}
+%<yy>\DeclareLucidaFontShape{OMS}{hlcy}{b}{n}{lbmsd}{}
+%<kb>\DeclareLucidaFontShape{OMS}{hlcy}{b}{n}{hlcdy}{}
+%</OMShlcy>
+%    \end{macrocode}
+%
+% \subsection{LucidaNewMath-Extension  font description files}
+%    \begin{macrocode}
+%<*OMXhlcv>
+\DeclareFontFamily{OMX}{hlcv}{}
+%<yy>\DeclareLucidaFontShape{OMX}{hlcv}{m}{n}{lbme}{}
+%<kb>\DeclareLucidaFontShape{OMX}{hlcv}{m}{n}{hlcrv}{}
+%</OMXhlcv>
+%    \end{macrocode}
+%
+% \subsection{LucidaNewMath-Arrows  font description files}
+%    \begin{macrocode}
+%<*LMRhlcm>
+\DeclareFontFamily{LMR}{hlcm}{}
+%<yy>\DeclareLucidaFontShape{LMR}{hlcm}{m}{n}{lbma}{}
+%<kb>\DeclareLucidaFontShape{LMR}{hlcm}{m}{n}{hlcra}{}
+%<yy>\DeclareLucidaFontShape{LMR}{hlcm}{b}{n}{lbmad}{}
+%<kb>\DeclareLucidaFontShape{LMR}{hlcm}{b}{n}{hlcda}{}
+%</LMRhlcm>
+%    \end{macrocode}
+%
+% \Finale

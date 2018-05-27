@@ -1,0 +1,31 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 05.12.15 : 1810 - 1826
+% ges: 16 min
+
+
+
+\begin{document}
+\begin{tikzpicture}[scale=4]
+
+
+\draw[-latex,thick] (0,0)--(0,1)node[below left,align=right]{Zahl der Ideen \\ bzw. Projekte \\ \\ Kosten je \\ Projekt};
+
+\draw[-latex, thick] (0,0)--(3,0)node[right]{Zeit};
+
+\draw[thick, dashed] (0,.9)to[out=-60,in=178](2.9,.01);
+
+\draw[thick] (.3,0)to[out=5,in=60+180] (2.9,.9)node[below right]{Kosten};
+
+\draw (2.9,0.05)--++(0,-.1)node[below,align=center]{1 erfolgreiches \\ Produkt};
+\draw (2.3,0.05)--++(0,-.1)node[below]{2 Produkte};
+\draw (1.1,0.15)--++(0,-.2)node[below,align=center]{5..10 Entwicklungs- \\ projekte};
+
+\draw (-0.02,.9)--++(.04,0)node[right]{100 Ideen};
+
+
+\end{tikzpicture}
+
+\end{document}

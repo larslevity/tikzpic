@@ -1,0 +1,97 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 13.1.16 : 1150-1250
+% ges = 60min
+
+\begin{document}
+\begin{tikzpicture}[yscale=1.2,xscale=4]
+
+%% Oberbau
+\draw (0,1.5)rectangle++(.8,1.5)node[midway,align=center]{Produkt- \\ entwicklung};
+\draw[-latex] (.8,2.2)--++(.2,0);
+\draw[-latex] (.8,2.3)--++(.1,0)|-++(.1,2.5);
+
+\draw (1,1.5)rectangle++(.8,1.5)node[midway,align=center]{Arbeits- \\ vorbereitung};
+\draw (1,4)rectangle++(.8,1.5)node[midway,align=center]{Material- \\ wirtschaft};
+\draw[-latex] (1.8,2.2)--++(.2,0);
+\draw[-latex] (1.8,2.3)--++(.1,0)|-++(1.1,2.4);
+\draw[-latex] (1.8,4.8)--++(1.2,0);
+
+\draw (2,1.5)rectangle++(.8,1.5)node[midway,align=center]{Betriebsmittel- \\ entwicklung};
+\draw[-latex] (2.8,2.2)--++(.2,0);
+\draw[-latex] (2.8,2.3)--++(.1,0)|-++(.1,2.3);
+
+\draw (3,1.5)rectangle++(.8,1.5)node[midway,align=center]{Investitions- \\ planung};
+\draw (3,4)rectangle++(.8,1.5)node[midway,align=center]{Qualitäts- \\ management};
+\draw[-latex] (3.8,2.2)--++(.2,0);
+\draw[-latex] (3.8,4.8)--++(.1,0)|-++(.1,-2.5);
+
+\draw (4,1.5)rectangle++(.8,1.5)node[midway,align=center]{Fertigung};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ebene 0
+\draw (0,.5)rectangle(.8,-.6)node[midway,align=center]{\textbf{Konstruieren,} \\ \textbf{Testen usw.}};
+\draw (0,-.9)rectangle(.8,-1.6)node[midway]{Ändern};
+\draw (0,-2.4)rectangle++(.8,-.7)node[midway]{Ändern};
+\draw (0,-4.9)rectangle++(.8,-.7)node[midway]{Ändern};
+
+% Ebene 1
+\draw (1,-.4)rectangle(1.8,-1.1)node[midway]{Planen};
+\draw (1,-1.4)rectangle(1.8,-2.1)node[midway]{Ändern};
+\draw (1,-2.9)rectangle++(.8,-.7)node[midway]{Ändern};
+\draw (1,-4.4)rectangle++(.8,-.7)node[midway]{Anders Planen};
+\draw (1,-5.4)rectangle++(.8,-.7)node[midway]{Ändern};
+% Pfeile Ebene 1
+\draw[-latex] (.8,-.5)--(1,-.5);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (1,-1)--(.8,-1);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (.8,-1.5)--(1,-1.5);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (.8,-3)--++(.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (1,-5)--++(-.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (.8,-5.5)--++(.2,0);
+
+% Ebene 2
+\draw[dashed] (2,-.9)rectangle++(.8,-.7)node[midway]{Planen};
+\draw (2,-1.9)rectangle++(.8,-.7)node[midway]{Planen};
+\draw (2,-3.4)rectangle++(.8,-.7)node[midway]{Ändern};
+\draw (2,-5.9)rectangle++(.8,-.7)node[midway]{Ändern};
+% Pfeile Ebene 2
+\draw[-latex,dashed] (1.8,-1)--++(.2,0);
+\draw[-latex] (1.8,-2)--++(.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (2,-2.5)--(.8,-2.5);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (1.8,-3.5)--++(.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (1.8,-6)--++(.2,0);
+
+% Ebene 3
+\draw[dashed] (3,-1.4)rectangle++(.8,-.7)node[midway]{Planen};
+\draw[] (3,-3.9)rectangle++(.8,-.7)node[midway]{Planen};
+\draw (3,-6.4)rectangle++(.8,-.7)node[midway]{Ändern};
+% Pfeile Ebene 3
+\draw[-latex,dashed] (2.8,-1.5)--++(.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (2.8,-4)--++(.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (3,-4.5)--++(-1.2,0);
+\draw[-latex, decoration={snake, amplitude = .02cm},decorate] (2.8,-6.5)--++(.2,0);
+
+% Ebene 4
+\draw[dashed] (4,-1.9)rectangle++(.8,-.7)node[midway]{Fertigen};
+\draw (4,-6.9)rectangle++(.8,-.7)node[midway]{\textbf{Fertigen}};
+% Pfeile Ebene 4
+\draw[-latex,dashed] (3.8,-2)--++(.2,0);
+\draw[-latex] (3.8,-7)--++(.2,0);
+
+
+
+%%%%% Pfeile
+\draw[help lines] (.8,.5)--(5.5,.5);
+\draw [help lines] (4.8,-2.6)--(5.2,-2.6);
+\draw [help lines] (4.8,-7.6)--(5.5,-7.6);
+\draw[very thick, -latex, dashed] (5,.5)node{$\bullet$}--++(0,-3.1);
+\draw[very thick, -latex] (5.3,.5)node{$\bullet$}--++(0,-8.1)node[midway,sloped,above, align=center]{Zeit vom Projektbeginn \\ bis zur Markteinführung};
+\draw[thick, dashed, latex-latex] (5,-2.6)--(5,-7.6) node[midway,sloped,above]{mögliche Zeiteinsparung};
+
+\path (2,-.5) node[right]{\textit{Idealverlauf}};
+
+
+\end{tikzpicture}
+\end{document}

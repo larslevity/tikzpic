@@ -1,0 +1,63 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 13.11.15 : 1230-1300
+% 21.11.15 : 1300-1400
+
+
+
+\begin{document}
+\begin{tikzpicture}
+
+
+% Params
+\def\xabs{9};
+\def\yabs{-12};
+\def\zh{.6}
+\pgfmathsetmacro{\zhhalf}{\zh*.5}
+
+\draw (0,0)coordinate(OL)--(\xabs,0)coordinate(OR)--(\xabs,\yabs)coordinate(UL)--(0,\yabs)coordinate(UR)--cycle;
+
+\draw (OL)rectangle++(\zh,-\zh)node[midway]{\hw{P}}coordinate(help);
+\path(help)++(0,\zhhalf)node[right]{\hw{Bezeichnung:}};
+\draw (OL)++(0,-\zh)rectangle++(\zh,-\zh)node[midway]{\hw{V}}--++(\xabs-\zh,0);
+\path(OL)++(0,-\zh-\zh-\zhhalf)node[right]{\hw{Skizze:}};
+
+
+\pgfmathsetmacro{\breiteOR}{\xabs*.4}
+\pgfmathsetmacro{\breiteDatum}{\breiteOR*.65}
+\draw (OR)rectangle++(-\breiteOR,-\zh)coordinate(help)++(0,\zhhalf)node[right]{\hw{Produktgruppe:}};
+\draw (help)rectangle++(\breiteDatum,-\zh)coordinate(help2)rectangle(\xabs,-\zh)coordinate(help3);
+\path(help)++(0,-\zhhalf)node[right]{\hw{Datum:}};
+\path(help2)++(0,\zhhalf)node[right]{\hw{Nr:}};
+\draw (help3)++(0,-\zh)rectangle++(-\breiteOR,-\zh) ++(0,\zhhalf)node[right]{\hw{Urheber:}};
+
+
+% Unten
+\pgfmathsetmacro{\breiteUL}{\xabs*.5}
+\foreach \x/\t in {0/F,1/F,2/T,3/V,4/ }{
+\pgfmathsetmacro{\xx}{\breiteUL+\x*(\xabs-\breiteUL)/5}
+\pgfmathsetmacro{\yy}{6.5*\zh}
+\draw (\xx,\yabs)--++(0,\yy)++(0,-\zhhalf)node[right]{\hw{\t}};
+}
+\foreach \y/\t in {1/Summen,2/Entwicklungsgruppe,3/Fertigungspot.,4/Marktpotential,5/Unternehmenspot.,6/Bemerkung:}{
+\pgfmathsetmacro{\yy}{\yabs+\zhhalf+\y*\zh}
+\draw(\xabs,\yy)--++(-\xabs,0)++(0,-\zhhalf)coordinate(help);
+\path(help) node[right]{\hw{\t}};
+}
+
+% Mitte
+\pgfmathsetmacro{\yhalf}{\yabs*.5}
+\draw(\xabs,\yhalf)--++(-\xabs,0)++(0,-\zhhalf)node[right]{\hw{Kurzbeschreibung:}};
+
+% Rahmen
+\pgfmathsetmacro{\xleft}{\zh*2}
+\draw (-\xleft,\zh)rectangle(\xabs+\zh,\yabs-\zh);
+\draw (-\zh,\yhalf)++(0,2)circle(.15);
+\draw (-\zh,\yhalf)++(0,-2)circle(.15);
+
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,29 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 12.02.16 : 0040-0100
+% ges = 20 min
+
+\begin{document}
+\begin{tikzpicture}[scale=1.2]
+
+
+
+\path (0,0)node(P)[ellipse,draw]{Person};
+
+\path (0,3)node(Z)[ellipse,draw]{Ziel};
+
+\draw[very thick] (-3,0)--++(0,1.75)--++(6,0)--++(0,-1.75)--++(-.5,0)--++(0,1.25)--++(-5,0)node[midway,above]{Problem}--++(0,-1.25)--cycle;
+
+
+\path (4,0)node(U)[dashed,circle,draw]{~~};
+
+\draw[dashed,-latex] (P.300)to[out=300,in=240](U.240);
+
+\draw[dashed,-latex] (U.80)to[out=80,in=350](Z.350);
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,54 @@
+\input{../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 05.07.16 : 1200 - 
+% ges = x min
+
+\begin{document}
+\begin{tikzpicture}[scale=1.8]
+
+\def\b{2.7}
+\def\mid{4.5}
+
+
+\path (\mid, 0.5) coordinate (last);
+\foreach \y/\t in {
+0/{Bedürfnis \\ nach kreativer \\ Selbstgestaltung},
+1/{Bedürfnis nach \\ Wertschätzung},
+2/{Bedürfnis nach Kontakt \\ Zugehörigkeit zur Gruppe},
+3/{Bedürfnis nach Sicherheit, \\ Geborgenheit},
+4/{Körperliche Grundbedürfnisse wie \\ Essen, Trinken, Schlafen, usw.}}{
+	\pgfmathsetmacro{\dx}{(\y+1)/5*\b}
+	\pgfmathsetmacro{\dxs}{(\y)/5*\b}	
+	\pgfmathtruncatemacro{\dec}{mod(\y,2)}
+	\ifnum 4=\y 
+		\def\dec{1} 
+	\fi
+	\ifnum 0=\dec 
+		\def\fill{gray!15}
+	\else
+		\def\fill{gray!5}
+	\fi
+	\path[fill=\fill] (last)--(0,-\y+.5)--(0,-\y-.5)--(\mid+\dx, -\y-.5) coordinate(last) --cycle; 
+	\draw (\mid-\dxs,-\y+.5)--++(\dxs+\dxs,0);
+	\path (\mid, -\y)node[align=center]{\t};
+	}
+
+
+
+\foreach \y/\t in {
+0/{Selbsterkenntniss zur \\ Selbstverwirklichung},
+1/{Geltungstrieb \\ (Sein-Wollen)},
+2/{Kontakttrieb \\ (Gemeinschafts-Wollen)},
+3.5/{Besitztrieb \\ (Haben-Wollen)}}{
+	\path (0, -\y)node[right, align=left]{\t};
+	}
+
+
+
+\draw (\mid, .5)--(\mid-\b, -4.5)--++(\b+\b, 0)--cycle;
+
+\end{tikzpicture}
+\end{document}
+

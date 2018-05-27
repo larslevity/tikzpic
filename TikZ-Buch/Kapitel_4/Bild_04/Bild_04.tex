@@ -1,0 +1,38 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.01.16 : 1810 - 1835
+% ges = 25 min
+
+\begin{document}
+\begin{tikzpicture}[xscale=2.5]
+
+\renewcommand{\hw}[1]{#1}
+\newcommand{\te}[1]{#1}
+
+\foreach \y/\ti/\t/\tii in {
+1/\hw{Kaffeebohnen}/\hw{Kaffeemehl} / \hw{(Stoff)},
+0/ \hw{Energie (elektr.)}/ \te{\hw{Wärme} \\ \hw{Geräusch}} / \hw{(Energie)},
+-1/ \hw{Schaltsignal} / \hw{Mahlende} / \hw{(Information)}
+}{
+\path[] (-2,\y)node[left=.2cm]{\ti}--++(1,0)node[midway,above]{\tii};
+\path[] (1,\y)--++(1,0)node[right=.2cm,align=left]{\t};
+}
+
+\foreach \y/\opt in {1/dashed,
+0/very thick,
+-1/}{
+\draw[\opt,black] (-2,\y)--++(1,0);
+\draw[-latex] (-1.1,\y)--++(.1,0);
+\draw[\opt,black] (1,\y)--++(1,0);
+\draw[-latex] (1.9,\y)--++(.1,0);
+
+
+}
+
+
+\draw(-1,1.2)rectangle(1,-1.2)node[midway,align = center]{\hw{Kaffebohnen} \\ \hw{zerkleinern}};
+
+\end{tikzpicture}
+\end{document}

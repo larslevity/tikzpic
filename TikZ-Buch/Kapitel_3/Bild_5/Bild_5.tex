@@ -1,0 +1,37 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.11.15 : 1430- 1440
+
+
+
+\begin{document}
+\begin{tikzpicture}[scale=.6]
+
+
+\draw[-latex] (0,0)--(18,0)node[below]{Wochen};
+
+\foreach \x in {0,4,10,14,16}{
+\draw (\x,0)node[below]{\x}--++(0,.5);
+}
+\foreach \x in {1,2,6,8,12}{
+\draw (\x,0)node[below]{\x}--++(0,.2);
+}
+\foreach \x/\t in {0/{Zeichnen und \\ Berechnen},4.5/{Muster \\ fertigen},10/{Versuche},14/{Bericht}}{
+\draw (\x,0)++(0,2)node[right,align=left]{\t};
+}
+
+\draw[help lines] (4,-1)--++(0,-2);
+\draw (4,-4)--++(5,0) node[right]{($\rightarrow$ Übergang zum Netzplan)} ;
+\foreach \x in {4,9}{
+\draw (\x,-4)node[below]{\x}--++(0,.5);
+}
+\foreach \x in {6,8}{
+\draw (\x,-4)--++(0,.2);
+}
+\path (4.5,-2) node[right,align=left,black]{Versuchsstand \\ aufbauen};
+
+\end{tikzpicture}
+
+\end{document}

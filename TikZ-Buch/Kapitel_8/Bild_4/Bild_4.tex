@@ -1,0 +1,61 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 15.1.16 : 1755 - 1830
+% ges = 35 min
+
+\begin{document}
+\begin{tikzpicture}[scale=4,xscale=1.5]
+
+
+\newcommand{\drawL}[7]{
+\path (#1,#2) coordinate (M);
+\def\h{#3}
+\def\b{#4}
+\def\su{#5}
+\def\sl{#6}
+\def\opt{#7}
+\path (M)--++(-\b,0)coordinate(L)--++(\sl,0)coordinate(LS);
+\path (M)--++(\b,0)coordinate(R)--++(-\sl,0)coordinate(RS);
+\path (M)--++(0,\h)coordinate(U)--++(-\su,0)coordinate(ULS);
+\path (U)--++(\su,0)coordinate(URS);
+\draw[\opt] (L)..controls (LS)and(ULS) .. (U) .. controls (URS) and (RS) .. (R);
+}
+
+% Team
+\drawL{.5}{0}{.8}{.3}{.3}{.1}{dashed}
+% Speziallisten
+\drawL{.35}{0}{.7}{.05}{.05}{.05}{solid}
+\drawL{.5}{0}{.5}{.1}{.1}{.05}{solid}
+\drawL{.65}{0}{.45}{.1}{.05}{.1}{solid}
+
+\drawL{.5}{0}{.2}{.3}{.2}{.1}{solid}
+
+\draw[decoration={zigzag, amplitude=.01cm},decorate,help lines] (0,.1)-|(.1,0);
+
+\draw[decoration={zigzag, amplitude=.01cm},decorate,help lines] (0,.2)-|(.2,0)node[pos=.25,above]{1900};
+\draw[decoration={zigzag, amplitude=.01cm},decorate,help lines] (0,.4)-|(.4,0);
+
+
+\draw[decoration={zigzag, amplitude=.01cm},decorate,help lines] (0,.9)-|(.9,0)node[pos=.25,above]{heute};
+
+
+
+\path (.5,.8)node[right,fill=white]{Team};
+\path (.6,.55)node[right,fill=white]{Spezialisten};
+\path (.9,.8)node[right,align=left]{synergetischer \\ Effekt};
+
+
+
+
+\draw[-latex] (0,0)--++(1.2,0)node[below left]{Wissensbreite};
+\draw[-latex] (0,0)--++(0,1)node[pos=.6,above,sloped]{Wissenstiefe};
+
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

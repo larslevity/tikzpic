@@ -1,0 +1,49 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.01.16 : 1505 - 1540
+% ges = 35 min
+
+\begin{document}
+\begin{tikzpicture}[scale=1.2]
+
+\draw[help lines,fill=gray!10] (0,0)rectangle(5.8,6);
+\draw[help lines,fill=gray!20] (8,0)rectangle(12,6);
+
+\def\pathI{(0,0) .. controls (1.8,2) and (2.5,3.4) .. (4,3.4)coordinate[pos=.55](XX) .. controls (5.5,3.4) and (7,1) .. (10,0)}
+\fill[white, opacity=.8] \pathI;
+
+\draw[thick,fill=white,opacity=.8] (2,0) .. controls (10,.5) and (8.5,6) .. (10,6)coordinate[pos=.55](X) ..controls (12,6) and (11,0) .. (12,0);
+
+\draw[thick] \pathI;
+
+\draw[-latex] (0,0)--++(0,6.5)node[midway,sloped,above]{kostenteilige Fehlerquote $[$\%$]$};
+\draw[-latex] (0,0)--++(12.5,0)node[below left]{Phasen im Produktlebenslauf};
+
+
+\foreach \x/\t in {2/Definition,4/Entwicklung,6/Ablaufplan,8/Fertigung,10/Prüfung,12/Einsatz}{
+\draw[help lines] (\x,0)--++(0,6);
+\path (\x,6)++(-1,.3)node[]{\t};
+}
+\foreach \y in {2,4,6}{
+\draw[help lines] (0,\y)--++(12,0);
+}
+
+
+
+\draw[help lines] (XX)--++(-45:.5)node[below right, black, align=left,fill=white]{Entstehung \\ der Fehler};
+
+
+\draw[help lines] (X)--++(-45:.5)node[below right, black, align=left,fill=white]{Behebung \\ der Fehler};
+
+\draw (.1,7)rectangle(5.7,8)node[midway,align=center]{75 \% der \\ enstandenen Fehlern};
+
+
+\draw (8.1,7)rectangle(11.9,8)node[midway,align=center]{80 \% der \\ behobenen Fehlern};
+
+
+
+
+\end{tikzpicture}
+\end{document}

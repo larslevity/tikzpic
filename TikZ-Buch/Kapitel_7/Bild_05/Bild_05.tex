@@ -1,0 +1,63 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.01.16 : 15 40 - 1610 
+% 1945 - 2025
+% ges = 70 min
+
+\begin{document}
+\begin{tikzpicture}[scale=1.2]
+
+
+
+\def\mypath {(12,6)..controls (11,1) and (8,.5) .. (0,0)};
+
+\begin{scope}[xshift=-.3cm,yshift=.3cm]
+\draw \mypath;
+\path (12,6)coordinate(last);
+\foreach[count=\x] \i/\j in {.15/0.05,.51/.3,.68/.6, .8/.75 , .93/.85}{
+\path[] \mypath coordinate[pos=\j](end)coordinate[pos=\i](start);
+\path[fill=white] (end)rectangle(last);
+\path (start)coordinate(\x)coordinate(last);
+}
+\path[fill=white] (last)rectangle(-.1,-.1);
+
+
+\foreach[count=\x] \t/\i in {100.-/.14, 10.-/.42, 1.-/.58, ~/.72, 10.-/.9}{
+\path[decoration={markings,mark=at position \i with \arrow{latex}},postaction=decorate] \mypath;
+\path (\x) node[above left]{\t};
+} 
+
+\end{scope}
+
+
+
+\path[help lines] (10,4)node(A)[scale=1.6]{Fehlerentdeckung};
+\path[help lines] (2,4)node(B)[scale=1.6]{Fehlerverhütung};
+\draw[very thick, help lines,-latex] (A)--(B);
+
+
+\path[help lines] (2,3) node[align=center]{entwickeln \\ und planen};
+
+\path[help lines] (6,3) node[align=center]{beschaffen \\ und herstellen};
+
+
+
+\draw[-latex] (0,0)--++(0,6.5)node[midway,sloped,above]{Kosten pro Fehler};
+\draw[-latex] (0,0)--++(12.5,0)node[below left]{Phasen im Produktlebenslauf};
+
+\foreach \x/\t in {2/Definition,4/Entwicklung,6/Ablaufplan,8/Fertigung,10/Prüfung,12/Einsatz}{
+\path (\x,6)++(-1,0)node[]{\t};
+}
+
+\draw[help lines,dotted] (4,-.3)--++(0,6.8);
+\draw[help lines,dotted] (8,-.3)--++(0,6.8);
+
+\draw[thick] \mypath;
+
+
+
+
+\end{tikzpicture}
+\end{document}

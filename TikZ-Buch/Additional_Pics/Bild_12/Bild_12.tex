@@ -1,0 +1,155 @@
+\input{../TikZ_header.tex}
+
+
+
+%% Arbeitszeit:
+% 03.03.15 : 1300 - 1400 % Welle fertig
+% 6.3.16 : 0000 - 0220
+% ges = 60+ 140min = 200min
+
+\begin{document}
+\begin{tikzpicture}[scale=.6]
+
+
+
+%%%%% Markings
+
+\begin{scope}[help lines]
+\def\y{-16}
+\def\x{-1.9}
+\draw (\x,-5)--(\x,\y)coordinate(1);
+\def\x{-.1}
+\draw (\x,-1)--(\x,\y)coordinate(2);
+\def\x{.3}
+\draw (\x,-1)--(\x,\y)coordinate(3);
+\def\x{2.3}
+\draw (\x,-1)--(\x,\y)coordinate(33);
+\def\x{14.3}
+\draw (\x,-1)--(\x,\y)coordinate(4);
+\def\x{16.3}
+\draw (\x,-1)--(\x,\y)coordinate(5);
+\def\x{18.5}
+\draw (\x,-5)--(\x,\y)coordinate(6);\end{scope}
+
+\begin{scope}[thick, latex-latex]
+\def\dy{8.5}
+\draw ($(1)+(0,\dy)$)--($(2)+(0,\dy)$)node[above,midway,black]{$c$};
+\draw ($(2)+(0,\dy)$)--($(3)+(0,\dy)$)node[above,midway,black]{$s$};
+\draw ($(3)+(0,\dy)$)--($(33)+(0,\dy)$)node[above,midway,black]{$b$};
+\draw ($(33)+(0,\dy)$)--($(4)+(0,\dy)$)node[above,midway,black]{$g$};
+\draw ($(4)+(0,\dy)$)--($(5)+(0,\dy)$)node[above,midway,black]{$b$};
+\draw ($(5)+(0,\dy)$)--($(6)+(0,\dy)$)node[above,midway,black]{$e$};
+\draw ($(1)+(0,\dy-1)$)--($(6)+(0,\dy-1)$)node[above,midway,black]{$d$};
+\end{scope}
+
+
+%%%% Diagramm
+
+\fill[white] (-2,-9)rectangle(19,-10.5);
+
+\fill ($(1)+(0,5.3)$)circle(.1)coordinate(help);
+\draw[-latex] (help)--++(.8,0)node[right]{+};
+
+\fill ($(1)+(0,2.5)$)circle(.1)coordinate(help);
+\draw[-latex] (help)--($(6)+(0,2.5)$)node[above, midway]{$d=160_{\pm0.05}$};
+
+\fill ($(6)+(0,.5)$)circle(.1)coordinate(help);
+\draw[-latex] (help)--($(5)+(0,.5)$)node[above, midway,align=left]{$e=$\\$19_{\pm0.05}$};
+\draw[-latex] ($(5)+(0,.5)$)--($(4)+(0,.5)$)node[above, midway,align=left]{$b=$\\$15_{-0.12}$};
+\draw[-latex] ($(4)+(0,.5)$)--($(33)+(0,.5)$)node[above, midway,align=left]{$g=95.8^{-0.15}_{-0.21}$};
+\draw[-latex] ($(33)+(0,.5)$)--($(3)+(0,.5)$)node[above, midway,align=left]{$b=$\\$15_{-0.12}$};
+
+\fill ($(2)+(0,3)$)circle(.1)coordinate(help);
+\draw[-latex] (help)--($(1)+(0,3)$)node[above, midway,align=left]{$c=$\\$15_{\pm0.05}$};
+
+
+\fill ($(3)+(0,4)$)circle(.1)coordinate(help);
+\draw[-latex] (help)--($(2)+(0,4)$)node[above right, midway,align=left]{$s=0.2^{+0.6}$};
+
+
+
+
+
+
+% Symmeztrie Linie
+\draw[dash pattern = on 10pt off 5pt on 2pt off 5pt, help lines] (-5,0)--(25.5,0);
+
+% Welle
+\foreach \s in {+,-}{
+\draw[thick] (0,0)--++(0,\s .9)--++(.1,\s .1)coordinate(1)--++(2,0)coordinate(2)arc(\s -180: 0:.1)coordinate(\s L)coordinate(3)--++(0,\s .2)--++(.1,\s .1)coordinate(4)--++(1,0)coordinate(5)--++(.1, -\s .1)--++(0,-\s .1)coordinate(6)--++(2,0)coordinate(7)--++(.3,\s .5)coordinate(8)--++(5,0)coordinate(9)--++(.3,-\s .5)coordinate(10)--++(2,0)coordinate(11)--++(0,\s .1)--++(.1, \s .1)coordinate(12)--++(1,0)coordinate(13)--++(.1,-\s .1)--++(0,-\s .2)coordinate(14)coordinate(\s R)arc(\s -180:0:.1)coordinate(15)--++(2,0)coordinate(16)--++(.1,-\s .05)coordinate(20)--++(3.9,0)coordinate(21)--++(.1,-\s .1)--++(0,-\s .1)coordinate(17)arc(\s -180:0:.1)coordinate(18)--++(4,0)coordinate(19)--++(.1,-\s .1)--++(0,-\s .7);
+
+\draw[dash pattern = on 10pt off 5pt on 2pt off 5pt, help lines] (10)++(0,\s .3)--++(-5.6,0);
+
+% Passfeder
+\draw (21.5,0)arc(\s 180:\s 90:.3)--++(2,0)arc(\s 90:\s 0:.3);
+
+% Linkes Lager
+\draw[thick] (\s L)rectangle++(-2,\s 2)--++(2, -\s 2)++(-2,0)--++(2,\s 2);
+% Rechtes Lager
+\draw[thick] (\s R)rectangle++(2,\s 2)--++(-2, -\s 2)++(2,0)--++(-2,\s 2);
+
+
+
+% Sichtkanten
+\foreach \i in {1,...,21}{
+\draw (\i)--++(0,-\s 1.5);
+}
+\draw (8)--++(0,-\s 2);
+\draw (9)--++(0,-\s 2);
+
+}
+
+
+%%%% Gehaeuse:
+
+
+\begin{scope}
+\path[clip] (-2,7)rectangle(18.6,-7);
+
+\begin{scope}
+\path[clip,decorate,decoration={zigzag, segment length=7cm, amplitude=.2cm}] (-8,6)rectangle(28,-6);
+\path[draw, help lines,decorate,decoration={zigzag, segment length=7cm, amplitude=.2cm}] (-8,6)rectangle(28,-6);
+
+\foreach \s in {+,-}{
+\fill[draw,thick,pattern = my north east lines, line space = 1cm] (\s L)++(-.2,\s 2)rectangle++(-4,\s 5);
+\fill[draw,thick,pattern = my north east lines, line space = 1cm] (\s R)++(.2,\s 2)rectangle++(4,\s 5);
+}
+\end{scope} % 
+\end{scope} % 
+
+
+% Deckel rechts
+
+\foreach \s in {+,-}{
+\fill[draw, thick, pattern = my north west lines, line space = .5cm] (\s R) ++ (2,\s 1.5) --++ (0,\s .3)--++(.2,\s .2)--++(.5,0)coordinate(\s D)--++(0,\s -.3)--++(.3,0)--++(0,\s .3)--++(1.2,0)--++(0,\s 3)--++(.8,0)--++(.2,\s -.2)--++(0,\s -2.8)--++(.5,-\s 1)--++(0,-\s .2)coordinate(\s RWDR)--++(-1,0)coordinate(1)--++(-.7,\s .7)coordinate(2)--cycle;
+\draw[fill] (\s D)++(.15,\s -.15)circle(.15);
+\draw[thick] (\s RWDR)rectangle++(-.8,\s -.8);
+\draw[line width = .1cm] (\s RWDR)++(-.7,\s-.1)--++(.6,0)--++(0,\s -.4)--++(-.4,\s -.2)--++(-.1,\s .1);
+
+% Sichtkanten
+\draw (1)--++(0,\s -.85);
+\draw (2)--++(0,\s -1.55);
+
+% Deckel links
+\fill[draw, thick, pattern = my north west lines, line space = .5cm] (\s L) ++ (-2.4,\s 1.5)coordinate(1) --++ (0,\s .3)--++(-.2,\s .2)--++(-.5,0)coordinate(\s D)--++(0,\s -.3)--++(-.3,0)--++(0,\s .3)--++(-.8,0)--++(0,\s 3)--++(-.8,0)--++(-.2,\s -.2)--++(0,\s -2.8)--++(-.5,-\s 1)--++(0,-\s 2)--++(1,0)--++(0,\s 2.1)--++(.4,\s .4)coordinate(2)--cycle;
+\draw[fill] (\s D)++(-.15,\s -.15)circle(.15);
+% Sichtkanten
+\draw (1)--++(0,\s -2.5);
+\draw (2)--++(0,\s -2.5);
+}
+
+% Schrauben
+\foreach \s in {+,-}{
+\draw[very thick, dash pattern = on 10p
+t off 5 pt on 2 pt off 5pt] (-4,\s 4.5)--++(4,0);
+\draw[very thick, dash pattern = on 10p
+t off 5 pt on 2 pt off 5pt] (20.5,\s 4.5)--++(-4,0);
+
+}
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

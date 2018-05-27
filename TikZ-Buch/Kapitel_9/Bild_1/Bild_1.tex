@@ -1,0 +1,38 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 14.01.16 : 1330-1410
+% ges = 40 min
+
+\begin{document}
+\begin{tikzpicture}[xscale=6, yscale=4]
+
+\def\mypath{(.1,.2)--(.9,.5)}
+\draw[very thick] \mypath node[right, align = center]{Stand der Technik};
+\draw[thick, dash pattern=on 10pt off 2 pt](.1,.4)--(.9,.7)node[right]{Erfindungshöhe};
+
+\foreach[count = \i] \pos/\dy in {.4/.1,.433/.05, .466/.12, .5/.3, .533/.04, .566/.11, .6/.03, .633/.17 }{
+	\path \mypath coordinate[pos=\pos](X);
+	\draw (X)--++(0,\dy)coordinate(X);
+	\fill (X)circle(0.01)coordinate(\i);
+	\ifthenelse{\NOT \i=4}{
+	\draw[help lines] (\i)--(.7,.2);
+	}{}	
+	}
+
+\pgfmathsetmacro{\y}{.1 + (.5-.2)/.8*.4+.05}
+\pgfmathsetmacro{\ys}{6/4}
+\draw[dashed,yscale=\ys] (.515,\y)circle(.18) (.515,\y-.18)--(.515,0)node[below,align = center]{betrachteter \\ Zeitpunkt};
+
+
+
+\draw[-latex] (0,0)--++(1,0)node[below left]{Zeit};
+\draw[-latex] (0,0)--++(0,1)node[pos=.99,sloped, above left, align = center]{Summe bzw. \\ Höhe von Ideen};
+
+
+\path[draw, help lines] (4)--++(60:.1)node[above,black]{Patentfähige Idee};
+\path (.7,.2) node[right, align = center]{Nicht patentfähige Ideen}; 
+
+\end{tikzpicture}
+\end{document}

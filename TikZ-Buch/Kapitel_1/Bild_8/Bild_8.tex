@@ -1,0 +1,55 @@
+\input{../../TikZ_header.tex}
+
+
+
+%% Arbeitszeit:
+% 07.12.15 : 1246 - 
+% ges = 33min
+
+\begin{document}
+\begin{tikzpicture}[scale=5]
+
+\draw[-latex,thick] (0,0)--(0,1)node[pos=.99,above left,sloped]{Wert, Nutzwert};
+
+\draw [thick] (0,0)--(1.6,0);
+
+
+\draw[dash pattern=on 10pt off 3pt on 1pt off 3pt,thick] (0,.7)--(1.96,.7)coordinate[pos=.98](help);
+\draw[latex-] (help)--++(0,.15)node[above]{Angebot};
+\draw[latex-] (help)--++(0,-.15)node[below]{Nachfrage};
+
+
+
+\draw[thick] (.105,.75)--(.125,.7)--(.15,.8)--(.3,.8)node[midway,above]{Preis};
+
+
+% Wertz für Hersteller
+
+\draw [] (.2,0)rectangle(.5,.6)node[midway,rotate=90]{Kosten}coordinate(help);
+\draw[dashed, help lines] (help)--++(.5,0);
+\path (.2,1.2)++(.15,0)node[below,align=center]{Wert für \\ Hersteller};
+\draw [latex-latex] (.55,0)--++(0,.7)node[midway,sloped,below,align=center]{Nutzwert für \\ den Hersteller};
+
+
+
+
+
+% Wert für Abnehmer
+\draw [] (1.1,0)rectangle++(.3,.8)node[midway,rotate=90]{Kosten}coordinate(help);
+\draw[dashed, help lines] (help)++(-.3,0)--++(-.5,0) (help)--++(.15,0);
+\path (1.1,1.2)++(.15,0)node[below,align=center]{Wert für \\ Abnehmer};
+
+
+\draw [latex-latex] (1.45,0)--++(0,.8)node[midway,sloped,below,align=center]{Nutzwert für \\ den Abnehmer};
+
+
+
+% Werte Summe
+
+\draw [] (.2+.45,0.6)rectangle++(.3,.2);
+\path (.2+.45,1.2)++(.15,0)node[below,align=center]{Werte- \\ summe};
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,41 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 19.12.15 : - 1400-1440
+% ges = 40 min
+
+\begin{document}
+\begin{tikzpicture}
+
+\def\rect{rectangle, draw, minimum height = 4cm, minimum width = 1.5cm}
+
+
+\path (0,0)node(G)[rectangle, draw, minimum height = 1.5cm, minimum width = 3cm]{Geschäftsleitung};
+
+\foreach \x/\t in {-5/{Produkt- \\ entwick- \\ lung},-3/{Einkauf, \\ Material- \\ wirtschaft},-1/{Fertigung},1/{Verkauf, \\ Marketing},3/{Qualitäts- \\ managment},5/ Finanzen,7/Personal}{
+\draw (\x,-3)node{$\bullet$}--++(0,-.3)node[below, align= center]{\t}coordinate(help)--++(0.9,0)--++(0,-5)coordinate(1);
+\draw (help)--++(-.9,0)--++(0,-5)coordinate(2);
+\draw[decorate,decoration={zigzag,segment length = .8cm,amplitude=.05cm}] (1)--(2);
+}
+\draw (-5,-3)--(7,-3);
+\draw (G)--(0,-3)node[midway]{$\bullet$}coordinate[pos=.5](help);
+\draw (help)--++(2,0)node[right,rectangle, draw, minimum height = 1.5cm, minimum width = 3cm,align = center]{Stabsstellen, z.B. \\ Schutzrechte};
+
+
+\draw[dashed] (-8.5,-5)node[below right, align = left]{z.B. \\ Kupplungen}rectangle(8.5,-6);
+
+
+\draw[dashed] (-8.5,-6.5)node[below right, align = left]{z.B. \\ Getriebe}rectangle(8.5,-7.5);
+
+
+\draw[very thick, latex-] (-7.5,-4.5)--++(0,.5)node[above, align = center]{Gliederung nach \\ \textbf{Produktarten} \\ (horizontal)};
+
+
+\draw[very thick, latex-] (-3,-1)--++(-.5,0)node[left, align = center]{Gliederung nach \\ \textbf{Funktionsbereichen} \\ (vertikal)};
+
+
+
+
+\end{tikzpicture}
+\end{document}

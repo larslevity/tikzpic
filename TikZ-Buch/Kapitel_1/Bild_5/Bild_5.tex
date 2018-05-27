@@ -1,0 +1,28 @@
+\input{../../TikZ_header.tex}
+
+
+
+%% Arbeitszeit:
+% 05.12.15 : 1855 - 1940
+% ges = 45min
+
+\begin{document}
+\begin{tikzpicture}[scale=5,yscale=1.25]
+
+% Achsen
+\draw[-latex] (0,0)--(0,1)node[midway,sloped,above=20]{Innovationszeit / Jahre};
+\draw[-latex] (0,0)--(2,0)node[near end, below=15]{Jahr der Erfindung};
+
+\foreach \x/\t in {0/1700,.5/1800,1/1900,1.5/2000}{
+\draw (\x,.01)--++(0,-.02)node[below]{\t};}
+
+\foreach \y/\t in {0/0,.4/50,.8/100}{
+\draw (.01,\y)--++(-.02,0)node[left]{\t};}
+
+
+\draw [thick] (.1,1) .. controls (.6,.4)and (.8,.3) ..(1.4,.02) \foreach \p/\t in {0/Fotografie,.15/Dampfmaschine,.35/Telefon,0.59/Radio,0.8/Radar,.91/Transistor,1/Hochgeschw.-Schleifen}{node[pos=\p]{+}node[pos=\p,auto]{\t}};
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,90 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 24.01.16 : 1930 - 2000
+% ges = 30 min
+
+\begin{document}
+\begin{tikzpicture}[scale=1]
+
+\def\a{3}
+\def\b{1.2}
+\def\c{1.5}
+
+\def\x{1}
+\def\y{.6}
+\def\z{4}
+\def\zz{5}
+
+
+
+% Erste Zeile
+\pgfmathsetmacro{\yy}{0}
+\pgfmathsetmacro{\dy}{-\y}
+\pgfmathsetmacro{\dxx}{6*\a+4*\b}
+\pgfmathsetmacro{\dxxx}{4*\b}
+\foreach \xx/\dx/\t in {0/\dxx/FMEA-Projekt,\dxx/\dxxx/verbesserter Zustand}{
+\draw(\xx,\yy)rectangle++(\dx,\dy);
+\path(\xx,\yy)++(0,\dy)node[above right]{\t};
+} 
+
+
+\newcommand{\te}[1]{#1}
+
+% 2 Zeile
+\pgfmathsetmacro{\yy}{-\y}
+\pgfmathsetmacro{\dy}{-\x}
+\foreach \xx/\dx/\t in {
+0/\a/ Fehler,
+\a/\a/ Fehlerfolgen,
+\a+\a/\b/ $B$,
+\a+\a+\b/\a/ Fehlerursachen,
+\a+\a+\b+\a/\b/ $A$,
+\a+\a+\b+\a+\b/ \b /  $E$,
+\a+\a+\b+\a+\b+\b/\b/ $RPZ$,
+\a+\a+\b+\a+\b+\b+\b/\a/ \te{empfohlene \\ Maßnahmen},
+\a+\a+\b+\a+\b+\b+\b+\a/\a / Verantwortlicher,
+\a+\a+\b+\a+\b+\b+\b+\a+\a/\a / \te{getroffene \\ Maßnahmen},
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a/\b / $A$,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a+\b/\b / $E$,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a+\b+\b/\b / $RPZ$,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a+\b+\b+\b/\b / ~
+}{
+\draw(\xx,\yy)rectangle++(\dx,\dy);
+\path(\xx,\yy)++(0,\dy)node[above right,align=left]{ \t };
+} 
+
+% 3 Zeile
+\pgfmathsetmacro{\yy}{-\y-\x}
+\pgfmathsetmacro{\dy}{-\z}
+\foreach \xx/\dx/\t in {
+0/\a/ ~,
+\a/\a/ ~,
+\a+\a/\b/ ~,
+\a+\a+\b/\a/ ~,
+\a+\a+\b+\a/\b/ ~,
+\a+\a+\b+\a+\b/ \b /  ~,
+\a+\a+\b+\a+\b+\b/\b/ ~,
+\a+\a+\b+\a+\b+\b+\b/\a/ ~,
+\a+\a+\b+\a+\b+\b+\b+\a/\a / ~,
+\a+\a+\b+\a+\b+\b+\b+\a+\a/\a / ~,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a/\b / ~,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a+\b/\b / ~,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a+\b+\b/\b / ~,
+\a+\a+\b+\a+\b+\b+\b+\a+\a+\a+\b+\b+\b/\b / ~
+}{
+\draw(\xx,\yy)rectangle++(\dx,\dy);
+\path(\xx,\yy)++(0,\dy)node[above right,align=left]{ \t };
+} 
+
+
+\path[fill=white] (0,-\zz)--++(\dxx+\dxxx,0)--++(0,\y)--++(-\dxx-\dxxx,0)--cycle;
+
+
+\draw[decorate,decoration={zigzag,segment length=3cm,amplitude=.05cm},help lines] (0,-\zz)--++(\dxx+\dxxx,0)++(0,\y)--++(-\dxx-\dxxx,0)++(0,-\y);
+
+
+
+\end{tikzpicture}
+\end{document}

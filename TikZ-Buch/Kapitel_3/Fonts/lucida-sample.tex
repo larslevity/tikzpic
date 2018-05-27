@@ -1,0 +1,303 @@
+% Copyright 2005, 2006 TeX Users Group.
+% 
+% Copying and distribution of this file, with or without modification,
+% are permitted in any medium, without royalty.
+
+\documentclass[11pt]{article}
+
+% we have to change the font encoding for Lucida.
+\usepackage[T1]{fontenc}
+\usepackage{textcomp} % to get the right copyright, etc.
+
+% use Lucida fonts for both text and math.
+\usepackage[altbullet]{lucidabr}     % get larger bullet
+\DeclareEncodingSubset{TS1}{hlh}{1}  % including \oldstylenums
+
+% other features we'll use.
+\usepackage{framed}
+\reversemarginpar
+\addtolength\marginparwidth{20pt}
+
+% live url's if pdf.
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage[breaklinks,colorlinks,linkcolor=black,citecolor=black,
+              pagecolor=black,urlcolor=black]{hyperref}
+\else
+  \usepackage{url}
+\fi
+
+\newcommand*\pkg[1]{\textsf{#1}}
+\newcommand*\opt[1]{\texttt{#1}}
+\newcommand*\cs[1]{\texttt{\char`\\#1}}
+
+\pagestyle{headings}
+
+\newcommand\demotext{%
+  For \textsterling 45, almost anything can
+  be found floating in fields. 
+%  !`THE DAZED BROWN FOX QUICKLY GAVE 12345--67890 JUMPS!
+  --- ?`But aren't Kafka's Schlo\ss{} and
+  \AE sop's \OE uvres often na\"\i ve vis-\`a-vis the d\ae monic
+  ph\oe nix's official r\^ole in fluffy souffl\'es?}
+
+\newcommand*\demotextsc{\textsc{Sphinx of black quartz, judge my vow}.}
+
+\newcommand*\demotextosf{\oldstylenums{0123456789}.}
+
+\newcommand*\raggedmarginpar[1]{\marginpar{\raggedright\hspace{0pt}#1}}
+
+\newcommand*\demo[2]{%
+   \par\leavevmode\raggedmarginpar{#1}%
+   \begin{minipage}[t]{\linewidth}%
+   \normalfont#2\demotext
+   \end{minipage}%
+}
+
+\newcommand*\demosc[2]{%
+  \par\leavevmode\raggedmarginpar{#1}{\normalfont#2\demotext
+  \newline\demotextsc\par}%
+}
+\newcommand*\demoscosf[2]{%
+  \par\leavevmode\raggedmarginpar{#1}{\normalfont#2\demotext
+  \newline\demotextsc\space\demotextosf\par}%
+}
+\newcommand*\demoosf[2]{%
+  \par\leavevmode\raggedmarginpar{#1}{\normalfont#2\demotext
+  \newline\space\demotextosf\par}%
+}
+
+
+\title{Using the Lucida fonts with \LaTeX}
+\author{\TeX\ Users Group\\[2pt]\url{http://tug.org/lucida}}
+\begin{document}
+\maketitle
+
+
+\section{Introduction}
+
+{\def\thefootnote{}
+% article.cls uses 1.8em for the footnote indent.
+\footnotetext{\kern-1.8em \textregistered\ Lucida is a trademark of
+Bigelow \& Holmes Inc.\ registered in the U.S. Patent \& Trademark
+Office and other jurisdictions.}
+}
+
+This document contains examples of the Lucida fonts available through
+TUG.  They are divided into two sets, \textit{basic} and
+\textit{complete}, as displayed in the following sections.
+
+For more information about Lucida and \TeX, and an order form for the
+fonts, please see \url{http://tug.org/lucida}.
+
+
+\section{\LaTeX\ macro support for Lucida}
+
+The Lucida support primarily consists of two packages: \pkg{lucidabr}
+and \pkg{lucbmath}. The former changes both running text and math to use
+Lucida, whereas the latter only changes the math font setup in case you
+want to use a different text font with the Lucida math fonts.
+
+You may already have the macro packages installed as they are part of
+most \TeX{} distributions---try running the example below.
+
+If it complains that \texttt{lucidabr.sty} is not found, you must
+install the package; it's available on CTAN in
+\url{http://www.ctan.org/tex-archive/macros/latex/contrib/psnfssx/lucidabr},
+and (of course) also included in the TUG distribution when you order the
+fonts.
+
+\subsection{Basic example}
+
+The packages do \emph{not} support \LaTeX's (and \TeX's) default
+encoding (OT1).  Supported encodings are T1, LY1, and TS1 (partial).
+What this means is that you have to use the \pkg{fontenc} package to
+switch the default.
+
+Here's a small example:
+
+\begin{verbatim}
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{lucidabr}
+\begin{document}
+Here's some text. And here's some math:
+\[
+  \phi(x)=\int_{-\infty}^{x} e^{-x^{2}/2}
+\]
+Euro and copyright symbols are available:
+\texteuro \textcopyright \textbullet.
+\end{document}
+\end{verbatim}
+This results in the following output:
+\begin{framed}
+Here's some text. And here's some math:
+\[
+  \phi(x)=\int_{-\infty}^{x} e^{-x^{2}/2}
+\]
+Euro, copyright, and bullet symbols are available:
+\texteuro \textcopyright \textbullet.
+\end{framed}
+
+\subsection{More details}
+
+If the example runs ok, but produces no output, try refreshing the
+``filename database'' (e.g., run \texttt{mktexlsr}).  Also, of course,
+you must actually purchase the fonts!  (All the metrics and support
+files are on CTAN, but not the \texttt{.pfb} files containing the actual
+outlines.)
+
+It's best to load the \pkg{textcomp} package with \pkg{lucidabr}, or
+some symbols, notably \cs{textcopyright}, will be synthesized instead of
+coming from the fonts.  We don't load \pkg{textcomp} automatically,
+since loading such fundamental packages behind the scenes can cause
+hard-to-debug trouble.
+
+Furthermore, the default \cs{textbullet} is quite small; the more normal
+one above is generated by specifying the \opt{altbullet} option when
+loading \pkg{lucidabr}.
+
+By default, oldstyle figures from the \pkg{textcomp} package, accessed
+with the \verb|\oldstylenums| command, are disabled for the Lucida fonts
+since they do not exist in all shapes. In order for \verb|\oldstylenums|
+to work, you must add the line
+\begin{verbatim}
+\DeclareEncodingSubset{TS1}{hlh}{1}
+\end{verbatim}
+to your preamble \emph{after} loading the \pkg{textcomp} package. The
+font family \texttt{hlhj} provides the oldstyle figures by default but
+there exists no bold italic version of these figures and the italic
+versions are only available if you buy the complete font set.
+
+Now, let's take a more systematic look at the fonts.
+
+
+\section{The \textsf{basic} font set}
+
+The basic set of fonts contains all the math fonts (shown in the
+accompanying \texttt{lucida-amsmath} document), a set of text fonts with
+accompanying small caps, and a monospaced font for code examples.  The
+idea is that this is sufficient for mathematical papers and typical text
+usage.
+
+The roman text font is Lucida Bright. It comes with small caps and
+oldstyle figures only in the upright shapes:
+
+\begin{quote}
+\demoscosf{LucidaBright}{}
+
+\demo{LucidaBright-Italic}{\itshape}
+
+\demo{LucidaBright-Oblique}{\slshape}
+
+\demoscosf{LucidaBright-Demi}{\bfseries}
+
+\demo{LucidaBright-DemiItalic}{\bfseries\itshape}
+\end{quote}
+
+\noindent The basic set also contains Lucida Sans Typewriter in various
+shapes and series:
+\begin{quote}
+\demo{LucidaSans-Typewriter}{\ttfamily\raggedright}
+
+\demo{LucidaSans-Typewriter Oblique}{\ttfamily\slshape\raggedright}
+
+\demo{LucidaSans-Typewriter Bold}{\ttfamily\bfseries\raggedright}
+
+\demo{LucidaSans-Typewriter BoldOblique}
+     {\ttfamily\bfseries\slshape\raggedright}
+\end{quote}
+
+\section{The \textsf{complete} font set}
+
+The complete font set includes (naturally) all the basic fonts, and
+assorted other text font variations, starting with the full sans serif
+variant, Lucida Sans:
+\begin{quote}
+\demo{LucidaSans}{\sffamily}
+
+\demo{LucidaSans-Italic}{\sffamily\itshape}
+
+\demo{LucidaSans-Demi}{\sffamily\bfseries}
+
+\demo{LucidaSans-DemiItalic}
+     {\sffamily\bfseries\itshape}
+\end{quote}
+
+LucidaSans also exists in an ultra bold version, which you have to select
+manually with \verb|\fontseries{ub}\selectfont|.
+\begin{quote}
+\demo{LucidaSans-Bold}{\sffamily\fontseries{ub}\selectfont}
+
+\demo{LucidaSans-BoldItalic}
+     {\sffamily\itshape\fontseries{ub}\selectfont}
+\end{quote}
+
+
+A second, seriffed, typewriter font is included as well. By default the
+\pkg{lucidabr} package chooses Lucida Sans Typewriter for typewriter but
+you can change that by giving the option \opt{seriftt}, as in:\\
+\verb|\usepackage[seriftt]{lucidabr}|
+
+\begin{quote}
+\demo{Lucida Typewriter}{\fontfamily{hlct}\selectfont\raggedright}
+
+\demo{Lucida Typewriter Oblique}
+     {\fontfamily{hlct}\selectfont\slshape\raggedright}
+
+\demo{Lucida Typewriter Bold}{\fontfamily{hlct}\selectfont\bfseries\raggedright}
+
+\demo{Lucida Typewriter BoldOblique}
+     {\fontfamily{hlct}\selectfont\slshape\bfseries\raggedright}
+\end{quote}
+
+Lucida Fax is a complete text font. By giving the option \opt{fax} to
+\pkg{lucidabr} this becomes the default roman font. There are no small
+caps or oldstyle figures for this font.
+\begin{quote}
+\demo{LucidaFax}{\fontfamily{hlx}\selectfont}
+
+\demo{LucidaFax-Italic}
+     {\fontfamily{hlx}\selectfont\itshape}
+
+\demo{LucidaFax-Bold}{\fontfamily{hlx}\selectfont\bfseries}
+
+\demo{LucidaFax-BoldItalic}
+     {\fontfamily{hlx}\selectfont\itshape\bfseries}
+\end{quote}
+
+Lucida Casual exists in two versions only: medium upright and
+medium italic. You can still make it the default text font by giving the
+option \opt{casual} to \pkg{lucidabr}.
+\begin{quote}
+\demo{LucidaCasual}{\fontfamily{hlcn}\selectfont}
+
+\demo{LucidaCasual-Italic}
+     {\fontfamily{hlcn}\selectfont\itshape}
+\end{quote}
+
+
+Finally, three more esoteric fonts are included. Lucida Calligraphy
+contains italic oldstyle figures, which are used if available when
+selecting \verb|\oldstylenums| for Lucida Bright. If you choose the
+option \opt{calligraphic} for \pkg{lucidabr}, Lucida Calligraphy will be
+the default roman font. A similar option \opt{handwriting} makes Lucida
+Handwriting the default roman font.
+
+\begin{quote}
+\demo{LucidaCalligraphy-Italic}
+     {\fontfamily{hlce}\selectfont}
+
+\demo{LucidaHandwriting-Italic}
+     {\fontfamily{hlcw}\selectfont}
+
+\demo{Lucida Blackletter}
+     {\fontfamily{hlcf}\selectfont}
+\end{quote}
+
+This is all the Lucida fonts available with \TeX\ support.  For more
+information about Lucida and \TeX, and an order form for the fonts,
+please see \url{http://tug.org/lucida}, and thanks.
+
+\end{document}

@@ -1,0 +1,48 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.11.15 : 1400-1430
+% ges: 30min
+
+
+
+\begin{document}
+\begin{tikzpicture}
+
+\def\zh{.6}
+\def\xabs{10}
+\pgfmathsetmacro{\yabs}{7.5*\zh}
+\pgfmathsetmacro{\breiteCOL}{.5*\xabs}
+\pgfmathsetmacro{\zhh}{.5*\zh}
+
+\draw (0,0) rectangle(\xabs,-\yabs);
+
+% Horizontal striche
+\foreach \y in {2 , 6}{
+\pgfmathsetmacro{\yy}{\y*\zh}
+\draw (0,-\yy)--++(\xabs,0);
+}
+
+% Vertikalstriche
+\foreach \x/\t in {0/E,1/F,2/P,3/V}{
+\pgfmathsetmacro{\xx}{\breiteCOL  + \x*(\xabs-\breiteCOL)/4}
+\draw (\xx,-\yabs)--++(0,\yabs)++(0,-\zhh)node[right]{\t};
+}
+
+% Beschriftung
+\foreach[count=\i] \t in {Kriterien, Unternehmenspotential, Marktpotential, Fertigungspotential, Entwicklungspotential, Summen}{
+\pgfmathsetmacro{\yy}{\zhh  + \i*\zh}
+\path (0,-\yy) node[right]{\t};
+}
+\path (\breiteCOL,-\zhh) node[left]{Bewerter};
+
+
+% Mittelstrich:
+\draw (0,0)--++(\breiteCOL,-\zh-\zh);
+
+
+
+\end{tikzpicture}
+
+\end{document}

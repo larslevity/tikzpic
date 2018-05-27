@@ -1,0 +1,45 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 31.01.16 : 0220 - 240
+% ges = 40 min
+
+\begin{document}
+\begin{tikzpicture}[scale=5.5]
+
+
+\draw[-latex] (0,0)--(1.2,0)node[below]{\%};
+\draw[-latex] (0,0)--(0,1.2)node[left]{\%};
+
+\foreach \x in {0,50,100}{
+\pgfmathsetmacro{\xx}{\x/100}
+\draw (\xx,0)++(0,.01)--++(0,-.02)node[below]{\x};
+}
+
+
+\foreach \y in {0,50,75,80,95,100}{
+\pgfmathsetmacro{\yy}{\y/100}
+\draw (0,\yy)++(.01,0)--++(-.02,0)node[left]{\y};
+}
+
+\draw[help lines] (0,.78)-|(.215,0);
+\draw[help lines] (0,1)-|(1,0);
+\draw[help lines] (0,.95)-|(.42,0);
+
+\path (0,0) coordinate(last);
+\foreach \x in {0,0.01,...,1}{
+\pgfmathsetmacro{\y}{1-exp(-\x*7)}
+\draw (last)--(\x,\y)coordinate(last);
+}
+\draw(last)--(1,1);
+
+\foreach \x/\t in {.1/A,.3/B,.7/C}{
+\path(\x,.2)node{\t};
+}
+
+\path (-.15,0)--++(0,1.2)node[midway,sloped,above]{Prozentuale Herstellungskosten};
+
+
+\end{tikzpicture}
+\end{document}

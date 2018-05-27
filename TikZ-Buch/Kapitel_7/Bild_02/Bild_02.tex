@@ -1,0 +1,31 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.01.16 : 1440-1505
+% ges = 25 min
+
+\begin{document}
+\begin{tikzpicture}[scale=3.8]
+
+\draw[-latex] (0,0)--++(0,1.7)node[pos=.99,left]{Wert (\%)};
+\draw[-latex] (0,0)--++(3.5,0)node[below left]{Festigkeit};
+
+\foreach \y/\t in {.5/50,1/100,1.5/150}{
+\draw[help lines] (0,\y)node[left,black]{\t}--++(3.3,0)node[pos=.6,fill=white]{//};
+}
+
+\draw (.5,0)node[above left]{\textbf{A}}arc(175:100:1.4)coordinate[pos=.45](A)coordinate[pos=.9](B);
+\draw[latex-] (A)--++(0,.25)node[pos=.4,left,align=right]{Untererfüllung \\ hart bestraft};
+\draw[latex-] (B)--++(0,-.21)node[pos=.05,above,align=center]{Übererfüllung \\ kärglich belohnt};
+\draw[latex-] (1.06,0)--++(0,1.6)node[above,align=center]{Festigkeitsforderung \\ Wäscheleine};
+
+
+%%
+\draw (2,0)node[above left]{\textbf{B}}arc(175:100:1.4)coordinate[pos=.45](A)coordinate[pos=.9](B);
+\draw[latex-] (1.06+1.5,0)--++(0,1.6)node[above,align=center]{Festigkeitsforderung \\ Bergseil};
+
+
+
+\end{tikzpicture}
+\end{document}

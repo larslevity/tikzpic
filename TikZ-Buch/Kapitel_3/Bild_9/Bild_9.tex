@@ -1,0 +1,109 @@
+\input{../../TikZ_header.tex}
+\usepackage{ulem}
+
+%% Arbeitszeit:
+% 21.11.15 : 1700-1800
+% ges: 60min
+
+
+
+\begin{document}
+\begin{tikzpicture}
+
+\def\xabs{14}
+\def\zhi{.6}
+\def\zhii{1}
+\pgfmathsetmacro{\zhhi}{.5*\zhi}
+\pgfmathsetmacro{\zhhii}{.5*\zhii}
+
+\pgfmathsetmacro{\Bi}{.3*\xabs}
+\pgfmathsetmacro{\Bii}{.2*\xabs}
+\pgfmathsetmacro{\Biii}{.4*\xabs}
+
+% Oberer Rahmen
+\draw [very thick] (0,0)--++(0,-\zhi-\zhii-\zhii-\zhii-\zhii)coordinate(ML);
+\draw [very thick] (\xabs,0)--++(0,-\zhi-\zhii-\zhii-\zhii-\zhii)coordinate(MR);
+
+% Erste Zeile
+\draw[very thick] (0,0)node[below right]{\texttt{\underline{Freigabeformular}}}rectangle++(\Bi,-\zhi);
+\draw[very thick] (\Bi,0)node[below right]{\texttt{{Produktgruppe}}}rectangle++(\Bi,-\zhi);
+\draw[very thick] (\Bi+\Bi,0)node[below right]{\texttt{{Nr.:}}}rectangle++(\Bii,-\zhi);
+\draw[very thick] (\Bi+\Bi+\Bii,0)node[below right]{\texttt{{Verteiler:}}}rectangle++(\Bii,-\zhi);
+% Zweite Zeile
+\draw (0,-\zhi)node[below right]{\texttt{Antargsteller:}}rectangle++(\Bi+\Bi,-\zhii);
+\draw (\Bi+\Bi,-\zhi)node[below right]{\texttt{Datum:}}rectangle++(\Bii,-\zhii)coordinate(help);
+\draw (help) rectangle++(\Bii,\zhhii);
+\draw (help)++(0,\zhhii) rectangle++(\Bii,\zhhii);
+% Dritte Zeile
+\draw (0,-\zhi-\zhii)node[below right]{\texttt{Betrifft: (Produkt, Teil)}}rectangle++(\Bi+\Bi,-\zhii);
+\draw (\Bi+\Bi,-\zhi-\zhii)node[below right]{\texttt{Sach-Nr.:}}rectangle++(\Bii,-\zhii)coordinate(help);
+\draw (help) rectangle++(\Bii,\zhhii);
+\draw (help)++(0,\zhhii) rectangle++(\Bii,\zhhii);
+% Vierte Zeile
+\draw (0,-\zhi-\zhii-\zhii)node[below right]{\texttt{Kalkulierte Stückzahl:}}rectangle++(\Biii,-\zhii);
+\draw (\Biii,-\zhi-\zhii-\zhii)node[below right,align=left]{\texttt{Vorgesehener} \\ \texttt{Freigabetermin:}}rectangle++(\Biii,-\zhii)coordinate(help);
+\draw (help) rectangle++(\Bii,\zhhii);
+\draw (help)++(0,\zhhii) rectangle++(\Bii,\zhhii);
+% Fuenfte Zeile
+\path (0,-\zhi-\zhii-\zhii-\zhii)node[below right]{\texttt{Erläuterungen: (Unterlagen sind beigefügt)}};
+
+% Cut off
+\path (ML) coordinate(X)coordinate (start);
+\def\n{20}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(MR);
+
+
+% Unterer Rahmen
+\draw [very thick] (ML)++(0,-\zhi)--++(0,-\zhii-\zhi-\zhii-\zhi-\zhi) coordinate(UL);
+\draw [very thick] (MR)++(0,-\zhi)coordinate(MRi)--++(0,-\zhii-\zhi-\zhii-\zhi-\zhi) coordinate(UR);
+% Cut off
+\path (ML)++(0,-\zhi) coordinate(X)coordinate (start);
+\def\n{20}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(MRi);
+% Sechste Zeile
+\draw (ML)++(0,-\zhi-\zhii)coordinate(6)node[below right]{\texttt{Freigabevermerk:}}rectangle++(\xabs,-\zhi);
+\draw [very thick] (6)--++(\xabs,0);
+
+% Siebte Zeile
+\draw (6)++(0,-\zhii-\zhi)--++(\xabs,0);
+\draw (6)++(0,-\zhi)coordinate(7)node[below right]{\texttt{Bereich:}};
+\foreach \x/\t in {0/\texttt{Ja},1/{\texttt{Ja, *} \\ \texttt{falls}},2/\texttt{Nein*},3/\texttt{Datum},4/\texttt{Unterschrift}}{
+\pgfmathsetmacro{\xx}{\Biii+\x*(\xabs-\Biii-\zhii-\zhi)/5}
+\draw (7)++(\xx,0)node[below right,align=left]{\t}--++(0,-\zhii-\zhi);
+}
+% Achte Zeile
+\draw (7)++(0,-\zhii-\zhi)coordinate(9)--++(\xabs,0);
+% Neunte Zeile
+\path (9) node[below right]{\texttt{*Begründung/Bedingung}};
+
+
+% Cut off
+\path (UL) coordinate(X)coordinate (start);
+\def\n{30}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(UR);
+
+
+\end{tikzpicture}
+
+\end{document}

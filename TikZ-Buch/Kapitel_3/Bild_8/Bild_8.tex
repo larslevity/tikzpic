@@ -1,0 +1,144 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.11.15 : 1800-1830
+
+
+
+\begin{document}
+\begin{tikzpicture}
+
+\def\xabs{18}
+\def\zhi{.6}
+\def\zhii{1}
+\pgfmathsetmacro{\zhhi}{.5*\zhi}
+\pgfmathsetmacro{\zhhii}{.5*\zhii}
+
+\pgfmathsetmacro{\Bi}{.3*\xabs}
+\pgfmathsetmacro{\Bii}{.2*\xabs}
+\pgfmathsetmacro{\Biii}{.4*\xabs}
+
+% Oberer Rahmen
+\draw [very thick] (0,0)--++(0,-\zhi-\zhii-\zhii-\zhii-\zhii)coordinate(ML);
+\draw [very thick] (\xabs,0)--++(0,-\zhi-\zhii-\zhii-\zhii-\zhii)coordinate(MR);
+
+% Erste Zeile
+\draw[very thick] (0,0)rectangle++(\Bii,-\zhii);
+\draw (0,-\zhhii)node[right]{\circled{~~~~~}}++(\zhii,0)node[right,align=left]{\texttt{Zeichnungs-}\\ \texttt{Änderung} };
+\draw[very thick] (\Bii,0)rectangle++(\Bii,-\zhii);
+\draw (\Bii,-\zhhii)node[right]{\circled{~~~~~}} ++ (\zhii,0)node[ right,align=left]{\texttt{Abweichungs-}\\ \texttt{erlaubnis:} };
+\draw[very thick] (\Bii+\Bii,0)node[below right,align=left]{\texttt{Produkt-}\\ \texttt{gruppe:} }rectangle++(\Bii,-\zhii);
+\draw[very thick] (\Bi+\Bi,0)node[below right]{\texttt{{Nr.:}}}rectangle++(\Bii,-\zhii);
+\draw[very thick] (\Bi+\Bi+\Bii,0)node[below right]{\texttt{{Verteiler:}}}rectangle++(\Bii,-\zhii);
+% Zweite Zeile
+\draw (0,-\zhii)node[below right]{\texttt{Antargsteller:}}rectangle++(\Bi+\Bi,-\zhii);
+\draw (\Bi+\Bi,-\zhii)node[below right]{\texttt{Datum:}}rectangle++(\Bii,-\zhii)coordinate(help);
+\draw (help) rectangle++(\Bii,\zhhii);
+\draw (help)++(0,\zhhii) rectangle++(\Bii,\zhhii);
+% Dritte Zeile
+\draw (0,-\zhii-\zhii)node[below right]{\texttt{Betrifft: (Produkt, Teil)}}rectangle++(\Bi+\Bi,-\zhii);
+\draw (\Bi+\Bi,-\zhii-\zhii)node[below right]{\texttt{Sach-Nr.:}}rectangle++(\Bii,-\zhii)coordinate(help);
+\draw (help) rectangle++(\Bii,\zhhii);
+\draw (help)++(0,\zhhii) rectangle++(\Bii,\zhhii);
+
+% Vierte Zeile
+\path(0,-\zhii-\zhii-\zhii)node[below right]{\texttt{Änderung/Abweichung: (Vorher/richtig; neu/Abweichung)}}++(\Biii+\Biii,-\zhii)coordinate(help);
+\draw (help) rectangle++(\Bii,\zhhii);
+\draw (help)++(0,\zhhii) rectangle++(\Bii,\zhhii)coordinate(help);
+\draw[very thick] (help)++(0,-\zhii)rectangle++(-\Bii,\zhii+\zhii+\zhii+\zhii);
+% Cut off
+\path (ML) coordinate(X)coordinate (start);
+\def\n{20}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(MR);
+
+
+% Unterer Rahmen
+\draw [very thick] (ML)++(0,-\zhi-\zhi-\zhii-\zhii)coordinate(ML)--++(0,-\zhii-\zhi-\zhii-\zhi-\zhi) coordinate(UL);
+\draw [very thick] (MR)++(0,-\zhi-\zhi-\zhii-\zhii)coordinate(MR)coordinate(MRi)--++(0,-\zhii-\zhi-\zhii-\zhi-\zhi) coordinate(UR);
+% Cut off
+\path (ML)++(0,0) coordinate(X)coordinate (start);
+\def\n{20}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(MRi);
+% Sechste Zeile
+\draw (ML)++(0,-\zhii)coordinate(6)node[below right]{\texttt{Stellungnahme:}}rectangle++(\xabs,-\zhi);
+\draw [very thick] (6)--++(\xabs,0);
+
+% Siebte Zeile
+\draw (6)++(0,-\zhii-\zhi)--++(\xabs,0);
+\draw (6)++(0,-\zhi)coordinate(7)node[below right]{\texttt{Name:}};
+\foreach \x/\t in {0/\texttt{Ja},1/{\texttt{Ja, *} \\ \texttt{falls}},2/\texttt{Nein*},3/{\texttt{Betr.} \\ \texttt{nicht}},4/\texttt{Datum},5/\texttt{Unterschrift}}{
+\pgfmathsetmacro{\xx}{\Bii*1.2+\x*(\xabs-\Biii-\zhii-\zhi)/5}
+\draw (7)++(\xx,0)node[below right,align=left]{\t}--++(0,-\zhii-\zhi);
+}
+% Achte Zeile
+\draw (7)++(0,-\zhii-\zhi)coordinate(9)--++(\xabs,0);
+% Neunte Zeile
+\path (9) node[below right]{\texttt{*Begründung/Bedingung}};
+
+
+% Cut off
+\path (UL) coordinate(X)coordinate (start);
+\def\n{30}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(UR);
+
+
+%% Mittlere Kiste 
+
+% Mittlerer Rahmen
+
+\draw[very thick] (ML)++(0,\zhi)coordinate(MLii)--++(0,\zhii+\zhi)coordinate(MLi);
+\draw[very thick] (MR)++(0,\zhi)coordinate(MRii)--++(0,\zhii+\zhi)coordinate(MRi);
+
+
+% Cut off
+\path (MLi) coordinate(X)coordinate (start);
+\def\n{30}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(MRi);
+
+\draw[very thick] (MLi)++(0,-\zhi)node[below right]{\texttt{Begründung:}}--++(\xabs,0);
+
+% Cut off
+\path (MLii) coordinate(X)coordinate (start);
+\def\n{30}
+\foreach \i in {1,2,...,\n}{
+\pgfmathsetmacro{\angle}{-90+rnd*180}
+\pgfmathsetmacro{\radian}{\xabs/(\n+1)}
+\pgfmathsetmacro{\x}{\i*\radian}
+\path (start)++(\x,0)++(\angle:.1)coordinate(Xn);
+\draw [] (X)--(Xn)coordinate(X);
+}
+\draw (X)--(MRii);
+
+
+\end{tikzpicture}
+
+\end{document}

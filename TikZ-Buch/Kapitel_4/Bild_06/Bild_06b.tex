@@ -1,0 +1,53 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 30.01.16 : 1740 - 1810
+% ges = 30 min
+
+\begin{document}
+\begin{tikzpicture}[scale=1]
+
+
+\draw[dash pattern = on 10pt off 4pt on 2pt off 4pt] (-2.3,0)--(2.3,0);
+\draw[dash pattern = on 10pt off 4pt on 2pt off 4pt] (-2.3,5.5)--(2.3,5.5);
+\draw[thick] (-2,5)--++(0,.5)--++(.1,.5)--++(3.8,0)--++(.1,-.5)--++(0,-.5)--cycle;
+
+\draw[thick] (2,1.4)rectangle(-2,-1.5);
+\draw[thick] (2,1.4)rectangle(-2,1.7);
+\draw[thick] (2,-1.5)--++(0,-.5);
+\draw[thick] (-2,-1.5)--++(0,-.5);
+\draw[thick] (-2,1.7)rectangle(2,5);
+
+\def\mypath{
+(-2,1.7)--++(0,.5)arc(270:350:1)--++(80:.5)arc(-10:60:.5)--(-2,4.5)--++(0,.5)--++(4,0)--++(0,-.5)--++(190:1.8)arc(100:170:.5)--++(260:.3)arc(170:265:1)--(2,2.2)--++(0,-.5)
+}
+\draw[thick] \mypath;
+
+\begin{scope}
+\path[clip] \mypath;
+\foreach \x in {-6.2,-5.8,...,2}{
+\draw (\x,1.7)--++(4,4);
+}
+
+\end{scope}
+
+
+\begin{scope}
+\path[clip] (2,-2.2)rectangle(-2,5);
+\foreach \x in {-2.2,-1.8,...,2}{
+\draw (\x,-2)--++(.5,.5);
+}
+\end{scope}
+
+
+\draw [thick] (-2,1.5)--++(.1,-.1)--(-1.9,-1.5)--++(-.1,-.1);
+
+\draw [thick] (2,1.5)--++(-.1,-.1)--(1.9,-1.5)--++(.1,-.1);
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,36 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 21.01.16 : 1800 - 1810
+% ges = 10 min
+
+\begin{document}
+\begin{tikzpicture}[
+edge from parent fork down,
+every node/.style={rectangle, draw, minimum height = 1.3cm, minimum width = 4cm,align=center,fill=gray!5},
+level 1/.append style={level distance=2cm,sibling distance=5cm},
+level 2/.append style={level distance=2cm,sibling distance=5cm},
+]
+
+
+\node[]{ System}
+	child { node{Teilsystem 1}}
+	child { node{Teilsystem 2}
+		child { node {Baugruppe 2.1}
+			child { node {Maschinenelement}}
+			child { node {Maschinenelement}
+				child { node {Wirkpaar \\ (Elementteile)}}					child { node {Wirkpaar}}
+			}	
+		}	
+		child { node {Baugruppe 2.2}}					
+	}
+;
+
+\foreach \y/\x in {-1/2.5,-3/5,-5/2.5,-7/5}{
+\draw[dash pattern = on 10pt off 5 pt] (\x,\y)--++(3,0);
+}
+
+
+\end{tikzpicture}
+\end{document}

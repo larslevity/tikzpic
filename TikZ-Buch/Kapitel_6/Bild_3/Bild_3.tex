@@ -1,0 +1,54 @@
+\input{../../TikZ_header.tex}
+
+
+%% Arbeitszeit:
+% 20.01.16 : 1705 - 1710
+% ges = x min
+
+\begin{document}
+\begin{tikzpicture}[
+edge from parent fork down,
+every node/.style={rectangle, draw, align=center},
+Grp/.style={minimum width = 1.6cm, minimum height = 1.2cm, align = left},
+A/.style={minimum width = 1cm, minimum height = 1cm, align = center},
+B/.style={},
+level 1/.append style={level distance=2cm,sibling distance=4cm},
+level 2/.append style={level distance=2cm,sibling distance=1.3cm},
+level 3/.append style={level distance=2cm,sibling distance=1.3cm},
+]
+
+
+\node[draw=none]{~}
+	child { node[Grp]{$^{\textnormal{F}}$ ~ 30}
+		child{ node[A] {8}}
+		child{ node[A] {10}}
+		child{ node[A] {12}}
+	}
+	child { node[Grp]{$^{\textnormal{K}}$ ~ 35}
+		child{ node[A] {25}
+			child { node[A]{12}}
+			child { node[A]{13}}
+		}
+		child{ node[A] {10}}	
+	}
+	child { node[Grp]{$^{\textnormal{M}}$ ~ 20}
+		child{ node[A] {6}}
+		child{ node[A] {8}}
+		child{ node[A] {6}}	
+	}
+	child { node[Grp]{$^{\textnormal{Z}}$ ~ 15}
+		child{ node[A] {5}}
+		child{ node[A] {10}
+			child { node[A]{9}}
+			child { node[A]{1}}
+		}	
+	}
+	;
+
+\path [fill=white] (-1,0)rectangle(1,-.98);
+
+
+
+
+\end{tikzpicture}
+\end{document}

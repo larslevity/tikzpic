@@ -1,0 +1,124 @@
+\input{../../TikZ_header.tex}
+\usetikzlibrary{mindmap, backgrounds, shadows}
+
+\usepackage[most]{tcolorbox}
+
+    
+%% Arbeitszeit:
+% 19.12.15 : 1500-15 20 ; 1720 - 1740
+% 21.12.15 : 2300--0300
+% ges = 4h 40 min
+
+\newcommand*\Circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=rectangle,draw,inner sep=4pt,solid,rounded corners = .3cm,fill=white, line width = 1pt] (char) {#1};}}
+
+\newcommand{\mybox}[2]{%
+  \setbox0=\hbox{#1}%
+  %\setlength{\@tempdima}{\dimexpr\wd0+2pt}%
+  \begin{tcolorbox}[colframe=black,colback=white,boxrule=2pt,arc=4pt,
+      left=2pt,right=2pt,top=2pt,bottom=2pt,boxsep=0pt, width=#2]
+    #1
+  \end{tcolorbox}
+}
+
+
+\begin{document}
+
+\begin{tikzpicture}[
+mindmap,
+rotate=-90,
+basic/.style={concept, execute at begin node=\hskip0pt  , fill=white, line width=.5ex, text=black},
+concept color=black!80,
+grow cyclic,
+level 1/.append style={level distance=5cm,sibling angle=36},
+level 2/.append style={level distance=4cm,sibling angle=45},
+level 3/.append style={level distance=5cm,sibling angle=15 ,line width = .1pt}
+]		
+
+
+
+
+
+\def\riv{15.5}
+\path[fill=gray!5] (0,-\riv)arc(-90:-30:\riv)--(0,0);
+\def\riii{11.2}
+\path[fill=gray!10] (0,-\riii)arc(-90:90:\riii);
+\def\rii{6.8}
+\path[fill=gray!15] (0,-\rii)arc(-90:90:\rii);
+\def\ri{3.1}
+\path[fill=gray!20] (0,-\ri)arc(-90:90:\ri);
+
+\fill[gray!15] (0,-\ri)rectangle(-5.5,-\rii)node[midway,align=center,text = black]{\textbf{Abteilungen} \\ (o.ä.) hier alle \\ wesentlichen Funktionen};
+\fill[gray!10] (0,-\rii)rectangle(-5.5,-\riii)node[midway,align=center,text = black]{\textbf{Gruppen} \\ (nur Beispiele)};
+\fill[gray!5] (0,-\riii)rectangle(-5.5,-\riv)node[midway,align=center,text = black]{A, B, C, ... : \\ einzelne Mitarbeiter \\ gehören nicht \\ ins Organogramm};
+
+
+\fill[gray!20] (0,-\ri)rectangle(-5.5,\ri);
+%\draw[rounded corners = 10pt, line width = 5pt, black!80] (-90+18:\ri)arc(-90+18:90:\ri)--++(-3.7,0)--++(0,-5);
+\path (180:4.5)node[align = center]{\textbf{Stabstellen} \\ ('kann' muss aber nicht)};
+
+
+
+
+
+\path (210:3.3)node[circle,draw, line width = 2pt, minimum width = 1cm, minimum height = 1cm, text width = 2cm, fill=white]{Normung};
+\path (150:3.3)node[circle,draw, line width = 2pt, minimum width = 1cm, minimum height = 1cm, text width = 2cm, align = center, fill=white]{Schutz- \\ rechte};
+
+
+\node[root concept, basic]{Produktentwicklung \\  \mybox{Entwicklungsleiter}{3.5cm}} %root
+child 	{ node[basic] {Forschung {\mybox{Abt.-Leiter}{2cm}}}
+			child {node[basic, dashed]{... \\ {\mybox{~}{1.5cm}}}}
+		}
+child 	{ node[basic] {Entwicklungs- konstruktion {\mybox{Abt.-Leiter}{2cm}}}
+			child {node[basic](BuK){Berechnung und Konstruktion \\ {\mybox{Gr.-Ltr.}{1.5cm}}} 
+				child{node[basic]{A}} 
+				child{node[basic]{B}}
+				child{node[basic]{C}}
+				child{node[basic]{D}} 
+				child{node[basic]{E}}
+				child{node[basic]{F}}				
+				}
+			child {node[basic](PuK){Planung und Koordination \\ {\mybox{Gr.-Ltr.}{1.5cm}}}
+%				child{node[basic]{G}} 
+%				child{node[basic]{H}}
+%				child{node[basic]{I}}
+%				child{node[basic]{J}} 
+%				child{node[basic]{K}}
+%				child{node[basic]{L}}			
+			}
+		}
+child 	{ node[basic] {Musterbau {\mybox{Abt.-Leiter}{2cm}}}
+			child {node[basic, dashed]{... \\ {\mybox{Gr.-Ltr.}{1.5cm}}}}
+		}
+child 	{ node[basic] {Versuch {\mybox{Abt.-Leiter}{2cm}}}
+			child {node[basic, dashed]{... \\ {\mybox{Gr.-Ltr.}{1.5cm}}}}
+		}
+child 	{ node[basic] {Auftrags-konstruktion {\mybox{Abt.-Leiter}{2cm}}}
+			child {node[basic]{Kupplungen \\ {\mybox{Gr.-Ltr.}{1.5cm}}}}
+			child {node[basic]{Getriebe \\ {\mybox{Gr.-Ltr.}{1.5cm}}}}			
+		}
+%child[grow = 200]	{ node[basic] {Normung} }
+%		
+%child[grow = 140]	{ node[basic] {Schutzrechte} }
+%		
+
+;
+\def\r{6.5}
+\draw[fill=gray,opacity=.1,dashed] (BuK)--++(-90+18+36-22.5:\r)arc(-90+18+36-22.5:-90+18+36-22.5-45:\r)--(BuK);
+\path (BuK)--++(-90+18+36-45:\r)node{\footnotesize Kupplungen};
+\draw[fill=gray!50,opacity=.1,dashed] (BuK)--++(-90+18+36+22.5:\r)arc(-90+18+36+22.5:-90+18+36+22.5-45:\r)--(BuK);
+\path (BuK)--++(-90+18+36:\r)node{\footnotesize Getriebe};
+
+
+%\path[fill=gray!50,opacity=.1] (PuK)--++(+18+36-22.5:\r)arc(18+36-22.5:-45+18+36-22.5:\r)--(PuK);
+%\path (PuK)--++(-90+18+36+45:\r)node{Kupplungen};
+%\path[fill=gray,opacity=.1] (PuK)--++(-90+18+36+22.5:\r)arc(-90+18+36+22.5:-90+18+36+22.5-45:\r)--(PuK);
+%\path (PuK)--++(-90+18+36:\r)node{Getriebe};
+
+
+
+
+
+
+\end{tikzpicture}
+\end{document}
