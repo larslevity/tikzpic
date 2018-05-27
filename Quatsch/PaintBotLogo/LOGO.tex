@@ -1,0 +1,120 @@
+\documentclass[]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{fadings}
+
+\begin{document}
+\begin{tikzpicture}
+
+\def\colA{black!90}
+\def\colB{black!60}
+
+
+
+
+
+% Kolibri
+\def\kolibri{ 
+(1.7,-1.6) to 
+(5.5,-.9) to 
+(5.9,-.6) to
+(6.3,-.4) to 
+(6.93,-.18) to 
+(7.44,-.3) to 
+(7.92,-.46) to 
+(8.15,-.53) to 
+(8.53,-.97) to 
+(8.74,-1.47) to 
+(8.79,-2.29) to 
+(8.66,-3.38) to 
+(9.58,-4) to 
+(10.97,-3.2) to 
+(12.5,-2.62) to 
+(14.58,-2.18) to 
+(16.6,-2.24) to 
+(18.52,-2.64) to 
+(17.73,-3.33) to 
+(16.69,-4.32) to 
+(15.50,-5.71) to 
+(14.94,-6.45) to 
+(14.05,-7.06) to 
+(13.03,-7.39) to 
+(11.94,-7.49) to
+(11.02,-7.39) to 
+(10.64,-7.47) to 
+(10.49,-8.26) to 
+(10.64,-9.32) to 
+(10.82,-10.26) to 
+(10.77,-11.07) to 
+(10.57,-11.91) to 
+(10.21,-12.75) to 
+(9.45,-13.89) to 
+(8.18,-15.70) to 
+(7.85,-16.23) to 
+(7.65,-16.84) to 
+(7.54,-17.73) to 
+(7.44,-17.09) to 
+(7.49,-16.64) to 
+(7.72,-15.82) to 
+(8.53,-13.31) to
+(8.64,-12.34) to 
+(8.48,-11.63) to 
+(7.11,-9.58) to 
+(6.6,-8.7) to 
+(6.1,-7.37) to 
+(5.82,-6.25) to 
+(5.84,-5.05) to 
+(6.15,-3.96) to 
+(6.32,-3) to 
+(6.1,-2.4) to 
+(5.8,-1.91) to 
+(5.28,-1.65) to 
+(4.27,-1.52) to 
+(1.8,-1.65) 
+}
+
+\path [fill = \colB,path fading=east ] (2,0)rectangle(16,-17.8);
+\path[rounded corners=.3cm,fill=white] \kolibri;
+
+\fill[\colA] (1.3,0)rectangle(1.8,-17.8);
+
+% faded kolibri
+\begin{scope}
+\path[clip,rounded corners=.3cm] \kolibri;
+\path [fill = \colA,path fading=west ] (5.2,0)rectangle(18.5,-17.8);
+\end{scope}
+
+% Kontur Kolibri
+%\path[draw, very thick,rounded corners=.3cm] \kolibri;
+
+
+\begin{scope}[
+rotate=90,
+line width = .1cm,
+scale=1.7,
+xshift = -10cm,
+yshift = -1.5cm
+]
+
+% PaintBot
+%P
+\draw (0,0)--++(0,2)--++(.5,0)arc(90:-90:.5)--++(-.5,0);
+%a
+\draw (1.5,.5)circle(.5) (2,1)--(2,0);
+%i
+\draw (2.5,0)--(2.5,1) (2.5,1.2)circle(.05);
+% n
+\draw (3,0)--(3,1) (3,.5)arc(180:0:.5)--++(0,-.5);
+% t
+\draw (4.5,2)--(4.5,.5)arc(180:270:.5) (4,1)--(5,1);
+%B
+\draw (6,0)--(6,2)--++(.5,0)arc(90:-90:.5)arc(90:-90:.5)--++(-.5,0) (6,1)--++(.5,0);
+% o
+\draw (7.6,.5)circle(.5);
+% t
+\draw (8.5,2)--(8.5,.5)arc(180:270:.5) (8,1)--(9,1);
+\end{scope}
+
+
+\end{tikzpicture}
+\end{document}

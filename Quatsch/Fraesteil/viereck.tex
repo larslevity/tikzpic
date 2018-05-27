@@ -1,0 +1,119 @@
+\documentclass{standalone}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+\usepackage{tikz-3dplot}
+\begin{document}
+% The colour of the xagons:
+\newcommand{\colA}{white};
+\newcommand{\colB}{black};
+
+\tdplotsetmaincoords{40}{230}
+\begin{tikzpicture}[tdplot_main_coords,background rectangle/.style={fill=\colA},show background rectangle]
+
+\def\position{10/100}
+\def\alph{5.82};
+
+\coordinate (center) at (0,0,0);
+\coordinate (1) at ($(center)+(120:2)$);
+\coordinate (2) at ($(center)+(240:2)$);
+\coordinate (3) at ($(center)+(360:2)$);
+%% Höhe regulieren
+		\foreach \j in {1,2,3}{
+			\coordinate (1\j) at ($(\j)+(0,0,-.2)$);
+			%% Linien ziehen::
+			\draw (1\j)--++(0,0,.2);		
+		}	
+\draw[] (11)--(12)--(13)--cycle;
+
+\foreach \i in {0,1,...,10}{
+	\pgfmathsetmacro{\density}{80-\i/18*100};
+	\draw[fill=\colA!\density!\colB] (1)--(2)--(3)--cycle;
+
+% New startpoints:
+		% First we need to save the first point :
+		\coordinate (z) at (1);
+		\pgfmathtruncatemacro{\y}{3-1}
+		\foreach \j in {1,...,\y}
+			{
+				\pgfmathtruncatemacro{\next}{\j+1}
+				\coordinate (\j) at ($(\j)!\position!(\next)$);
+			}
+		%at least the last corner:
+		\coordinate (3) at ($(3)!\position!(z)$);	
+
+
+\draw[fill=\colA!\density!\colB] (1)--(2)--(3)--cycle;		
+		
+		%% Höhe regulieren
+		\foreach \j in {1,2,3}{
+			\coordinate (\j) at ($(\j)+(0,0,.2)$);
+			%% Linien ziehen::
+			\draw (\j)--++(0,0,-.2);		
+		}
+
+\draw[fill=\colA!\density!\colB] (1)--(2)--(3)--cycle;
+}
+
+\foreach \i in {1,2,3}{
+\coordinate (1\i) at ($(1\i)+(0,0,.2)$);
+}
+% First we need to save the first point :
+		\coordinate (z) at (11);
+		\pgfmathtruncatemacro{\y}{3-1}
+		\foreach \j in {1,...,\y}
+			{
+				\pgfmathtruncatemacro{\next}{1\j+1}
+				\coordinate (2\j) at ($(1\j)!\position!(\next)$);
+			}
+		%at least the last corner:
+		\coordinate (23) at ($(13)!\position!(z)$);	
+		
+		% First we need to save the first point :
+		\coordinate (z) at (21);
+		\pgfmathtruncatemacro{\y}{3-1}
+		\foreach \j in {1,...,\y}
+			{
+				\pgfmathtruncatemacro{\next}{2\j+1}
+				\coordinate (3\j) at ($(2\j)!\position!(\next)$);
+			}
+		%at least the last corner:
+		\coordinate (33) at ($(23)!\position!(z)$);
+
+%% Höhe regulieren
+		\foreach \j in {1,2,3}{
+			\coordinate (3\j) at ($(3\j)+(0,0,.2)$);	
+		}
+
+
+
+\draw[help lines] (11)--++(-90:5);
+\draw[help lines] (21)--++(-90+\alph:5);
+\tdplotdrawarc[tdplot_main_coords,->]{(21)}{4.5}{-90}{-90+\alph}{above}{$\alpha$};
+
+\draw[help lines] (11)++(0,0,-.2)--++(-2,0,0)coordinate(X);
+\draw[help lines] (12)++(0,0,-.2)--++(-2,0,0)coordinate(Y);
+\draw[latex-latex] (X)--(Y) node[midway,fill=white,rectangle]{$\ell_0$};
+
+\draw[help lines] (21)--++(\alph:-1.5)coordinate(X);
+\draw[help lines] (22)--++(\alph:-1.5)coordinate(Y);
+\draw[latex-latex] (X)--(Y) node[midway,fill=white,rectangle]{$\ell_1$};
+
+\draw[help lines] (31)--++(2*\alph:-1)coordinate(X);
+\draw[help lines] (32)--++(2*\alph:-1)coordinate(Y);
+\draw[latex-latex] (X)--(Y) node[midway,fill=white,rectangle]{$\ell_2$};
+
+
+
+
+%\path(22)node{x};
+
+\coordinate (O) at (1,2,0);
+\draw[->] (O)--++(1,0,0)node[right]{$x$};
+\draw[->] (O)--++(0,1,0)node[below]{$y$};
+\draw[->] (O)--++(0,0,1)node[right]{$z$};
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,124 @@
+\documentclass[]{minimal}
+\usepackage{amsmath,tikz}
+\usetikzlibrary{backgrounds,calc}
+\usepackage{ifthen}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}%
+\newboolean{greatenough}
+\begin{document}
+
+		%%%%___________Settings for the xagons
+		% The colour of the xagons:
+		\newcommand{\colA}{black};
+		\newcommand{\colB}{white};
+
+\begin{tikzpicture}[background rectangle/.style={fill=\colA},show background rectangle]
+
+% Fibonacci numbers : f(n)={0,1,2,3,5,8,13,21,34}
+%create some counters to handle the fibonacci numbers
+\newcounter{a}
+\newcounter{b}
+\newcounter{temp}
+%initialize the counters
+\setcounter{a}{0};
+\setcounter{b}{1};
+
+% The spiral will start at the origin
+\coordinate (0) at (0,0);
+
+%this loop will create the fibonacci spiral.
+\foreach \i in {1,2,...,12}
+{	
+	% Get the "name" of the last point on the spiral
+    \pgfmathsetmacro{\lastpoint}{\i-1}
+
+    % Compute the angle for this turn of the spiral
+    \pgfmathsetmacro{\startangle}{mod(\i-1,4) * 90}
+
+    % Draw this turn of the spiral and remember the point where we end 
+    \draw[white] (\lastpoint) arc 
+      (\startangle : \startangle +90: \value{b}) coordinate (\i);
+      
+      
+    % Draw some frame
+    \draw[black!90](\lastpoint)rectangle(\i) coordinate[pos=.5] (center);  
+    \draw[black!90](center)circle(\value{b}/2);
+%%_____________________________________________________________________________________%%
+	% Add some rotated xagons:	
+	\ifnum\i > 6
+	
+% The number of corners
+\pgfmathtruncatemacro{\x}{\i-4}
+% The number of xagons
+\newcommand{\n}{30};
+% The radius of the circle were the xagons live in :
+\pgfmathsetmacro{\R}{\value{b}/2};
+
+
+% Compute the corners of the xagons:
+\foreach \i in {1,...,\x}
+	{
+		\coordinate (10\i) at ($(center)+(360*\i/\x:\R)$);
+	}
+	
+% Draw the xagon \n -times:
+\foreach \i in {1,...,\n}
+	{
+		\pgfmathsetmacro{\density}{99-\i/\n*30}
+		\pgfmathsetmacro{\position}{0.15}
+		\foreach \j in {2,...,\x}				
+			{
+				\pgfmathtruncatemacro{\lastpoint}{10\j-1}
+				\fill[\colA!\density!\colB](\lastpoint)--(10\j)--(center);
+			}
+		% Draw the xagon of this part of the loop
+		\draw[\colA!\density!\colB,fill=\colA!\density!\colB] (10\x)--(101)--(center);		
+		
+		% New startpoints:
+		% First we need to save the first point :
+		\coordinate (z) at (101);
+		\pgfmathtruncatemacro{\y}{\x-1}
+		\foreach \j in {1,...,\y}
+			{
+				\pgfmathtruncatemacro{\next}{10\j+1}
+				\coordinate (10\j) at ($(10\j)!\position!(\next)$);
+			}
+		%at least the last corner:
+		\coordinate (10\x) at ($(10\x)!\position!(z)$);		
+	}
+			\fi
+ %%  _________________________end xagons______________________________________________________&%%
+ 
+    \draw[black!80] (\lastpoint)--(\i)
+    node[white,midway,circle,fill=black,font=\fontsize{20}{23}\selectfont]{\the\value{b}};
+	\draw[black!80] (\i) arc (\startangle +180 : \startangle+270: \value{b});
+	
+	%draw this part of the spiral again:
+	\draw[white] (\lastpoint) arc 
+      (\startangle : \startangle +90: \value{b});
+    
+    % Compute the next Fibonacci number
+    \setcounter{temp}{\value{b}}
+    \addtocounter{b}{\value{a}}
+    \setcounter{a}{\value{temp}}
+}
+
+% Add some text displaying the formula for the Fibonacci numbers
+ \node(eq) at ($(7) + (10.2,1.4)$) 
+   [white,text width = 2cm,font=\fontsize{20}{23}\selectfont] {
+   \begin{displaymath}
+     f(n) = \left\{
+       \begin{array}{lr}
+         0 & \text{~~if } n = 0\\
+         1 & \text{~~if } n = 1\\
+         f(n-1) + f(n-2) & \text{~~if } n \geq 2\\
+      \end{array}
+     \right.
+   \end{displaymath}
+  };
+  
+ 
+  
+\end{tikzpicture}
+\end{document}

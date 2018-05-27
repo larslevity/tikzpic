@@ -1,0 +1,40 @@
+% Test
+\documentclass{minimal}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}%
+
+\begin{document}
+\begin{tikzpicture}[background rectangle/.style={fill=green},show background rectangle]
+
+% The colour of the xagons:
+\newcommand{\col}{black};
+% The number of corners
+\newcommand{\x}{8};
+% The number of xagons
+\newcommand{\R}{10};
+% The start point where all begins
+\coordinate (center) at (0,0);
+% Draw the circle which is the home:
+\draw (center)circle(\R);
+
+% Compute the corners of the xagons:
+\foreach \i in {1,...,\x}
+	{
+		\coordinate (\i) at ($(center)+(360*\i/\x:\R)$);
+	}
+	
+\draw[fill=\col!20!green] (1)--(\x)--(center);
+\foreach \i in {2,...,\x}
+{
+	\pgfmathsetmacro{\last}{\i-1}
+	\draw[fill=\col!20!green] (\i)--(\last)--(center);
+}	
+	
+
+
+\end{tikzpicture}
+\end{document}

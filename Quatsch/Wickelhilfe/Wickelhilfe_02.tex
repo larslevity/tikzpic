@@ -1,0 +1,274 @@
+\documentclass[minimal]{standalone}
+\input{../../tikzpic_packages.tex}
+\usepackage{tikz-3dplot}
+\usepackage{ifthen}
+
+\begin{document}
+\tdplotsetmaincoords{65}{-50-90+180}
+\begin{tikzpicture}[tdplot_main_coords,scale=2]
+
+% Show coordinate systems?
+\def\show{0}
+
+
+
+
+\path (0,0,0)coordinate(O);
+\ifthenelse{0=\show}{}{
+%% main coords
+\draw[->] (O)--++(1,0,0)node{$x$};
+\draw[->] (O)--++(0,1,0)node{$y$};
+\draw[->] (O)--++(0,0,1)node{$z$};
+}
+
+
+%% parameters
+\def\r{.3}
+\def\l{2} % fixed
+\def\abs{5} % Abstand Öse - Seiltrommel
+\def\absW{2.5} % Abstand Seiltrommel - Wickelhilfe
+\def\a{.2} % Abstand zur Ebene
+\def\nr{1} % Neues radius
+\def\NEIG{74} % Neigung der Wickelhilfe
+
+
+% now we are in the x-y plane
+\tdplotsetrotatedcoords{90}{90}{0} 
+\tdplotsetrotatedcoordsorigin{(O)}
+
+
+
+
+
+\begin{scope}[tdplot_rotated_coords]
+% rotated coords
+\path (0,0,0)coordinate(O);
+\ifthenelse{0=\show}{}{
+\draw[->,help lines] (O)--++(.5,0,0)node{$x$};
+\draw[->,help lines] (O)--++(0,.5,0)node{$y$};
+\draw[->,help lines] (O)--++(0,0,.5)node{$z$};
+}
+
+%%% Draw the first half of seiltrommel
+\foreach \x in {2,1.8,...,0}{
+\pgfmathsetmacro{\y}{\nr}
+\draw[help lines](0,0,\x)circle(\y);
+}
+\foreach \angle in {0,20,...,360}{
+\tdplotsetrotatedcoords{90}{90}{\angle} 
+\begin{scope}[tdplot_rotated_coords]
+% draw solid line
+\draw[help lines] (\nr,0,\l)-- (\nr,0,0);
+\end{scope}
+}
+
+
+
+%% Draw a plane to illustrate the position of Öse
+
+%\draw[help lines,fill=gray!10,opacity=.7,tdplot_main_coords] (-\nr-\a,0,-\nr-\a)--(-\nr-\a,0,\nr+\a)--(5,0,\nr+\a)--(5,0,-\nr-\a)--cycle;
+
+
+
+%%% Draw the second half of seiltrommel
+\foreach \x in {-2,-1.8,...,0}{
+\pgfmathsetmacro{\y}{\r}
+\draw[help lines](0,0,\x)circle(\y);
+}
+\foreach \angle in {0,20,...,360}{
+\tdplotsetrotatedcoords{90}{90}{\angle} 
+\begin{scope}[tdplot_rotated_coords]
+% def (last)
+\draw[help lines] (\r,0,-\l) --(\r,0,0);
+\end{scope}
+}
+
+
+
+\end{scope}
+
+
+% Cut with plane
+\draw[tdplot_rotated_coords,gray] (0,0,0)circle(\r);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% draw the actual wickelhilfe
+
+%% Define the new Coord-System
+\path (\absW,0,\r) coordinate(O);
+\tdplotsetrotatedcoordsorigin{(O)} %% NEW ORIGIN!!!
+
+%%%%%% Bearings
+\tdplotsetrotatedcoords{90}{90}{0}
+\begin{scope}[tdplot_rotated_coords]
+\ifthenelse{0=\show}{}{
+%% main coords
+\draw[->,help lines] (0,0,0)--++(.5,0,0)node{$x$};
+\draw[->,help lines] (O)--++(0,.5,0)node{$y$};
+\draw[->,help lines] (O)--++(0,0,.5)node{$z$};
+}
+
+\draw[thick] (0,0,-\l-\a)coordinate(L)--(0,0,\l+\a)coordinate(R);
+\pgfmathsetmacro{\ah}{.5*\a}
+\foreach \s in {1,-1}{
+\pgfmathsetmacro{\z}{\s*(\l+\a)}
+\draw[thick] (0,0,\z)circle(.1)++(-30:.1)--++(-30:.2)coordinate(help);
+\draw[thick] (0,0,\z)++(30:.1)--++(30:.2)coordinate(help2)--(help);
+\foreach \pos in {.2,.5,.8}{
+\path (help)--(help2)coordinate[pos=\pos](X);
+\draw[thick] (X)--++(-45:.1);
+}
+}
+\end{scope}
+%%%% End Bearings
+
+
+
+
+
+
+
+
+% tweo points for Seil:
+% (1.55877,0.872556,0.157046)
+% (0.911282,1.21887,0.317036)
+% (1.34458,1.02424,0.219251)
+
+
+\foreach \neig/\opt/\s/\x/\yy/\zz in {
+\NEIG/{}/-1/1.55877/0.872556/.157046,
+90/{}/1/1.34458/1.02424/.219251
+}{ % Do ist for both sides
+%% Rotated Coord
+\tdplotsetrotatedcoords{180}{\neig}{90} %<-- rotated
+
+\ifthenelse{-1=\s}{\def\opt{gray} \def\opa{.2}}{\def\opa{.4}}
+
+\begin{scope}[tdplot_rotated_coords]
+
+
+
+%% Draw Plane 
+\pgfmathsetmacro{\outerx}{\s*(\l+\a)}
+\draw[help lines,fill=gray!20,opacity=\opa] (0,0,\absW+\r+\a)--++(\outerx,0,0)--++(0,0,-\a-\r-\abs)--++(-\outerx,0,0)--cycle;
+\draw[help lines] (0,0,\absW+\a+\r)--++(0,0,-\abs-\a-\r);
+
+\ifthenelse{0=\show}{}{
+%% main coords
+\draw[->] (O)--++(1,0,0)node{$x$};
+\draw[->] (O)--++(0,1,0)node{$y$};
+\draw[->] (O)--++(0,0,1)node{$z$};
+}
+
+% Draw Draht
+\draw[thick,\opt]  (2*\s,0,0)-- 	
+(1.99434*\s,0.106768,0.00225956)-- 	
+(1.98719*\s,0.160209,0.00510666)-- 	
+(1.97722*\s,0.213126,0.0090586)-- 	
+(1.96451*\s,0.265361,0.0140703)-- 	
+(1.94914*\s,0.316769,0.0200868)-- 	
+(1.93121*\s,0.367222,0.0270446)-- 	
+(1.91083*\s,0.416607,0.0348741)-- 	
+(1.88813*\s,0.464829,0.0435014)-- 	
+(1.86321*\s,0.511809,0.0528497)-- 	
+(1.8362*\s,0.557486,0.0628412)-- 	
+(1.80723*\s,0.601811,0.0733984)-- 	
+(1.77641*\s,0.64475,0.0844448)-- 	
+(1.74386*\s,0.686277,0.0959062)-- 	
+(1.70969*\s,0.726381,0.107711)-- 	
+(1.67399*\s,0.765056,0.119791)-- 	
+(1.63688*\s,0.802303,0.13208)-- 	
+(1.59845*\s,0.838133,0.144518)-- 	
+(1.55877*\s,0.872556,0.157046)-- 	
+(1.51795*\s,0.905589,0.16961)-- 	
+(1.47605*\s,0.937252,0.182159)-- 	
+(1.43314*\s,0.967566,0.194644)-- 	
+(1.3893*\s,0.996555,0.207022)-- 	
+(1.34458*\s,1.02424,0.219251)-- 	
+(1.29905*\s,1.05065,0.231293)-- 	
+(1.25275*\s,1.07581,0.24311)-- 	
+(1.20575*\s,1.09974,0.254671)-- 	
+(1.15808*\s,1.12247,0.265943)-- 	
+(1.10979*\s,1.14401,0.276898)-- 	
+(1.06093*\s,1.16441,0.287508)-- 	
+(1.01153*\s,1.18367,0.29775)-- 	
+(0.961639*\s,1.20182,0.3076)-- 	
+(0.911282*\s,1.21887,0.317036)-- 	
+(0.860496*\s,1.23486,0.326039)-- 	
+(0.809314*\s,1.2498,0.33459)-- 	
+(0.757765*\s,1.2637,0.342673)-- 	
+(0.70588*\s,1.27659,0.350272)-- 	
+(0.653686*\s,1.28847,0.357374)-- 	
+(0.60121*\s,1.29937,0.363964)-- 	
+(0.548478*\s,1.30929,0.370032)-- 	
+(0.495517*\s,1.31826,0.375566)-- 	
+(0.442349*\s,1.32627,0.380558)-- 	
+(0.388999*\s,1.33334,0.384998)-- 	
+(0.335491*\s,1.33948,0.38888)-- 	
+(0.281847*\s,1.34469,0.392197)-- 	
+(0.228089*\s,1.34898,0.394944)-- 	
+(0.174239*\s,1.35237,0.397116)-- 	
+(0.120321*\s,1.35484,0.398709)-- 	
+(0.0663539*\s,1.35641,0.399722)-- 	
+(0.0113606*\s,1.35708,0.400155);
+
+
+% Draw Öse
+\draw [] (0,0,-\abs+\absW) coordinate(ABS) circle(.05);
+
+
+%% Draw Verstellarm
+\draw[thick,\opt] (O)++(\outerx,0,0)--++(0,0,\absW)--++(-\outerx,0,0);
+\draw[thick,\opt] (O)--(ABS);
+
+
+
+%%%%%%%%%%% Draw Seil
+
+\pgfmathsetmacro{\xx}{\x*\s}
+\path (\xx,\yy,\zz)coordinate(W); % Point of Wickelhilfe
+
+
+% Seil
+\draw[\opt,thick] (ABS)--(W)--(\xx,0,\absW)coordinate(S)coordinate[pos=.5](F);
+\draw[gray,\opt] (ABS)--(\xx,0,\zz)coordinate(X)--(S);
+\draw[help lines,\opt] (X)--(W);
+
+% Force
+\draw[-latex,thick] (S)--(F)node[midway,above]{$F$};
+
+
+
+\end{scope} % End scope of Wickelhilfe / roteted coords
+
+
+
+\pgfmathsetmacro{\xx}{\x*\s}
+% Seil auf Seiltrommel
+\tdplotsetrotatedcoords{90}{90}{0}
+\path (0,0,0)coordinate(OO);
+\tdplotsetrotatedcoordsorigin{(OO)}
+\ifthenelse{1=\s}{\def\R{\r}}{\def\R{\nr}}
+\draw[tdplot_rotated_coords] (0,0,-\xx)circle(\R);
+
+} % Ende foreach both sides
+
+% Draw Axis again
+\draw[thick] (O)--(L);
+
+
+
+
+%% Beschriftung
+\draw[help lines] (ABS)circle(.02)--++(0,.5,0)node[right,black]{\"Ose};
+
+\draw[help lines] (0,-\l,-\r)circle(.02)--++(.5,-.5,0)node[right,black]{Seiltrommel};
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

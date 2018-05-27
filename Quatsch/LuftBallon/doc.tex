@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+
+\usepackage[ansinew]{inputenc} % erweiterter Eingabezeichensatz (z.B. Sonderzeichen, Umlaute, etc.)
+\usepackage[T1]{fontenc} % erweiterter T1 Zeichenvorrat
+\usepackage[ngerman]{babel} % Deutsche Trennregeln
+\usepackage{booktabs} % Tabellenlayout
+\usepackage{units} % einbinden von Einheiten
+\usepackage{amsmath} % Matheumgebung
+\usepackage{mathtools} % erweiterte Matheumgebung
+\usepackage{dsfont} % für mathematische Mengensymbole
+\usepackage{amssymb} % Symbolumgebung
+\usepackage{theorem} % Erweiterung für Theoreme und Sätze
+\usepackage{array} % für z.B. Matrizen
+\usepackage{color} % Verwendung von Farben
+\usepackage{rotate} % Drehung von Objekten
+\usepackage{lmodern} % Serifenlose Schrift
+\usepackage{tikz}    % TikZ Pictures 
+\usepackage{graphics} % Einbindung von Grafiken in PS, PDF und JPG
+\usepackage{epsfig} % Einbindung von Grafiken mit epsfig
+\usepackage{pifont}
+\usepackage{eurosym} % Verwendung des Euro-Zeichens
+\usepackage{colortbl} % Tabellen farbig gestalten
+\usepackage{xmpmulti}
+\usepackage{multimedia}
+\usepackage{graphicx}
+%\usepackage{movie15}
+\usepackage{pdfsync}
+\usepackage{ulem} % für Unterstreichungen
+\usepackage{url} % Internetlinks eingeben über \url{http://www.tu-harburg.de}
+\usepackage[lmargin=2cm,rmargin=2cm,tmargin=2cm,bmargin=2cm]{geometry}
+
+\setlength{\parindent}{1em}
+
+\title{Was passiert mit einem Helium Ballon?}
+\author{Lars Schiller}
+
+\begin{document}
+
+\maketitle
+
+Da spielt Vieles eine Rolle. Nachdem der Heliumballon auf der Erde aufgeblasen wurde, ist die Masse der Verdrängten Luft größer, als seine eigene Masse (Hülle, Schnur Helium). Daher wird er wenn er losgelassen wird aufsteigen.
+
+Je höher man in der Atmosphäre ist, desto dünner wird die Luft. Im 11 km Höhe ist sie etwas halb so dicht wie an der Erdoberfläche. Dünner heißt konkret, weniger Luftdruck und weniger Dichte. Das weniger an Luftdruck bewirkt, dass sich der Ballon weiter ausdehnt. Ursache dafür ist, dass die Druckdifferenz zwischen Innen und Außendruck abnimmt, und die entsprechenden Kräfte von der elastischen Luftballonhülle aufgenommen werden. Sie dehnt sich also. Wäre der Ballon bis kurz vor dem Platzen aufgepumpt, würde er dabei auch platzen.
+
+Der Händler füllt den Ballon jedoch gewiss nicht bis an die \textit{Platzgrenze}. (Helium ist teuer und er will ja Gewinn machen). Dann wird der Ballon soweit aufsteigen, bis die Masse der (dünneren) Luft gleich der Masse des Ballons ist. Das nennt auch \textit{Schweben}. Der Wind wird den Ballon dann auch weg wehen.
+
+Heliumgas besteht aus kleinen Atome. Daher kann das Gas durch die die Ballonhülle diffundieren (ganz langsam austreten). Dadurch nimmt die Menge an Helium im Ballon immer weiter ab und er wird schlapper. Irgend wann ist dann die Masse der verdrängten Luft kleiner als die Masse des Ballon und er landet wieder auf der Erde.
+
+Eine leeren Heliumballon landen zu sehen, dazu erfordert es viel Glück. So ein Ballon kann einige 1000 km weit fliegen. Würde man um den Startpunkt einen Kreis ziehen, kämen rund 1000000\,km$^2$ als Fläche in der der Ballon landen könnte heraus. Selbst wenn Du ihn auf 100\,m Entfernung noch erkennen könntest, ist die Chance 1:100000000, also etwa 7\,mal unwahrscheinlicher als eine Sechser im Lotto. Und Du musst dann auch noch am richtigen Zeitpunkt dort sein und auch noch hinschauen.
+
+Vergleiche hierzu auch die Abbildungen \ref{fig:Skizzen} und \ref{fig:Druck}.
+
+\clearpage
+
+\textit{Nachtrag zur Unendlichkeit:} \\
+Ein Ballon, der unendlich weit steigt, müsste die Ionosphäre (ca. 80-400\,km über der Erdoberfläche) passieren. Dort herrschen Temperaturen von über 1000\,$^\circ$C. Die Ballonhülle würde bei diesen Temperaturen einfach schmelzen. Mit Stratosphärenballons hat man bisher ca. 40\,km Höhe erreicht.
+
+Lässt man die ganzen \textit{praktischen} Probleme beiseite, auch das Problem ob das Universum endlich oder unendlich ist, dann hilft ein Abschätzung. Im interstellaren Raum wird eine (Wasserstoff-)\-Teilchendichte von 1/cm$^3$ bis 1/m$^3$ (je nach Quelle) vermutet. Ein Festkörper hat etwa $10^{22}$ Teilchen /cm$^3$, eine Folie mit eine Dicke von 1/1000 mm hat also $10^{18}$ Teilchen/cm$^2$. Nehmen wir einmal an wir könnten mit der Folie eine kugelförmige Hülle mit Radius $r$ bauen, im Innern ein perfektes Vakuum erzeugen, die Hülle würde gegen den äußeren Druck stabil sein und aus Wasserstoffteilchen bestehen. Dann schätzen wir mal:
+Masse des Ballon:
+\begin{equation}m_{\textnormal{B}} \sim r^2 \cdot 10^{18}\,Teilchen/cm^2 \end{equation}
+
+Masse des verdrängten interstellaren Raumes:
+\begin{equation} m_{\textnormal{R}} \sim r^3*1\,Teilchen/cm^2 \end{equation}
+Gleichsetzen und Auflösen:
+\begin{equation} r \approx 10^{18}\,cm=10^16\,km= 1000\,Lichtjahre \end{equation}
+
+
+Bitte jetzt nicht bemängeln, dass das bei der Oberfläche 4 Pi und beim Volumen 4 Pi/3 als gleich betrachtet wurde, es geht mir nur um die Anzahl der Nullen und ob das jetzt eine mehr oer weniger ist, spielt bei der Schätzung keine Rolle, zumal die "Eingangsdaten" auf 3 Nullen unsicher sind. 
+\begin{figure}[p]
+\begin{center}
+\begin{tikzpicture}
+
+%%Erdoberfläche
+\path(0,5)node{Erdoberfläche};
+\path(0,4)node{$\varrho_{\textnormal{Luft}} \sim 1 \frac{\textnormal{kg}}{\textnormal{m}^3}$};
+\draw (0,0)circle(1)++(0,-1)--++(240:.2)--++(0:.2)--++(120:.2)coordinate(A);
+\foreach \i in {1,2,...,20}{\draw[rounded corners=2pt] (A)--++(270+rnd*100:.1)coordinate(A);}
+
+\draw[->,thick,blue] (0,0)node{$\bullet$}--++(0,1.5)node[near end,right]{$F_{A}$};
+\draw[->,thick,red] (0,0)node{$\bullet$}--++(0,-1.2)node[near end,right]{$F_{G}$};
+\path(0,3)node{$F_G = m \cdot g = const.$};
+\path(-.5,-3)node[red]{$F_G$};
+\path(0,-3)node[]{$<$};
+\path(.5,-3)node[blue]{$F_A$};
+
+\draw[line width=.05cm,->] (2,0)--(3,0);
+
+%% Luftige Höhe
+\path(5,5)node{Luftige Höhe von 11\,km};
+\path(5,4)node{$\varrho_{\textnormal{Luft}} \sim .5 \frac{\textnormal{kg}}{\textnormal{m}^3}$};
+\path(5,3)node{$F_A = \varrho (\downarrow) \cdot g \cdot V(\uparrow)$};
+\draw (5,0)circle(1.5)++(0,-1.5)--++(240:.2)--++(0:.2)--++(120:.2)coordinate(A);
+\foreach \i in {1,2,...,20}{\draw[rounded corners=2pt] (A)--++(270+rnd*100:.1)coordinate(A);}
+
+\draw[->,thick,blue] (5,0)node{$\bullet$}--++(0,1.4)node[near end,right]{$F_{A}$};
+\draw[->,thick,red] (5,0)node{$\bullet$}--++(0,-1.2)node[near end,right]{$F_{G}$};
+\foreach \n in {0,20,...,360}{\draw[help lines, very thin,->,xshift=5cm] (\n:1.4)--(\n:1.8); }
+\path[help lines, very thin](5,2)node{Helium diffundiert aus dem Ballon};
+
+\draw[line width=.05cm,->] (7,0)--(8,0);
+
+\path(5-.5,-3)node[red]{$F_G$};
+\path(5,-3)node[]{$\approx$};
+\path(5.5,-3)node[blue]{$F_A$};
+
+%% Platzen
+\path(10,5)node{Fall A: Platzen};
+\draw (10,3)coordinate(B)++(0,-1.4)--++(240:.2)--++(0:.2)--++(120:.2)coordinate(A);
+\foreach \i in {1,2,...,20}{\draw[rounded corners=2pt] (A)--++(270+rnd*100:.1)coordinate(A);}
+
+\foreach \n in {0,30,...,330}{
+\path (10,3)++(\n:1.4)coordinate(A);
+\foreach \i in {1,2,...,10}{
+\draw[xshift=10cm,yshift=3cm] (A)--++(\n+40+rnd*360:.1)coordinate(A);
+}}
+
+
+%% Landen
+\path(10,-1)node{Fall B: weiches Landen};
+\draw (10,-3)circle(.8)++(0,-.8)--++(240:.2)--++(0:.2)--++(120:.2)coordinate(A);
+\foreach \i in {1,2,...,20}{\draw[rounded corners=2pt] (A)--++(270+rnd*100:.1)coordinate(A);}
+
+\path(13-.5,-3)node[red]{$F_G$};
+\path(13,-3)node[]{$>$};
+\path(13.5,-3)node[blue]{$F_A$};
+
+
+\draw[->,thick,blue] (10,-3)node{$\bullet$}--++(0,1)node[near end,right]{$F_{A}$};
+\draw[->,thick,red] (10,-3)node{$\bullet$}--++(0,-1.2)node[near end,right]{$F_{G}$};
+
+
+\end{tikzpicture}
+\caption{Zustands Skizzen}
+\label{fig:Skizzen}
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+\begin{center}
+\includegraphics[width=.55\textwidth]{Atmosphaere_Dichte_600km.png}
+\caption{Luftdruck in verschiedenen Höhen}
+\label{fig:Druck}
+\end{center}
+\end{figure}
+
+\vfill
+
+\textit{Quelle:}~~ \url{https://de.answers.yahoo.com/question/index?qid=20070619005637AArItgs}
+
+
+
+
+
+
+
+
+\end{document}

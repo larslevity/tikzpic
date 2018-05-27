@@ -1,0 +1,155 @@
+\documentclass[minimal]{standalone}
+\input{../../tikzpic_packages.tex}
+\usepackage{tikz-3dplot}
+\usepackage{ifthen}
+
+\begin{document}
+\tdplotsetmaincoords{65}{-50-90+180}
+\begin{tikzpicture}[tdplot_main_coords,scale=2]
+
+% Show coordinate systems?
+\def\show{0}
+
+
+
+
+\path (0,0,0)coordinate(O);
+\ifthenelse{0=\show}{}{
+%% main coords
+\draw[->] (O)--++(1,0,0)node{$x$};
+\draw[->] (O)--++(0,1,0)node{$y$};
+\draw[->] (O)--++(0,0,1)node{$z$};
+}
+
+
+%% parameters
+\def\r{.3}
+\def\l{2} % fixed
+\def\sig{.6}
+\def\a{.5}
+
+
+
+% now we are in the x-y plane
+\tdplotsetrotatedcoords{90}{90}{0} 
+\tdplotsetrotatedcoordsorigin{(O)}
+
+
+%%% Öse
+\def\abs{5}
+\path (\abs,0,\r)coordinate(ABS);
+% Hinteres Seil (muss vor Ebene gezeichnet werden)
+\draw[] (ABS)--(0,\l,\r)coordinate(P2);
+
+\begin{scope}[tdplot_rotated_coords]
+
+
+% rotated coords
+\path (0,0,0)coordinate(O);
+\ifthenelse{0=\show}{}{
+\draw[->,help lines] (O)--++(.5,0,0)node{$x$};
+\draw[->,help lines] (O)--++(0,.5,0)node{$y$};
+\draw[->,help lines] (O)--++(0,0,.5)node{$z$};
+}
+
+%%% Draw the first half of seiltrommel
+\foreach \x in {2,1.8,...,0}{
+\pgfmathsetmacro{\y}{\a*exp(-\x*\x/\sig)+\r}
+\draw[help lines](0,0,\x)circle(\y);
+}
+\foreach \angle in {0,10,...,360}{
+\tdplotsetrotatedcoords{90}{90}{\angle} 
+\begin{scope}[tdplot_rotated_coords]
+% def (last)
+\path (\r,0,\l) coordinate(last);
+\foreach \z in {2,1.9,...,0}{
+\pgfmathsetmacro{\x}{\a*exp(-\z*\z/\sig)+\r}
+\draw[help lines] (last)--(\x,0,\z)coordinate(last);
+}
+\draw[help lines] (last)--(\r+\a,0,0);
+\end{scope}
+}
+
+
+%% Draw a plane to illustrate the position of Öse
+\draw[help lines,fill=gray!10,opacity=.7,tdplot_main_coords] (-\r-\a,0,-\r-\a)--(-\r-\a,0,\r+\a)--(5,0,\r+\a)--(5,0,-\r-\a)--cycle;
+
+
+
+%%% Draw the first half of seiltrommel
+\foreach \x in {-2,-1.8,...,0}{
+\pgfmathsetmacro{\y}{\a*exp(-\x*\x/\sig)+\r}
+\draw[help lines](0,0,\x)circle(\y);
+}
+\foreach \angle in {0,10,...,360}{
+\tdplotsetrotatedcoords{90}{90}{\angle} 
+\begin{scope}[tdplot_rotated_coords]
+% def (last)
+\path (\r,0,-\l) coordinate(last);
+\foreach \z in {-2,-1.9,...,0}{
+\pgfmathsetmacro{\x}{\a*exp(-\z*\z/\sig)+\r}
+\draw[help lines] (last)--(\x,0,\z)coordinate(last);
+}
+\draw[help lines] (last)--(\r+\a,0,0);
+\end{scope}
+}
+
+
+
+\end{scope}
+
+
+% Cut with plane
+\draw[tdplot_rotated_coords,gray] (0,0,0)circle(\r+\a);
+
+
+
+
+%%% draw rope
+
+% Define new x-y-plane
+\tdplotsetrotatedcoords{0}{90}{0}
+\draw[tdplot_rotated_coords] (ABS)circle(.07);
+
+
+% Define new x-y-plane
+\tdplotsetrotatedcoords{90}{90}{0}
+% Define Angle
+\pgfmathsetmacro{\angle}{atan(\abs/\l)}
+
+
+% Seil
+\draw[] (ABS)--(0,-\l,\r)coordinate(P);
+\draw[tdplot_rotated_coords] (0,0,-\l)circle(\r);
+
+% Seilkraft
+\def\len{2}
+\pgfmathsetmacro{\leny}{cos(\angle)*\len}
+\pgfmathsetmacro{\lenx}{sin(\angle)*\len}
+\draw[-latex,thick] (P)--++(0,\leny,0)coordinate(help)node[midway,above left]{$F_x$};
+\draw[-latex,gray] (help)--++(\lenx,0,0)node[midway,above]{};
+\draw[-latex] (P)--++(90-\angle:\len)node[near end,below]{$F$};
+
+
+\begin{scope}[thin]
+% Seil
+\draw[tdplot_rotated_coords] (0,0,\l)circle(\r);
+\draw[-latex,thick] (P2)--++(0,-\leny,0)coordinate(help)node[midway,above left]{$F_x$};
+\draw[-latex,gray] (help)--++(\lenx,0,0)node[midway,below]{};
+\draw[-latex] (P2)--++(-90+\angle:\len)node[midway,above]{$F$};
+\end{scope}
+
+
+
+
+%% Beschriftung
+\draw[help lines] (ABS)circle(.02)--++(0,.5,0)node[right,black]{\"Ose};
+
+\draw[help lines] (P)++(0,0,-\r-\r)circle(.02)--++(.5,-.5,0)node[right,black]{Seiltrommel};
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

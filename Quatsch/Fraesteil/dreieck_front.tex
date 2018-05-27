@@ -1,0 +1,81 @@
+\documentclass[12pt]{minimal}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\usepackage{mathabx}
+
+\setlength\PreviewBorder{0pt}%
+\begin{document}
+
+\begin{tikzpicture}[scale=1.4]
+
+\def\position{10/100}
+\def\alph{5.82};
+\def\d{1};
+
+%\coordinate (O) at (-3,0);
+%\draw[->] (O)--++(1,0)node[below]{$x$};
+%\draw[->] (O)--++(0,1)node[left]{$y$};
+
+\coordinate (center) at (0,0);
+\coordinate (1) at ($(center)+(90:2)$);
+\coordinate (2) at ($(center)+(90+120:2)$);
+\coordinate (3) at ($(center)+(90+240:2)$);
+\coordinate (1_Mitte) at ($(2)!.5!(3)$);
+
+\coordinate (21) at ($(1)!\position!(2)$);
+\coordinate (22) at ($(2)!\position!(3)$);
+\coordinate (23) at ($(3)!\position!(1)$);
+\coordinate (2_Mitte) at ($(22)!.5!(23)$);
+
+\coordinate (31) at ($(21)!\position!(22)$);
+\coordinate (32) at ($(22)!\position!(23)$);
+\coordinate (33) at ($(23)!\position!(21)$);
+\coordinate (3_Mitte) at ($(33)!.5!(31)$);
+
+
+\draw (1)--(2)--(3)--cycle;
+\draw (21)--(22)--(23)--cycle;
+\draw (31)--(32)--(33)--cycle;
+
+\draw[help lines] (center)--(1_Mitte);
+\draw[help lines] (center)--(2_Mitte);
+\draw[help lines] (center)--(3_Mitte);
+
+\path (1_Mitte)--++(-.5,0) coordinate (X);
+\draw[help lines] (center)--++(-.5,0) coordinate (Y);
+\draw [latex-latex] (X)--(Y)node[midway,fill=white,rectangle]{$s_0$};
+
+
+\path (2_Mitte)--++(\alph:.3) coordinate (X);
+\draw[help lines] (center)--++(\alph:.3) coordinate (Y);
+\draw [latex-latex] (X)--(Y)node[midway,fill=white,rectangle]{$s_1$};
+
+\path (3_Mitte)--++(120+2*\alph:.2) coordinate (X);
+\draw[help lines] (center)--++(120+2*\alph:.2) coordinate (Y);
+\draw [latex-latex] (X)--(Y)node[near end, above=2]{$s_2$};
+
+\draw[help lines] (2)--++(0,-1) coordinate (X);
+\draw[help lines] (3)--++(0,-1) coordinate (Y);
+\draw [latex-latex] (X)--(Y)node[midway,fill=white,rectangle]{$\ell_0$};
+
+\draw[help lines] (22)--++(0,-.5) coordinate (X);
+\draw[help lines] (23)--++(0,-.808) coordinate (Y);
+\draw [latex-latex] (X)--(Y)node[midway,fill=white,rectangle]{$a$};
+
+\draw[help lines] (3)--++(0,-.5) coordinate (Y);
+\draw [latex-] (Y)--++(.4,0)node[right]{$b$};
+
+\draw[help lines] (23)--++(.573,0) coordinate (Y);
+\draw[help lines] (3)--++(.4,0) coordinate (X);
+\draw [latex-latex] (Y)--(X)node[midway,right]{$c$};
+
+\draw[dashed,help lines] (2)--++(30:4);
+
+\draw[help lines] (3_Mitte)--++(30+2*\alph:\d)node[midway,fill=white,rectangle]{$r_w$}circle(\d) ++ (0,\d)--++(1.5,0)coordinate(X)++(0,-2*\d)coordinate(Y)--++(-1.5,0);
+\draw[help lines,latex-latex] (X)--(Y)node[midway,fill=white,rectangle]{$\diameter d_w$};
+
+\end{tikzpicture}
+\end{document}

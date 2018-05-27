@@ -1,0 +1,29 @@
+\documentclass{minimal}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+\usepackage{tikz-3dplot}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}%
+\begin{document}
+
+
+\tdplotsetmaincoords{250}{-20}
+\begin{tikzpicture}[tdplot_main_coords,domain=0:4]
+\coordinate (O) at (0,0,0);
+
+\draw [thick, ->] (O)--++(5,0,0)node[below]{$x$};
+\draw [thick, ->] (O)--++(0,3,0)node[below]{$z$};
+
+\draw[] plot function{(1.5+1*cos(x*2*3.1416/4))*(1-x*.5/4)} node[right]{$z(x)$}; 
+
+\tdplotsetrotatedcoords{-180}{-90}{180};
+
+\draw[tdplot_rotated_coords,help lines] (0,0,0)circle(2.5) (0,0,.5)circle(2.0692) (0,0,1)circle(1.3125) (0,0,1.5)circle(0.6442) (0,0,2)circle(.375) (0,0,2.5)circle(.5451) (0,0,3)circle(.9375) (0,0,3.5)circle(1.2415) (0,0,4)circle(1.25);
+
+
+
+
+\end{tikzpicture}
+\end{document}

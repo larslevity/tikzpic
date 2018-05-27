@@ -1,0 +1,65 @@
+\documentclass{standalone}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+
+\begin{document}
+% The colour of the xagons:
+\newcommand{\colA}{white};
+\newcommand{\colB}{orange};
+
+
+\begin{tikzpicture}[background rectangle/.style={fill=\colA},show background rectangle]
+%% Gebe hier die Anzahl der Ecken des höchsten Vielecks ein:
+\newcommand{\nn}{9}
+\pgfmathsetmacro{\abs}{\nn-2}
+\foreach \i in {3,...,\nn}
+{
+% The number of corners
+\pgfmathtruncatemacro{\x}{\i}
+% The number of xagons
+\newcommand{\n}{20};
+% The radius of the circle were the xagons live in :
+\newcommand{\R}{10};
+% The start point where all begins
+\pgfmathsetmacro{\angle}{mod(\i,\abs)}
+\pgfmathsetmacro{\spanne}{360/\abs}
+\path (0,0)--(\angle*\spanne:\nn*2.5) coordinate(center);
+% Draw the circle which is the home:
+%\draw (center)circle(\R);
+
+% Compute the corners of the xagons:
+\foreach \i in {1,...,\x}
+	{
+		\coordinate (10\i) at ($(center)+(360*\i/\x:\R)$);
+	}
+	
+% Draw the xagon \n -times:
+\foreach \i in {1,...,\n}
+	{
+		\pgfmathsetmacro{\density}{100-\i/\n*100}
+		\pgfmathsetmacro{\position}{\i/\n*0.3}
+		\foreach \j in {2,...,\x}				
+			{
+				\pgfmathtruncatemacro{\lastpoint}{10\j-1}
+				\fill[\colA!\density!\colB](\lastpoint)--(10\j)--(center);
+			}
+		% Draw the xagon of this part of the loop
+		\draw[\colA!\density!\colB,fill=\colA!\density!\colB] (10\x)--(101)--(center);		
+		
+		% New startpoints:
+		% First we need to save the first point :
+		\coordinate (z) at (101);
+		\pgfmathtruncatemacro{\y}{\x-1}
+		\foreach \j in {1,...,\y}
+			{
+				\pgfmathtruncatemacro{\next}{10\j+1}
+				\coordinate (10\j) at ($(10\j)!\position!(\next)$);
+			}
+		%at least the last corner:
+		\coordinate (10\x) at ($(10\x)!\position!(z)$);		
+	}
+
+}
+\end{tikzpicture}
+\end{document}
