@@ -1,0 +1,48 @@
+% Pneumatic Circuit
+
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+spring/.style={decoration = {zigzag, segment length = 1mm, amplitude = 1.5mm}, decorate},
+help/.style={very thin, lightgray},
+arrow/.style={-triangle 45}
+]
+
+% States
+\foreach[count=\i] \x in {-.5,.5}{
+	\draw (\x-.5,.5)--++(1,0)coordinate[pos=.25](\i2)--++(0,-1)--++(-1,0)coordinate[pos=.25](\i3)coordinate[pos=.75](\i1)--cycle;
+}
+% State1
+\draw (13)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw[arrow] (11)--(12);
+%State2
+\draw (21)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw[arrow] (22)--(23);
+
+% In- and Outlets
+\draw[fill] (22)--++(0,.3)circle(.025)node[right]{2}coordinate(2);
+\draw[fill] (21)--++(0,-.3)circle(.025)node[left]{1}coordinate(1);
+\draw[fill] (23)--++(0,-.3)circle(.025)node[right]{3}coordinate(3);
+
+% Frame
+\draw[spring](1,-.25)--++(.5,0);
+\draw (-1,-.5)--++(-.5,0)coordinate[pos=.1](ur)
+coordinate[pos=.9](ul)--++(0,.4)--++(.5,0)coordinate[pos=.4](ol)coordinate[pos=.6](or);
+\draw (ul)--(ol);
+
+
+
+
+%%%%%%%% Schaltung
+%\draw (3)--++(0,-.2)--++(-.1,0)--++(0,-.4)coordinate[pos=.5](l)--++(0.2,0)coordinate[pos=.25](u)coordinate[pos=.75](uu)--++(0,.4)coordinate[pos=.25](rr)coordinate[pos=.75](r)--++(-.1,0);
+%\draw (l)--++(.1,0) (r)--++(-.1,0) (rr)--++(-.1,0);
+%\draw (u)--++(-45:.07)--(uu);
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

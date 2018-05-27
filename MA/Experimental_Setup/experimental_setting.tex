@@ -1,0 +1,88 @@
+\documentclass[10pt]{standalone}
+\def\path{../../}
+\input{\path/tikzpic_packages.tex}
+\usepackage{url}
+
+
+\begin{document}
+\begin{tikzpicture}[
+scale=1, 
+solid/.style={line width=.333mm, draw=red!40},
+plate/.style={draw=black, fill=gray!20},
+darrow/.style={latex-latex},
+camera/.style={fill=black},
+stativ/.style={very thick},
+gecko/.style={draw=red!70, fill=red!50},
+block/.style={draw, minimum width=3cm, minimum height=1cm, fill=gray!10},
+arrow/.style={-triangle 45},
+cable/.style={rounded corners=5mm, smooth, double}
+]
+
+\def\l{5.2} % length of plate
+\def\t{.2} % thickness of plate
+\def\buf{.2} % Extra Length of housing
+\def\r{1.7} % Radius for angle notes
+\def\ls{.5} % Schraffur Laenge
+
+
+% Housing
+\draw[very thick] (\l+\buf,0)--(0,0)--(0,\buf+\l);
+\foreach \pos in {0,.1,...,1.1}{
+	\path (0,0)--(\l+\buf,0)coordinate[pos=\pos](x);
+	\path (0,0)--(0,\l+\buf)coordinate[pos=\pos](y);
+	\draw (x)--++(225:\ls);
+	\draw (y)--++(225:\ls);	
+}
+
+% Ebene
+\def\del{30} % Ebenenwinkel
+\foreach \del/\opa in {70/.4,30/1}{
+	\begin{scope}[opacity=\opa]
+	\pgfmathsetmacro{\x}{cos(\del)*\l}
+	\pgfmathsetmacro{\y}{sin(\del)*\l}
+	\draw[plate] (\x,0)--(0,\y)--++(90-\del:\t)--++(-\del:\l)coordinate[midway](PlaneMid)--++(-90-\del:\t);
+	\draw[darrow] (\x-\r,0)arc(180:180-\del:\r);
+	\pgfmathsetmacro{\delh}{0.5*\del}
+	\path (\x,0)++(180-\delh:\r)node[right,rotate=-\delh]{$\delta=\del ^\circ$};
+	\end{scope}
+}
+\draw[help lines] (PlaneMid)++(180-\del:1)--++(50:1)node[above, black]{Schachbrettmuster};
+
+% Kamera
+\def\angle{30}
+\path (8,3.5)coordinate(K);
+\begin{scope}[rotate=\angle]
+\draw[camera] (K)++(0,.15)rectangle++(.2,-.3)coordinate(K1);
+\draw[camera] (K1)++(0.02,.4)rectangle++(.4,-.6)coordinate(K)++(0,.6)coordinate(K2)++(-.2,-.6)coordinate(Joint);
+\draw[camera] (K2)++(0,0.02)rectangle++(-.2,.1);
+\end{scope}
+\draw[stativ] (Joint)--++(0,-1.5)coordinate(X);
+\draw[stativ] (X)--++(-1,-2);
+\draw[stativ] (X)--++(1,-2);
+\draw[stativ] (X)--++(.2,-2.2);
+
+% Gecko
+\def\del{30}
+\begin{scope}[rotate=-\del]
+\draw[gecko] (PlaneMid)++(1,0)++(0,.1)--++(-1,0)--++(0,-.05)--++(0.05,-.05)--++(-0.3,0)--++(.05,0.05)--++(.1,.25)--++(.5,0)--++(0,-.2)--++(0,.2)--++(.8,0)coordinate[midway](GeckoMid)--++(0,-.2)--++(0,.2)--++(.5,0)--++(.1,-.25)--++(.05,-.05)--++(-.3,0)--++(.05,.05)--++(0,0.05)--cycle;
+\draw[|-latex,black, fill=black,thick] (GeckoMid)++(0,.1)--++(-.8,0);
+\path (GeckoMid)++(.3,0)coordinate(GeckoMid);
+\end{scope}
+
+% ControlBoard
+\path (\l,5)node[block](ControlBoard){ControlBoard};
+\path (\l+7,5)node[block](ClientBoard){ClientBoard};
+
+% User
+\umlactor[x=\l+7, y=2, scale=2]{User}
+
+% Arrows
+\draw[arrow] (User.west)--++(-1,0)|-($(K)+(0.2,0)$)node[pos=.75,above]{auslösen};
+\draw[arrow] (User.north)--(ClientBoard)node[midway, right]{Laufmuster};
+\draw[arrow] (ClientBoard)--(ControlBoard)node[midway, above]{Laufmuster};
+
+
+\draw[cable](GeckoMid)--($(GeckoMid)+(90-\del:1)$)--($(ControlBoard.south)+(0,-1)$)node[midway, sloped, above]{Druck}--(ControlBoard.south);
+
+\end{tikzpicture}
+\end{document}

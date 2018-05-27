@@ -1,0 +1,97 @@
+\documentclass[10pt]{standalone}
+\def\path{../../}
+\input{\path/tikzpic_packages.tex}
+\usepackage{url}
+
+\begin{document}
+\begin{tikzpicture}[
+level2/.style={fill=red!20},
+level0/.style={fill=gray!5},
+level4/.style={fill=gray!20}
+]
+
+
+%%%%% CBoard %%%%%%
+\begin{umlcomponent}[fill=white, name=CBoard, dash pattern=on 5pt off 5pt]{ControlBoard}
+	% Objects
+	\begin{umlcomponent}[x=7, level0]{Pneumatic System}
+		\umlbasiccomponent[level2]{Proportional Valves}
+		\umlbasiccomponent[y=-2.5,level2]{Discrete Valves}
+	\end{umlcomponent}
+	\begin{umlcomponent}[y=-2, level0]{Electronical System}
+		\umlbasiccomponent[level2]{Controller}
+		\umlbasiccomponent[y=-2.5,level2]{Communication}
+	\end{umlcomponent}
+	% Interfaces
+	\umlHVHassemblyconnector[with port, interface=Control]{Pneumatic System}{Electronical System}
+	\umlassemblyconnector{Communication-north-port}{Controller-south-port}
+	\umlrequiredinterface[padding=2cm]{Pneumatic System}
+	\umlprovidedinterface[width=0em, padding=0.8cm]{Communication}
+%	\umlrequiredinterface[interface=Compressed Air + Vacuum, distance=5cm, with port]{Pneumatic System}
+%	\umlprovidedinterface[interface=Comm-interface, distance=3.5cm, with port]{Communication}
+\end{umlcomponent}
+
+\umlHVHassemblyconnector[with port]{CBoard-west-port}{Communication-west-port}
+\umlHVHassemblyconnector[with port]{CBoard-east-port}{Pneumatic System-east-port}
+\umlVHVassemblyconnector[with port]{CBoard-south-port}{Pneumatic System-south-port}
+
+
+
+
+%%%%% PC %%%%%%
+\begin{umlcomponent}[x=-12.5,y=-.2, fill=gray!5, name=Personal Computer]{ClientBoard}
+\umlbasiccomponent[level2]{GUI}
+\umlbasiccomponent[y=-2, level2]{Communication}
+\umlassemblyconnector{GUI-south-port}{Communication-north-port}
+\umlrequiredinterface[padding=1cm, width=0.1]{GUI}
+\end{umlcomponent}
+\umlHVHassemblyconnector[anchor2=5, with port]{GUI-east-port}{Personal Computer}
+\umlHVHassemblyconnector[anchor2=-12, with port]{Communication-east-port}{Personal Computer}
+
+
+
+%%%%% Soft Robot %%%%%%
+\begin{umlcomponent}[y=-9, fill=gray!5]{Soft Robot}
+\umlbasiccomponent[level4]{Pneumatic Muscles}
+\umlbasiccomponent[y=-2,level4]{Vacuum Cups}
+\end{umlcomponent}
+\umlport[width=1em]{Soft Robot}{east}
+
+%%%%% Energy Source %%%%%%
+\begin{umlcomponent}[x=16.7, fill=gray!5]{Energy Source}
+\umlbasiccomponent[level4]{Compressed Air}
+\umlbasiccomponent[y=-2,level4]{Vacuum Pump}
+\umlbasiccomponent[y=-4,level4]{230 VAC}
+
+\end{umlcomponent}
+\umlport[width=1em]{Energy Source}{west}
+
+
+
+
+%%%%% User %%%%%%
+\umlactor[x=-6, y=3, scale=2]{User}
+
+
+
+%%%%% Interfaces %%%%%%
+\umlVHassemblyconnector[interface=User Interface, anchor2=5]{User}{Personal Computer}
+\umlVHVassemblyconnector[interface=Communication Interface, anchor1=-12]{Personal Computer}{CBoard-west-port}
+\umlHVassemblyconnector[interface=Pneumatic Interface, label=right]{Soft Robot-east-port}{CBoard-south-port}
+\umlVHVassemblyconnector[interface=Energy Interface]{CBoard-east-port}{Energy Source-west-port}
+
+
+%%%% Notes %%%%
+\umlnote[x=15,y=-8,width=4cm]{Energy Interface-interface}{Besteht aus zwei pneumatischen Schnellverbindern und einem 230\,V Wechselstromanschluss}
+
+\umlnote[x=9,y=-8,width=4cm]{Pneumatic Interface-interface}{Besteht aus zehn 2\,mm-Push-in Schlauchverbindern}
+
+\umlnote[x=-8,y=-7,width=4cm]{Communication Interface-interface}{Basierend auf BSD-Socket-Interface (\url{https://docs.python.org/2/library/socket.html})}
+
+\umlnote[x=-9.4,y=4,width=4cm]{User Interface-interface}{Graphische Bedienoberfläche und einfache Einbettung eigener Python-Programme}
+
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,87 @@
+\documentclass[]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{lmodern}
+\usepackage{fourier}
+\usepackage{tikz}
+\usepackage{pgf}
+\usetikzlibrary{mindmap}
+
+\author{Lars Schiller}
+\date{\today}
+\title{Mindmap Master Thesis}
+
+
+\begin{document}
+
+\begin{tikzpicture}	[mindmap,
+every node/.style={concept, execute at begin node=\hskip0pt , fill=white, line width=1ex, text=black},
+concept color=black!80,
+grow cyclic,
+level 1/.append style={level distance=4.5cm,sibling angle=90},
+level 2/.append style={level distance=3cm,sibling angle=72},
+level 3/.append style={line width=0.5ex, fill=red}]
+		
+\node[root concept]{Laufen auf schiefer Ebene} %root
+child 	{node{GeckoBot 2.0}
+			child 	{node{Entwurf}}
+			child 	{node{Fertigung}
+						child {node{Blasen- vermeidung}}
+						child {node{Toleranzen}}
+					}
+			child	{node{Konstruktion}} 
+		}
+child 	{ node {ControlBoard}
+			child 	{node{Löten}
+					}
+			child 	{node{Gehäuse}
+						child{node{LaserCutter}} 
+						child{node{CAD}}
+						child{node{Nachbearbeitung}} 
+						child{node{...}}
+					}
+			child 	{node{Komponenten- auswahl} 
+						child{node{Ventile}} 
+						child{node{Recheneinheit}}
+						child{node{Sensoren}} 
+						child{node{...}}
+					}
+			child 	{node{Sensorik}
+						child{node{Analog}}
+						child{node{Digital}}
+					}
+		}
+child 	{node{Theretische Grundlagen} 
+			child	{node{Laufmuster}
+						child {node{Bionik}}
+						child {node{weiche Robotik}} 
+					} 
+			child	{node{Regelung} 
+						child {node{PID}}
+						child {node{Implementierung}} 
+					}
+		}
+child 	{ node {Software}
+			child 	{node{GUI}
+						child{node{GTK3+}}
+						child{node{...}}
+					}
+			child 	{node{Signale}
+						child{node{I2C}}
+						child{node{PWM}}
+						child{node{OPAMP}}
+					}
+			child 	{node {Kommunkation} 
+						child{node{Berkeley-Sockets}}
+					}
+			child 	{node {Python} 
+					}
+		}
+;
+\end{tikzpicture}
+
+\end{document}

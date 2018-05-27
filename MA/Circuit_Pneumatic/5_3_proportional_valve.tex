@@ -1,0 +1,70 @@
+% Pneumatic Circuit
+
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+spring/.style={decoration = {zigzag, segment length = 1mm, amplitude = 1.5mm}, decorate},
+help/.style={very thin, lightgray},
+arrow/.style={-triangle 45}
+]
+
+% States
+\foreach[count=\i] \x in {-2,0,2}{
+	\draw (\x-1,.5)--++(2,0)coordinate[pos=.25](\i4)coordinate[pos=.75](\i2)--++(0,-1)--++(-2,0)coordinate[pos=.25](\i3)coordinate[pos=.5](\i1)coordinate[pos=.75](\i5)--cycle;
+}
+% State1
+\draw (15)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw[arrow] (11)--(14);
+\draw[arrow] (12)--(13);
+%State2
+\draw (25)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw (21)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw (23)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw (24)--++(0,-.2)++(-.1,0)--++(.2,0);
+\draw (22)--++(0,-.2)++(-.1,0)--++(.2,0);
+% State1
+\draw (33)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw[arrow] (34)--(35);
+\draw[arrow] (31)--(32);
+
+% In- and Outlets
+\draw[fill] (24)--++(0,1.2)circle(.025)node[right]{4}coordinate(4);
+\draw[fill] (22)--++(0,.5)circle(.025)node[right]{2}coordinate(2);
+\draw[fill] (25)--++(0,-.5)circle(.025)node[right]{5}coordinate(5);
+\draw[fill] (21)--++(0,-1.6)circle(.025)node[right]{1}coordinate(1);
+\draw[fill] (23)--++(0,-.5)circle(.025)node[right]{3}coordinate(3);
+
+% Frame
+\draw (-3,.5)--++(0,.5)++(0,-.2)coordinate(X);
+\draw[spring](X)--++(-.5,0);
+\draw (3,.5)--++(0,.5)++(0,-.2)coordinate(X);
+\draw[spring](X)--++(.5,0);
+\draw (-2.9,.6)--(2.9,.6);
+\draw (-2.9,-.6)--(2.9,-.6);
+\draw (-3,-.5)--++(-.7,0)coordinate[pos=.1](ur)
+coordinate[pos=.9](ul)--++(0,.4)--++(.7,0)coordinate[pos=.4](ol)coordinate[pos=.6](or);
+\draw (ur)--(or) (ul)--(ol);
+\draw[arrow] (-3.2,-.7)--++(-.2,.4+.5);
+
+
+
+
+%%%%%%% Schaltung
+\draw (5)--++(0,-.2)--++(-.1,0)--++(0,-.4)coordinate[pos=.5](l)--++(0.2,0)coordinate[pos=.25](u)coordinate[pos=.75](uu)--++(0,.4)coordinate[pos=.25](rr)coordinate[pos=.75](r)--++(-.1,0);
+\draw (l)--++(.1,0) (r)--++(-.1,0) (rr)--++(-.1,0);
+\draw (u)--++(-45:.07)--(uu);
+\draw[help] (l)++(-.05,0)--++(200:.5)node[left,black]{Silencer};
+
+\draw (3)--++(0,-.2)--++(-.1,0)--++(0,-.4)coordinate[pos=.5](l)--++(0.2,0)coordinate[pos=.25](u)coordinate[pos=.75](uu)--++(0,.4)coordinate[pos=.25](rr)coordinate[pos=.75](r)--++(-.1,0);
+\draw (l)--++(.1,0) (r)--++(-.1,0) (rr)--++(-.1,0);
+\draw (u)--++(-45:.07)--(uu);
+
+\draw (2)--++(0,.2)++(-.1,0)--++(.2,0);
+
+
+
+
+\end{tikzpicture}
+\end{document}

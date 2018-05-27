@@ -1,0 +1,150 @@
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+scale = .5,
+lochraster/.style={very thin, lightgray},
+screw/.style={very thick, fill=gray},
+gebohrt/.style={fill, pattern=north west lines, opacity=.5},
+fontnode/.style={scale=.5, rotate=90},
+resistor/.style={sloped, scale=.5, fill=red!50, minimum width=2cm},
+capacity/.style={sloped, scale=.5, fill=blue!50},
+led/.style={sloped, scale=.5, fill=green!50},
+pluscable/.style={line width=.1cm, red},
+minuscable/.style={line width=.1cm, blue},
+signalcable/.style={line width=.1cm, orange}
+]
+
+
+%%%%%%%% LOCHRASTER %%%%%%%%
+%\newcommand{\calcidx}{\pgfmathtruncatemacro{\idx}{(\y-1)*40 + \x}}
+
+\foreach \y in {1, 2, ..., 20}{
+	\foreach \x in {1, 2, ..., 40}{
+		\draw[lochraster] (\x, \y) circle (.2);
+	}
+}
+\foreach \x in {1,2,...,40}{
+	\draw[lochraster] (\x+.5,0.5)--++(0,20);
+}
+
+%%%%%%%% SCREWs %%%%%%%%
+
+
+\draw[screw] (2,2) circle (.8);
+\path[gebohrt] (.5, 3.5) rectangle++(3,1);
+\draw[screw] (2,19) circle (.8);
+\path[gebohrt] (.5, 17.5) rectangle++(3,-1);
+\draw[screw] (39,15) circle (.8);
+\path[gebohrt] (40.5, 12.5) rectangle++(-3,1);
+\path[gebohrt] (40.5, 16.5) rectangle++(-3,1);
+
+
+%%%%%%%% Power Supply %%%%%%%%
+
+\def\y{6}
+\draw (2-1.3, \y-1.3) rectangle++(4.6,2.6);
+\draw[fill=black] (2, \y) circle(.2) ++ (0,-1)node[fontnode]{VCC$^+$};
+\draw[fill=black] (2+2, \y) circle(.2) ++ (0,-1)node[fontnode]{VCC$^-$};
+
+%%%%%%%% Power LED %%%%%%%%
+
+\draw (2,\y+3) node{$\bullet$}--++(1,3)node{$\bullet$} node[midway, resistor]{R1};
+\draw (2+1,\y+2) node{$\bullet$}--++(1,0)node{$\bullet$} node[midway, led]{LED};
+
+
+
+%%%%%%%% REF BLOCK %%%%%%%%
+
+\def\y{15}
+\draw (2-1.3, \y-1.3) rectangle++(4.6,2.6);
+\draw[fill=black] (2, \y) circle(.2) ++ (0,1)node[fontnode]{NC};
+\draw[fill=black] (2+2, \y) circle(.2) ++ (0,1)node[fontnode]{REF};
+
+\draw[minuscable] (2+2,\y-3)node{$\bullet$}--++(2,0)node{$\bullet$};
+\path[gebohrt] (2+2,\y-4)++(-.5,-.5)rectangle++(1,1);
+
+
+
+%%%%%%%% Circuit %%%%%%%%
+
+\foreach[count=\i] \x in {0,5,10,15,20,25}{
+%\foreach[count=\i] \x in {0}{
+	\def\xo{7}
+	\def\yo{8}
+	
+	% OPAMPs
+	\draw (\x+\xo,\yo)++(-.5,-.5)rectangle++(4,4);
+	\path[gebohrt] (\x+\xo-.5,\yo+.5)rectangle++(4,2);
+	\path (\x+\xo,\yo)++(0,3) node[fontnode]{OUT};
+	\path (\x+\xo,\yo)++(1,3) node[fontnode]{NC (GAIN)};
+	\path (\x+\xo,\yo)++(2,3) node[fontnode]{IN$^+$};
+	\path (\x+\xo,\yo)++(3,3) node[fontnode]{VCC$^+$};
+	\path (\x+\xo,\yo)++(0,0) node[fontnode]{GND};
+	\path (\x+\xo,\yo)++(1,0) node[fontnode]{GAIN};
+	\path (\x+\xo,\yo)++(2,0) node[fontnode]{IN$^-$};
+	\path (\x+\xo,\yo)++(3,0) node[fontnode]{VCC$^-$};
+	\draw (\x+\xo,\yo)++(-.5,1)arc(270:450:.5);
+	
+	%%% Elements
+	% LOWPASS
+	
+	\draw (\x+\xo,\yo)++(0,4) node{$\bullet$}--++(-1,3)node{$\bullet$} node[midway, resistor]{R3};	
+	\draw (\x+\xo,\yo)++(0,6) node{$\bullet$}--++(3,1)node{$\bullet$} node[midway, resistor]{R2};
+	\draw (\x+\xo,\yo)++(3,8) node{$\bullet$}--++(1,0)node{$\bullet$} node[midway, capacity]{C};
+	\draw (\x+\xo,\yo)++(3,9) node{$\bullet$}--++(-3,-1)node{$\bullet$} node[midway, resistor]{R2};
+	\draw (\x+\xo,\yo)++(0,10) node{$\bullet$}--++(-1,0)node{$\bullet$} node[midway, capacity]{C};
+
+	% In+ to IN+
+	\draw[signalcable, rounded corners] (\x+\xo, 4) node{$\bullet$} --++(-.65,0) |-(\x+\xo+2,\yo+4)node{$\bullet$};
+	% Cut the circuit
+	\path[gebohrt] (\x+\xo,4)++(-.5,.5)rectangle++(1,1);
+	\path[gebohrt] (\x+\xo,\yo)++(.5,5.5)rectangle++(3,1);
+	\path[gebohrt] (\x+\xo,\yo)++(-.5,6.5)rectangle++(1,1);
+
+
+	
+	% GND to GAIN
+	\draw (\x+\xo,\yo)++(0,-1) node{$\bullet$}--++(1,0)node{$\bullet$} ;
+	% GND to GND
+	\draw (\x+\xo,\yo)++(0,-2) node{$\bullet$}--++(-1,0)node{$\bullet$} ;
+	% GND to GND
+	\draw[minuscable] (\x+\xo,\yo)++(1,-2) node{$\bullet$}--++(3,1)node{$\bullet$} ;
+
+
+
+
+	% Cables
+	\ifthenelse{\i=1}{\def\dx{-6}}{\def\dx{-5}}
+	\draw[minuscable] (\x+\xo+3, 5)node{$\bullet$}--++(\dx,-1)node{$\bullet$};
+	\ifthenelse{\i=1}{\def\dx{-8}}{\def\dx{-5}}
+	\draw[pluscable] (\x+\xo+3, \yo+4)node{$\bullet$}--++(\dx,1)node{$\bullet$};
+	
+	
+
+
+	% INPUT BLOCK
+	\draw (\x+\xo-1.3, 0.7) rectangle++(4.6,2.6);
+	\draw[fill=black] (\x+\xo, 2) circle(.2) ++ (0,-1)node[fontnode]{IN$^+$};
+	\draw[fill=black] (\x+\xo+2, 2) circle(.2) ++ (0,-1)node[fontnode]{IN$^-$};
+
+
+	% PWM IN
+	\path (\x+\xo-1, \yo-6) coordinate (PWM\i);
+}
+
+
+%%%%% TABLE %%%%%%
+
+\path (2,-2) node[left]{R1:} node[right]{300 Ohm};
+\path (2,-3) node[left]{LED:} node[right]{green 2V};
+\path (2,-4) node[left]{R2:} node[right]{510 Ohm green orange black black};
+\path (2,-5) node[left]{C:} node[right]{220 uF};
+\path (2,-6) node[left]{C:} node[right]{22 kOhm red red orange gold };
+
+
+
+
+\end{tikzpicture}
+\end{document}

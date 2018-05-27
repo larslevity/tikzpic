@@ -1,0 +1,117 @@
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+scale = .5,
+lochraster/.style={very thin, lightgray},
+screw/.style={very thick, fill=gray},
+gebohrt/.style={fill, pattern=north west lines, opacity=.5},
+fontnode/.style={scale=.5, rotate=90},
+resistor/.style={sloped, scale=.5, fill=red!50, minimum width=2cm},
+capacity/.style={sloped, scale=.5, fill=blue!50},
+pluscable/.style={line width=.1cm, red},
+minuscable/.style={line width=.1cm, blue},
+signalcable/.style={line width=.1cm, orange}
+]
+
+
+%%%%%%%% LOCHRASTER %%%%%%%%
+%\newcommand{\calcidx}{\pgfmathtruncatemacro{\idx}{(\y-1)*40 + \x}}
+
+\foreach \y in {1, 2, ..., 20}{
+	\foreach \x in {1, 2, ..., 40}{
+		\draw[lochraster] (\x, \y) circle (.2);
+	}
+}
+\foreach \x in {1,2,...,40}{
+	\draw[lochraster] (\x+.5,0.5)--++(0,20);
+}
+
+%%%%%%%% SCREWs %%%%%%%%
+
+
+\draw[screw] (2,2) circle (.8);
+\path[gebohrt] (.5, 3.5) rectangle++(3,1);
+\draw[screw] (2,19) circle (.8);
+\path[gebohrt] (.5, 17.5) rectangle++(3,-1);
+\draw[screw] (39,2) circle (.8);
+\path[gebohrt] (40.5, 3.5) rectangle++(-3,1);
+\draw[screw] (39,19) circle (.8);
+\path[gebohrt] (40.5, 17.5) rectangle++(-3,-1);
+
+
+%%%%%%%% Circuit %%%%%%%%
+
+\foreach[count=\i] \x in {0,5,10,15,20,25}{
+	\def\xo{7}
+	\def\yo{10}
+	
+	% OPAMPs
+	\draw (\x+\xo,\yo)++(-.5,-.5)rectangle++(4,4);
+	\draw (\x+\xo-.5,\yo+1)arc(-90:90:.5);
+	\path[gebohrt] (\x+\xo-.5,\yo+.5)rectangle++(4,2);
+	\path (\x+\xo,\yo)++(1,3) node[fontnode]{VCC$^+$};
+	\path (\x+\xo,\yo)++(2,3) node[fontnode]{OUT};
+	\path (\x+\xo,\yo)++(1,0) node[fontnode]{IN$^-$};
+	\path (\x+\xo,\yo)++(2,0) node[fontnode]{IN$^+$};
+	\path (\x+\xo,\yo)++(3,0) node[fontnode]{VCC$^-$};
+	\draw (\x+\xo,\yo)++(-.5,1)arc(270:450:.5);
+	
+	%%% Elements
+	% R2
+	\draw (\x+\xo,\yo)++(2,4) node{$\bullet$}--++(-3,1)node{$\bullet$} node[midway, resistor]{R2};
+	% In- to OUT
+	\draw[signalcable] (\x+\xo,\yo)++(-1,-1) node{$\bullet$}--++(2,0)node{$\bullet$};
+	% R1
+	\draw (\x+\xo,\yo)++(-1,-2) node{$\bullet$}--++(4,0)node{$\bullet$} node[midway, resistor]{R1};
+	% C
+	\draw (\x+\xo,\yo)++(2,-3) node{$\bullet$}--++(1,0)node{$\bullet$} node[midway, capacity]{C};
+	% R
+	\draw (\x+\xo,\yo)++(2,-5) node{$\bullet$}--++(-3,1)node{$\bullet$} node[midway, resistor]{R};
+	% Cut the circuit
+	\path[gebohrt] (\x+\xo,\yo)++(-1.5,-2.5)rectangle++(1,-1);
+
+	% Cables
+	\draw[minuscable] (\x+\xo, 17)node{$\bullet$}--++(5,-1)node{$\bullet$};
+	\ifthenelse{\i=6}{\def\dx{6}}{\def\dx{5}}
+	\draw[pluscable] (\x+\xo+1, 17)node{$\bullet$}--++(\dx,-1)node{$\bullet$};
+	
+	\ifthenelse{\i=6}{\def\dx{2}}{\def\dx{5}}
+	\draw[minuscable] (\x+\xo, \yo)++(3,-5)node{$\bullet$}--++(\dx,-1)node{$\bullet$};
+	
+	
+
+
+	% OUTPUT BLOCK
+	\draw (\x+\xo-1.5, 20.5) rectangle++(5,-3);
+	\draw[fill=black] (\x+\xo, 19) circle(.2) ++ (0,1)node[fontnode]{OUT$^-$};
+	\draw[fill=black] (\x+\xo+2, 19) circle(.2) ++ (0,1)node[fontnode]{OUT$^+$};
+
+
+	% PWM IN
+	\path (\x+\xo-1, \yo-6) coordinate (PWM\i);
+}
+
+
+%% PWR Supply Block
+\def\x{36} \def\y{10}
+\draw (\x-.5,\y-.5) rectangle++(5,3);
+\draw[fill=black] (\x+1,\y+1) circle(.2) ++ (0,1)node[fontnode]{VCC$^-$};
+\draw[fill=black] (\x+3,\y+1) circle(.2) ++ (0,1)node[fontnode]{VCC$^+$};
+
+
+%% PWM IN
+
+
+\foreach \i in {1,2,...,6}{
+	\draw[signalcable] (PWM\i)--(17+\i,2)coordinate(x);
+	\ifthenelse{\i=4}{}{
+	\path[gebohrt] (x)++(-.5,.5)rectangle++(1,1);}
+	}
+
+
+
+
+\end{tikzpicture}
+\end{document}

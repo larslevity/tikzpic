@@ -1,0 +1,50 @@
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+scale = 2,
+socket/.style={above, align=center, draw, fill=gray!10},
+base/.style={fill=yellow!30},
+queue/.style={fill=gray!10, thick}
+]
+
+% Defs
+\def\r{1}
+\pgfmathsetmacro{\rh}{\r*.5}
+\pgfmathsetmacro{\dy}{\r/sqrt(2)}
+\path (-1.5,0)coordinate(client)++(0,\r)node[above]{Client};
+\path (1.5,0)coordinate(server)++(0,\r)node[above]{Server};
+
+% Basics
+\draw[base] (client)circle(\r);
+\draw[base] (server)++(180:\r)--($(server)+(-.2,0)$)|-($(server)+(90+45:\r)$)coordinate(X)arc(90+45:-180:\r);
+
+% Nodes
+\path (client)++(-\rh+.1,-\rh-.2)node[socket]{bound \\ socket A};
+\path (server)++(\rh-.15,-\rh-.2)node[socket]{bound \\ socket C};
+\path (server)++(\rh-.15,.1)node[socket]{bound \\ socket B};
+
+\draw[queue] (client)++(.2,-.2)rectangle($(server)+(-.2,-.7)$)node[midway]{Connection};
+
+% Queue
+\draw[queue] (server)++(-\r-.25,0.05)--++(\r,0)coordinate(Qur)|-++(-\r,\dy-0.1)coordinate(Qol);
+\path (Qur)coordinate(start);
+\foreach \el in {1,2,3}{
+\draw[queue] (start)rectangle++(-.2,\dy-.1)++(0,-\dy+.1)coordinate(start);}
+\path (Qol)node[above, align=center]{listen queue};
+
+%% Clip and notes
+\path[clip] ($(client)+(-\r-.3,\r+.3)$)rectangle($(server)+(\r+.3,-\r-1.6)$);
+
+
+\path (server)++(\r+.5,-\r)node[below]{\vbox{
+\begin{itemize}
+\item \textsl{Server} hat Anfrage akzeptiert.
+\item \textsl{Server} hat die Verbindung mit \\ einem neuen Socket etabliert.
+\item Ursprüngliches Socket wartet \\ auf weitere Anfragen.
+\end{itemize}}
+};
+
+\end{tikzpicture}
+\end{document}

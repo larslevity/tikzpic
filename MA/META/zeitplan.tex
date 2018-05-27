@@ -1,0 +1,38 @@
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\def\pneumaticcolor{blue!20}
+
+\begin{document}
+\begin{tikzpicture}[xscale=2.2]
+
+\foreach \x/\month in {1/Juni,2/Juli,3/August,4/September,5/Oktober,6/November}{
+	\pgfmathtruncatemacro{\intensity}{\x/6*50}
+	\pgfmathtruncatemacro{\ai}{60-\intensity}
+	\fill[red!\intensity] (\x,0)rectangle(\x+1,5)coordinate(Ende\month)++(-1,0)coordinate(Anfang\month);
+	\path (\x+.5,0) node[right,rotate=90, scale=2.5, red!\ai]{\month};
+}
+
+
+\fill[blue, opacity=.1] ($(AnfangJuni)+(0,-.2)$) rectangle ($(EndeJuli)+(0,-.7)$)
+	node[midway, black,opacity=1]{Bau ControlBoard};
+
+\fill[blue, opacity=.1] ($(AnfangJuni)+(0,-3.4)$) rectangle ($(EndeSeptember)+(0,-3.9)$)
+	node[midway, black,opacity=1]{Software ControlBoard};
+
+\fill[blue, opacity=.1] ($(AnfangAugust)+(0,-1)$) rectangle ($(EndeAugust)+(0,-1.5)$)
+	node[midway, black,opacity=1]{Bau Gecko};
+
+\fill[blue, opacity=.1] ($(AnfangSeptember)+(0,-1.8)$) rectangle ($(EndeSeptember)+(0,-2.3)$)
+	node[midway, black,opacity=1]{Tuning Regler};
+	
+\fill[blue, opacity=.1] ($(AnfangOktober)+(0,-2.6)$) rectangle ($(EndeNovember)+(0,-3.1)$)
+	node[midway, black,opacity=1]{Dokumentation};
+	
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

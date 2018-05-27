@@ -1,0 +1,106 @@
+% 
+\documentclass[10pt]{standalone}
+\def\path{../../}
+\input{\path/tikzpic_packages.tex}
+\usepackage{url}
+
+\begin{document}
+
+\begin{tikzpicture}[
+]
+
+\def\colO{gray!5}
+\def\colA{yellow!20}
+\def\colB{red!20}
+\def\colC{white}
+\def\colD{gray!5}
+
+%%%%%%%%%%%%%%%% walking commander %%%%%%%%%%%%%%%%%%%%%
+\path (-5,6) coordinate(0);
+\foreach[count=\i] \x/\n in {0/1,7/2,14/0,21/N}{
+	\ifthenelse{\i=3}{\path (0)++(\x,0) node{$\cdots$};}{
+	\draw[rounded corners = 2mm] (0)++(\x,0)++(-.5,2)rectangle++(1,-4)node[midway,rotate=90]{pose $\n$};}
+	\ifnum\i<4 \draw[-angle 60] (0)++(\x+.5,0)--++(6,0)node[midway, above, align=left]{
+%\textcolor{purple}{all}(s == \textcolor{green}{'HOLD'} \\ \quad \quad \textcolor{blue}{for} s \textcolor{blue}{in} PThreads.status)\\
+all PThreads.status == \textcolor{green}{'HOLD'} \\
+\textcolor{blue}{\textbf{or}} \\ 
+\textcolor{red}{MaxProcessTime\_TimeOut}}; \fi
+	}
+\draw[-angle 60] (0)++(21.5,0)-|++(1,3)--++(-24,0)node[midway, above]{flag == \textcolor{purple}{True}}|-++(1,-3);
+
+\umlstateinitial[x=-7,y=5, name=init]{}
+\draw[-angle 60] (init)--++(1.5,0);
+\umlstatefinal[x=18,y=5,name=final]{}
+\draw[angle 60-] (final)--++(-1.5,0)node[midway,below right, rotate=-60]{flag == \textcolor{purple}{False}};
+
+%%%%%%%%%%%%%%%% PThread %%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{umlstate}[fill=gray!5]{PThreads}
+	\foreach[count=\i] \x/\n in {0/1,6/2,10/0,14/6}{
+		\ifthenelse{\i=3}{
+			\path (\x,-1.2)node{$\cdots$};
+		}{
+		\begin{umlstate}[fill=\colB, x=\x,y=0]{PThread \n}
+			\umlstatefinal[x=2,y=.25,name=final]{}
+			\umlstateinitial[x=-2,y=.25, name=init]{}
+			\umlbasicstate[fill=\colC]{hold}
+			\umlbasicstate[y=-2.3,fill=\colC]{process}
+			\umltrans{init}{hold}
+			\umltrans[anchor1=80,anchor2=280]{process}{hold}
+			\umltrans[anchor1=260,anchor2=100]{hold}{process}
+			\umltrans{hold}{final}
+		\end{umlstate}}
+	}
+\end{umlstate}
+
+%%%%%%%%%%%%% NOTES %%%%%%%%%%%%%%%%%%%%
+
+\umlclass[x=-5,y=-2.1]{PThread Cargo}{
+status : string \\
+sens : Sensor.PressureSens \\
+valve : Actuators.ProportionalValve \\
+controller: Controller.PID \\
+ref : float \\
+}{}
+
+
+%%%% Class
+%
+%
+%\umlclass[x=-12]{WalkingCommander}{
+%	PThreads : list of PThread \\
+%	PThreads.status : list of PThread.status \\
+%	DValves : list of Actuators.DiscreteValve \\
+%	CCargo.state : interface to Controller
+%}{
+%	init(valves, dvalves, sensors, controllers) : open all PThreads \\
+%	set pos(pos) : interface to PThreads \\
+%	walk(pattern) : play pattern aslong CCargo.state allows - except TimeOutError \\
+%	clean() : close all PThreads
+%}
+
+
+
+%%PThread Class
+%\umlclass[y=-8,x=-12]{PThread}{
+%	valve : Actuators.ProportionalValve \\
+%	sensor : Sensor.PressureSensor \\
+%	controller : Controller.PID \\
+%	ref : float \\
+%	status: int \\
+%	\_stop event : bool \\
+%}{
+%	init(valve, sensor) : open the Thread, init the StateMachine \\
+%	run() : run the Thread \\
+%	stop() : set self.\_stop event \\
+%	stopped() : return self.\_stop event \\
+%	set(ref) : set new reference \\
+%	hold(ref) : hold the reference \\
+%	process(ref) : bring Actuator to reference \\
+%}
+%
+
+
+\end{tikzpicture}
+\end{document}

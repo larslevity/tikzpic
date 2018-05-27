@@ -1,0 +1,146 @@
+\documentclass[10pt]{standalone}
+\def\path{../../}
+\input{\path/tikzpic_packages.tex}
+\usepackage{url}
+
+\newcommand{\pvalve}[2]{
+\path (#1,#2)coordinate(4);
+\draw (4)--++(0,-.2)++(-.1,0)--++(.2,0);
+\draw (4)++(-.1,-.25)--($(4)+(.1,-.75)$)--++(-.2,0)--($(4)+(.1,-.25)$)--cycle;
+\draw (4)++(0,-1)coordinate(1)--++(0,.2)++(-.1,0)--++(.2,0);
+\draw (4)++(0,-.5)coordinate(valveMid)--++(-.2,0)++(0,-.15)rectangle++(-.3,.3)node[midway]{\textsf{S}};
+}
+
+\newcommand{\sens}{
+\draw (sens)--++(.2,0)++(.25,0)circle(.25)coordinate(sensMid)++(-45:.2)coordinate(X);
+\draw[arrow] (X)--++(90+45:.4);
+\path (sensMid)++(.25,0)coordinate(sensOut);
+}
+
+\newcommand{\eye}[4]% size, x, y, rotation
+{   \draw[rotate around={#4:(#2,#3)}] (#2,#3) -- ++(-.5*55:#1) (#2,#3) -- ++(.5*55:#1);
+    \draw (#2,#3) ++(#4+55:.75*#1) arc (#4+55:#4-55:.75*#1);
+    % IRIS
+    \draw[fill=gray] (#2,#3) ++(#4+55/3:.75*#1) arc (#4+180-55:#4+180+55:.28*#1);
+    %PUPIL, a filled arc 
+    \draw[fill=black] (#2,#3) ++(#4+55/3:.75*#1) arc (#4+55/3:#4-55/3:.75*#1);
+}
+
+\begin{document}
+\begin{tikzpicture}[
+scale=.333, 
+stretch/.style={color=red!10, line width=.667cm},
+dstretch/.style={color=red!10, line width=1.333cm},
+foot/.style={fill=red!10, line width=.333mm, draw=red!40},
+solid/.style={line width=.333mm, draw=red!40},
+help/.style={very thin, lightgray},
+arrow/.style={triangle 45-}
+]
+
+%% Box
+\path[clip](-20.5,17.5)rectangle(43,-3.5);
+
+\def\hx{11.2}	% length of legs
+\def\hy{2}  % change only with line width of stretch
+\def\lb{11.2}	% length of belly
+\def\rf{2}	% radius of foot
+\pgfmathsetmacro{\rfh}{\rf*.5}
+\pgfmathsetmacro{\hyh}{.5*\hy}
+\pgfmathsetmacro{\hxh}{\hx/2}
+
+
+
+\foreach \alp in {88,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10,5,2}{
+
+\def\bet{\alp}
+
+\def\pi{3.1416}
+\pgfmathsetmacro{\r}{\hx/\alp*180/\pi}
+\pgfmathsetmacro{\rb}{\hx/\bet*180/\pi}
+
+% % Links
+\draw[stretch] (0,0)arc(270:270-\bet:\rb+\hyh)++(-\bet+180:\rfh) coordinate(X);
+\draw[solid] (-90:-\hyh)coordinate(O)arc(270:270-\bet:\rb)coordinate(help);
+
+\draw[help lines] (help)--++(-\bet+180:7)coordinate(help);
+\path (help)--++(-\bet+180:1.5)node[midway,sloped]{$\beta = \bet$};
+\draw[foot] (X) circle(\rf);
+
+% % Rechts
+\draw[stretch] (0,0)arc(270:270+\alp:\r+\hyh) ++(\alp:\rfh)coordinate(X);
+\draw[solid] (-90:-\hyh)arc(270:270+\alp:\r)coordinate(help);
+
+\draw[help lines] (help)--++(\alp:7)coordinate(help);
+\path (help)--++(\alp:1.5)node[midway,sloped]{$\alpha = \alp$};
+\draw[foot] (X) circle(\rf);
+}
+
+
+
+% Real Gecko
+\def\alp{32}
+\def\bet{73}
+\def\pi{3.1416}
+\pgfmathsetmacro{\r}{\hx/\alp*180/\pi}
+\pgfmathsetmacro{\rb}{\hx/\bet*180/\pi}
+
+% Bauch
+\draw[color=red!50, line width=1.333cm] (0,0)--++(0,-3);
+% % Links
+\draw[color=red!50, line width=.667cm] (0,0)arc(270:270-\bet:\rb+\hyh)++(-\bet+180:\rfh) coordinate(X);
+\draw[line width=.333mm] (-90:-\hyh)coordinate(O)arc(270:270-\bet:\rb)coordinate(help);
+\draw[fill=red!50, line width=.333mm, draw=black] (X) circle(\rf);
+% % Rechts
+\draw[color=red!50, line width=.667cm] (0,0)arc(270:270+\alp:\r+\hyh) ++(\alp:\rfh)coordinate(X);
+\draw[line width=.333mm] (-90:-\hyh)arc(270:270+\alp:\r)coordinate(help);
+\draw[fill=red!50, line width=.333mm, draw=black] (X) circle(\rf);
+\path (0,0)++(2.5,0)coordinate(inlet);
+
+\draw[line width=.5mm](0,1)--++(0,-4)coordinate(X);
+\path[fill=white] (X)++(-2.5,.3)--++(1.66,.2)--++(1.66,-.4)--++(1.66,.2)--++(0,-.5)--++(-5,0);
+\draw[very thick] (X)++(-2.5,.3)--++(1.66,.2)--++(1.66,-.4)--++(1.66,.2)++(0,-.5)++(-5,0);
+
+
+%% Schaltkreis:
+
+\begin{scope}[yshift=-1cm,xshift=34cm, scale=2, rotate=90]
+
+% Motor
+\path (0,-2)coordinate(0);
+\draw (0)--++(0,-.25)--++(270-30:.3)--++(0:.3)--++(90+30:.3)++(0,-0.75)circle(.75)++(0,-.75)--++(0,-.25);
+\fill(0)++(0,-2)circle(.03);
+\draw (0)++(0,-1)++(185:.75)--++(-.5,0)coordinate(X);
+\draw (0)++(0,-1)++(175:.75)--++(-.5,0)--(X);
+\path (0)++(.75,-1)node[above]{Kompressor};
+
+% Valves
+\foreach[count=\i] \x in {0}{
+	\begin{scope}[scale=2]
+	\pvalve{\x}{.5}
+	\draw (0)--(1);
+	\draw[fill] (4)--++(0,2)coordinate(sens)circle(.03)--++(0,.5)coordinate(P);
+	\sens
+	\path (1)coordinate(0);
+	\end{scope}
+}
+\draw[] (P)|-(inlet)node[pos=.15, below]{$p$};
+\fill (inlet)circle(.06);
+\end{scope}
+
+% Controller
+\path (valveMid)++(0,7)node[draw, scale=1, minimum width=2cm, minimum height=1cm, fill=gray!10](C){C};
+\draw[arrow](valveMid)--(C)node[midway,left]{$u$};
+\draw[arrow](C.west)-|(sensOut)node[pos=.25,above]{$y$};
+
+% User
+\umlactor[x=29, y=14, scale=2]{User}
+\draw[arrow] (C.north)|-(User)node[pos=.25,right]{$r$};
+
+% Auge
+\eye{2}{23}{14.5}{220}
+\draw[arrow] (User.west)--++(-2,0)node[midway, above]{$\alpha$};
+
+
+
+\end{tikzpicture}
+\end{document}

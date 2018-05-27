@@ -1,0 +1,74 @@
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+scale = 1,
+block/.style={minimum width=1cm, minimum height=.6cm, draw, fill=gray!10, rounded corners=1mm},
+sblock/.style={minimum width=.6cm, minimum height=.6cm, draw, fill=gray!10, rounded corners=1mm},
+col1/.style={very thick, red},
+col2/.style={very thick, blue},
+col3/.style={very thick, orange},
+pool/.style={draw=gray!30, line width=2mm, rounded corners=2mm},
+circ/.style={draw, circle, inner sep=.4pt, fill},
+ax/.style={-latex, thick}
+]
+
+\def\h{5}
+\def\bh{1.8}
+\def\dh{.2}
+
+%% Select
+\foreach \y/\t/\e in {0/1/0,
+					  1/2/0,
+					  1.7/0/1,
+					  2.5/i/0,
+					  3.2/0/1,
+					  4/N/0}{
+	\ifthenelse{1=\e}{
+		\path (0,-\y)node{$\vdots$};
+		\path (1.2,-\y)node{$\vdots$};
+	}{
+		\path (0,-\y)node[block](O\t){val$_\t$};
+		\path (1.2,-\y)node[block](A\t){val$_\t$};
+	}
+}
+\path (current bounding box.north)coordinate(O)(current bounding box.south)coordinate(U);
+\draw[pool] (O)++(-\bh,\dh)rectangle($(U)+(\bh,-\dh)$);
+\path (U)++(0,-\dh)node[below]{Select};
+
+\draw[col1] (O1.center)node[circ]{}--(A2.center)node[circ]{};
+\draw[col2] (O2.center)node[circ]{}--($(Ai.center)+(-.3,0)$)node[circ]{};
+\draw[col3] (ON.center)node[circ]{}--(Ai.center)node[circ]{};
+
+%% Status
+\draw[pool] (O)++(1+\bh,\dh)rectangle($(U)+(1+\bh+\bh+\bh,-\dh)$);
+\path (U)++(1+\bh+\bh,-\dh)node[below]{Status};
+\path (O)++(1+\bh+\bh,0)coordinate(O);
+\path (U)++(1+\bh+\bh,0)coordinate(U);
+
+
+\foreach \i/\y/\t in {1/0/{val$_1$-val$_2$},
+					  2/1.5/{val$_2$-val$_i$}, 
+					  3/3/{val$_N$-val$_i$}}{
+	\path[col\i] (O)++(-.7,-1-\y)node[block]{\t};
+	\path[col\i] (O)++(0.5,-1-\y)node[sblock]{\includegraphics[height=.3cm]{visible.png}};
+	\path[col\i] (O)++(1.2,-1-\y)node[sblock]{\includegraphics[height=.3cm]{delete.png}};	
+}
+
+%% Plot
+\draw[pool] (O)++(1+\bh,\dh)rectangle($(U)+(1+\bh+\bh+\bh,-\dh)$);
+\path (U)++(1+\bh+\bh,-\dh)node[below]{Plot};
+\path (O)++(1+\bh+\bh,0)coordinate(O);
+\path (U)++(1+\bh+\bh,0)coordinate(U);
+
+\draw[ax] (U)++(-\bh+\dh+\dh,\dh)--++(\bh+\bh-\dh-\dh-\dh-\dh,0);
+\draw[ax] (U)++(-\bh+\dh+\dh,\dh)--($(O)+(-\bh+\dh+\dh,-\dh)$)coordinate[pos=.3](1)coordinate[pos=.13](2)coordinate[pos=.65](3);
+\foreach \i in {1,2,3}{
+\foreach \x in {.1,.2,...,1}{
+	\draw[col\i] (\i)--++(.25,rand)coordinate(\i);
+}}
+
+
+\end{tikzpicture}
+\end{document}

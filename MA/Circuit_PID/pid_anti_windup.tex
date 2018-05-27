@@ -1,0 +1,64 @@
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\def\pneumaticcolor{blue!20}
+
+\begin{document}
+\begin{tikzpicture}[
+scale = 1,
+block/.style={draw, rectangle, minimum height=1cm, minimum width=1.1cm},
+bigblock/.style={draw, rectangle, minimum height=1cm, minimum width=2cm},
+sum/.style={draw, circle, inner sep=0pt, minimum width=.2cm},
+connect/.style={draw, circle, fill, inner sep=0pt, minimum width=.05cm},
+arrow/.style={-latex},
+ax/.style={help lines, -latex}
+]
+\newcommand{\saturation}[2]{
+\path (#1,#2)node[draw, scale=.5](sat){
+\tikz{\draw[ax] (-1,0)--(1,0); \draw[ax] (0,-1)--(0,1);
+\draw (-1,-.8)--(-.5,-.8)--(.5,.8)--(1,.8);}};}
+
+
+% C
+	\path(-.5,0)node[block](KP){$K_P$};
+	\path(.5,0)node[connect](c){};
+	\path(2,1.2)node[block](1){$1$};
+	\path(2,-1.2)node[block](I){$\displaystyle \frac{1}{T_Is}$};
+	\path(2,0)node[block](D){$T_Ds$};
+	\path(3.5,0)node[sum](sum){};
+
+	\path(4,0)node[connect](cuc){};
+	\path(.5,-1.2)node[sum](sumaw){};
+	\path(2,-2.8)node[block](KAW){$K_{AW}$};
+	\saturation{5}{0}
+	\path(6,0)node[connect](cu){};
+	\path(4,-2.8)node[sum](sumuc){};
+
+	\draw (KP)--(c);
+	\draw[arrow] (c)--(D)node[midway, above]{$e_D$};
+	\draw[arrow] (c)|-(1);
+	\draw[arrow] (c)--(sumaw);
+	\draw[arrow] (sumaw)--(I)node[midway, above]{$e_I$};
+	\draw[arrow] (KAW)-|(sumaw)node[below left]{$-$};
+	\draw[arrow] (cu)|-(sumuc)node[below right]{$-$};
+	\draw[arrow] (sum)--(sat)node[midway, above]{$u_c$};
+	\draw[arrow] (cuc)--(sumuc);
+	\draw[arrow] (sumuc)--(KAW);
+	
+	\draw[arrow] (I)-|(sum)node[pos=.25, above]{$u_I$};
+	\draw[arrow] (1)-|(sum);
+	\draw[arrow] (D)--(sum)node[midway, above]{$u_D$};
+
+%\draw[dashed] (current bounding box.north west)++(-.5,.5)node[below right]{$C$}rectangle($(current bounding box.south east)+(.5,-.5)$);
+
+\draw[arrow] (sat.east)--++(1,0)node[pos=.7, above]{$u$};
+\draw[arrow] ($(KP.west)+(-1,0)$)--(KP)node[midway, above]{$e$};
+
+%\draw[arrow] (c2)|-($(current bounding box.south)+(0,-.5)$)-|(sum2);
+%\draw[arrow] (G.east)--++(1,0)node[midway, above]{$y$};
+%\draw[arrow] ($(sum2)+(-1,0)$)--(sum2)node[midway, above]{$r$}node[below right]{$-$};
+
+
+
+\end{tikzpicture}
+\end{document}
