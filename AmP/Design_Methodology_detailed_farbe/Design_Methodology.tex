@@ -29,74 +29,74 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \matrix[matrix1] (concept) at (0,0){
-    |[title]| \textsc{Conceptual Design} \\
-    \matrixnode{type}{long long long type description} \\
-    \matrixnode{number}{number description} \\
-    \matrixnode{arrangement}{(serial, parallel, hybrid)} \\
-    \matrixnode{connection}{connection description} \\
+    |[title]| \textsc{Env 1} \\
+    \matrixnode{elem1}{long long long type description} \\
+    \matrixnode{elem2}{  description} \\
+    \matrixnode{elem3}{description of elem 3} \\
+    \matrixnode{elem4}{another description} \\
 };
 \path (concept.0)node[pooldescript](elementsDescription){
-	elements \\ \tiny (e.\,g., actuators, suction cups, etc.)};
+	Pool \\ \tiny (Pool descriptor)};
 \begin{pgfonlayer}{background}
   \node[level0] [fit = (concept) (elementsDescription)] {};
 \end{pgfonlayer}
 
 
-\draw[thickArrow] (type)--(number);
-\draw[thickArrow] (number)--(arrangement);
-\draw[thickArrow] (arrangement)--(connection);
-\draw[thickArrow] (connection.5)--++(.2,0)|-(arrangement.-5);
-\draw[thickArrow] (arrangement.5)--++(.2,0)|-(number.-5);
-%\draw[thickArrow] (number.5)--++(.2,0)|-(type.-5);   % standard
-\draw[thickArrow] (number.5)--++(.6,0)|-(type.-5);		% for long description
+\draw[thickArrow] (elem1)--(elem2);
+\draw[thickArrow] (elem2)--(elem3);
+\draw[thickArrow] (elem3)--(elem4);
+\draw[thickArrow] (elem4.5)--++(.2,0)|-(elem3.-5);
+\draw[thickArrow] (elem3.5)--++(.2,0)|-(elem2.-5);
+%\draw[thickArrow] (elem2.5)--++(.2,0)|-(elem1.-5);   % standard
+\draw[thickArrow] (elem2.5)--++(.6,0)|-(elem1.-5);		% for long description
 
 
 %\draw[thickArrow] (connection.5)--++(.2,0)|-(type.-5);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\othernode{($(concept.90)+(0,1)$)}{solution}{solution description}
-\othernode{($(solution.90)+(0,1)$)}{task}{task description}
-\othernode{($(concept.270)+(0,-1)$)}{model}{model description}
+\othernode{($(concept.90)+(0,1)$)}{step2}{step2 description}
+\othernode{($(step2.90)+(0,1)$)}{step1}{step1 description}
+\othernode{($(concept.270)+(0,-1)$)}{step3}{step3 description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\matrix[matrix1, below] (geometry) at ($(model.270)+(0,-.5)$){
-    |[title]| \textsc{Geometrical Design} \\
-    \matrixnode{shape}{shape description} \\
-    \matrixnode{material}{material description} \\
-    \matrixnode{surface}{surface description} \\
-    \matrixnode{dimension}{dimension description} \\
+\matrix[matrix1, below] (geometry) at ($(step3.270)+(0,-.5)$){
+    |[title]| \textsc{Env 2} \\
+    \matrixnode{elem5}{elem description} \\
+    \matrixnode{elem6}{elem description} \\
+    \matrixnode{elem7}{elem description} \\
+    \matrixnode{elem8}{elem description} \\
 };
 \path (geometry.0)node[pooldescript](fabricationDescription){
-	fabrication \\ \tiny (fabricationDescription)};
+	Another Pool \\ \tiny (Pool Description)};
 \begin{pgfonlayer}{background}
   \node[level0] [fit = (geometry) (fabricationDescription)] {};
 \end{pgfonlayer}
 
 
-\draw[thickArrow] (shape)--(material);
-\draw[thickArrow] (material)--(surface);
-\draw[thickArrow] (surface)--(dimension);
-\draw[thickArrow] (dimension.5)--++(.2,0)|-(surface.-5);
-\draw[thickArrow] (surface.5)--++(.2,0)|-(material.-5);
-\draw[thickArrow] (material.5)--++(.2,0)|-(shape.-5);
+\draw[thickArrow] (elem5)--(elem6);
+\draw[thickArrow] (elem6)--(elem7);
+\draw[thickArrow] (elem7)--(elem8);
+\draw[thickArrow] (elem8.5)--++(.2,0)|-(elem7.-5);
+\draw[thickArrow] (elem7.5)--++(.2,0)|-(elem6.-5);
+\draw[thickArrow] (elem6.5)--++(.2,0)|-(elem5.-5);
 
 %\draw[thickArrow] (dimension.5)--++(.2,0)|-(shape.-5);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\othernode{($(geometry.270)+(0,-1)$)}{realization}{realization description}
+\othernode{($(geometry.270)+(0,-1)$)}{step4}{step4 description}
 
-\draw[thickArrow] (task) -- (solution);
-\draw[thickArrow] (solution) -- (concept);
-\draw[thickArrow] (concept) -- (model);
-\draw[thickArrow] (model) -- (geometry);
-\draw[thickArrow] (geometry) -- (realization);
+\draw[thickArrow] (step1) -- (step2);
+\draw[thickArrow] (step2) -- (concept);
+\draw[thickArrow] (concept) -- (step3);
+\draw[thickArrow] (step3) -- (geometry);
+\draw[thickArrow] (geometry) -- (step4);
 
-\draw[thickArrow] (model.east)-|($(concept.south)+(2,0)$);
-\draw[thickArrow] (realization.east)-|($(geometry.south)+(2,0)$);
+\draw[thickArrow] (step3.east)-|($(concept.south)+(2,0)$);
+\draw[thickArrow] (step4.east)-|($(geometry.south)+(2,0)$);
 
 
 \end{tikzpicture}
