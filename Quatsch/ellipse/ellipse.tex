@@ -1,0 +1,26 @@
+\documentclass[]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{fadings}
+
+\begin{document}
+\begin{tikzpicture}
+
+
+\def\l{10}
+
+\foreach \a in {10,20,...,90}{
+	\pgfmathsetmacro{\r}{180*\l/\a/3.1416}
+	\draw (0,0)arc(0:\a:\r);
+	\draw (0,0)arc(0:-\a:\r);
+	\draw (0,0)arc(0:\a:-\r);
+	\draw (0,0)arc(0:-\a:-\r);
+}
+
+\pgfmathsetmacro{\b}{.95*7/8*\l}
+\draw[help lines] (0,0)circle(\l);
+\draw[help lines] (0,0)circle(\b);
+\draw (0,0) ellipse (\b cm and \l cm);
+
+\end{tikzpicture}
+\end{document}
