@@ -12,6 +12,7 @@
 \pgfmathsetmacro{\lgh}{\lgh/2}
 \pgfmathsetmacro{\bet}{arctan(\lg/2/\hg)}
 \pgfmathsetmacro{\h}{\hg/(\N+1)}
+\pgfmathsetmacro{\R}{\h/cos(\bet)}
 
 % Init
 \draw (0,0)--++(-\lgh,0)coordinate(L);
@@ -19,7 +20,7 @@
 
 
 \foreach \n in {1,...,\N}{
-	\
+	\pgfmathsetmacro{\ln}{\lg*(1-\n/(\N+1))}
 }
 
 
