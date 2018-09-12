@@ -41,7 +41,6 @@ con1 = {'type': 'eq', 'fun': constraint}
 cons = ([con1])
 
 
-
 ######################################
 
 #alphaset = np.arange(-30, 30, 1)
@@ -68,6 +67,71 @@ cons = ([con1])
 #plt.plot(alphaset, beta2set, label='beta2')
 #plt.legend()
 
+######################################
+
+
+def tikz_makefile(name):
+    header = """
+\\documentclass[10pt]{standalone}
+\\input{../../tikzpic_packages.tex}
+\\begin{document}
+\\begin{tikzpicture}
+\\tikzset{
+    scale=2,
+    part/.style={line width = .3mm, color=black},
+    joint/.style={line width = .3mm, color=black, fill=white},
+    grid line/.style={gray},
+    link/.style={line width=.3mm, color=black},
+    baloon/.style={fill=red!20, draw=red!30, line width=.5mm}
+    }
+"""
+    text_file = open(name, "w")
+    text_file.write(header)
+    return text_file
+
+
+def tikz_closefile(text_file):
+    footer = """
+\\draw[baloon] (0,1.5) circle(.91);
+\\end{tikzpicture}
+\\end{document}
+"""
+    text_file.write(footer)
+    text_file.close()
+
+
+def tikz_drawfinray(p2s, p3s, text_file):
+    header = """
+\\draw[part] (%f, %f) coordinate(Llast) -- (%f, %f) coordinate(Rlast);
+""" % (p2s[0][0], p2s[0][1], p3s[0][0], p3s[0][1])
+
+    text_file.write(header)
+
+    i = 0
+    for p2, p3 in zip(p2s, p3s):
+        if i != 0:
+            elem = """
+\\path (%f, %f) coordinate(L) -- (%f, %f) coordinate(R);
+\\draw[part] (L)--(Llast) (R)--(Rlast);
+""" % (p2[0], p2[1], p3[0], p3[1])
+            text_file.write(elem)
+            if i % 2 == 1 and i != 1:
+                text_file.write("""
+\\draw[joint] (Llast)circle(.04);
+\\draw[joint] (Rlast)circle(.04);
+\\draw[link] (Llast)--(Rlast);
+\\draw[joint] (Llast)circle(.015);
+\\draw[joint] (Rlast)circle(.015);
+""")
+            text_file.write("\\path (L)coordinate(Llast) (R)coordinate(Rlast);")
+        i += 1
+
+    footer = """
+\\draw[part] (L)--(R);
+"""
+    text_file.write(footer)
+    return text_file
+
 
 ######################################
 plt.figure('FinRay')
@@ -80,7 +144,10 @@ L = 1.
 
 #alpha = np.deg2rad(0)
 
-for alpha in [np.deg2rad(0), np.deg2rad(2), np.deg2rad(4)]:
+name = 'gripper_stiff.tex'
+text_file = tikz_makefile(name)
+
+for alpha, xshift in [(np.deg2rad(0), 1.2), (np.deg2rad(0), -1.2)]:
 
     h_ = H/(N+1.)
     beta_ = np.arctan(L/(2.*H))
@@ -88,11 +155,13 @@ for alpha in [np.deg2rad(0), np.deg2rad(2), np.deg2rad(4)]:
     
     # init
     l0 = L
-    p1x = -l0/2.
+    p1x = xshift-l0/2.
     p1y = 0
-    p4x = l0/2.
+    p4x = xshift+l0/2.
     p4y = 0
-    
+
+    p2, p3 = [(p1x, p1y)], [(p4x, p4y)]
+
     #solution = minimize(objective, [0, 0], method='SLSQP', constraints=cons)
     #beta1, beta2 = solution.x
     #print beta_, beta1, beta2
@@ -119,5 +188,13 @@ for alpha in [np.deg2rad(0), np.deg2rad(2), np.deg2rad(4)]:
         p1y = p2y
         p4x = p3x
         p4y = p3y
+        
+        p2.append((p2x, p2y))
+        p3.append((p3x, p3y))
+    text_file = tikz_drawfinray(p2, p3, text_file)
+
+tikz_closefile(text_file)
+
+
 
 plt.axis('equal')

@@ -1,0 +1,157 @@
+
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+\begin{document}
+\begin{tikzpicture}
+\tikzset{
+    scale=2,
+    part/.style={line width = .3mm, color=black},
+    joint/.style={line width = .3mm, color=black, fill=white},
+    grid line/.style={gray},
+    link/.style={line width=.3mm, color=black},
+    baloon/.style={fill=red!20, draw=red!30, line width=.5mm}
+    }
+
+\draw[part] (0.500000, 0.000000) coordinate(Llast) -- (1.500000, 0.000000) coordinate(Rlast);
+
+\path (0.538462, 0.230769) coordinate(L) -- (1.461538, 0.230769) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.576923, 0.461538) coordinate(L) -- (1.423077, 0.461538) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.615385, 0.692308) coordinate(L) -- (1.384615, 0.692308) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.653846, 0.923077) coordinate(L) -- (1.346154, 0.923077) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.692308, 1.153846) coordinate(L) -- (1.307692, 1.153846) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.730769, 1.384615) coordinate(L) -- (1.269231, 1.384615) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.769231, 1.615385) coordinate(L) -- (1.230769, 1.615385) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.807692, 1.846154) coordinate(L) -- (1.192308, 1.846154) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.846154, 2.076923) coordinate(L) -- (1.153846, 2.076923) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.884615, 2.307692) coordinate(L) -- (1.115385, 2.307692) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.923077, 2.538462) coordinate(L) -- (1.076923, 2.538462) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (0.961538, 2.769231) coordinate(L) -- (1.038462, 2.769231) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\draw[part] (L)--(R);
+
+\draw[part] (-1.500000, 0.000000) coordinate(Llast) -- (-0.500000, 0.000000) coordinate(Rlast);
+
+\path (-1.461538, 0.230769) coordinate(L) -- (-0.538462, 0.230769) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.423077, 0.461538) coordinate(L) -- (-0.576923, 0.461538) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.384615, 0.692308) coordinate(L) -- (-0.615385, 0.692308) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.346154, 0.923077) coordinate(L) -- (-0.653846, 0.923077) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.307692, 1.153846) coordinate(L) -- (-0.692308, 1.153846) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.269231, 1.384615) coordinate(L) -- (-0.730769, 1.384615) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.230769, 1.615385) coordinate(L) -- (-0.769231, 1.615385) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.192308, 1.846154) coordinate(L) -- (-0.807692, 1.846154) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.153846, 2.076923) coordinate(L) -- (-0.846154, 2.076923) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.115385, 2.307692) coordinate(L) -- (-0.884615, 2.307692) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.076923, 2.538462) coordinate(L) -- (-0.923077, 2.538462) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+
+\draw[joint] (Llast)circle(.04);
+\draw[joint] (Rlast)circle(.04);
+\draw[link] (Llast)--(Rlast);
+\draw[joint] (Llast)circle(.015);
+\draw[joint] (Rlast)circle(.015);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\path (-1.038462, 2.769231) coordinate(L) -- (-0.961538, 2.769231) coordinate(R);
+\draw[part] (L)--(Llast) (R)--(Rlast);
+\path (L)coordinate(Llast) (R)coordinate(Rlast);
+\draw[part] (L)--(R);
+
+\draw[baloon] (0,1.5) circle(.91);
+\end{tikzpicture}
+\end{document}
