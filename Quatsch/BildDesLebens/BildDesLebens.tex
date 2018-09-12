@@ -1,0 +1,73 @@
+
+\documentclass[12pt]{standalone}
+\input{../../tikz_header_beamer.tex}
+
+
+\begin{document}
+\begin{tikzpicture}
+\tikzset{
+solid/.style={draw=blue, fill=blue, thick},
+stretch/.style={red, thick},
+description/.style={midway, align=center}
+    }
+
+\def\family{red}
+\def\work{blue}
+\def\education{yellow}
+\def\hobbies{orange}
+\def\move{purple}
+\def\emotions{green}
+
+
+\def\B{5}
+\def\H{3}
+\pgfmathsetmacro{\Hh}{\H*.5}
+\pgfmathsetmacro{\Bh}{\B*.5}
+
+\foreach[count=\i] \category/\text in {\family/relations \& friends, \work/work, \education/education, \hobbies/hobbies, \move/move, \emotions/emotions}{
+	\foreach[count=\j] \time in {10--15, 15--19, 19--24, 24--27, 27+}{
+		\pgfmathsetmacro{\x}{\j*\B}
+		\pgfmathsetmacro{\y}{-\i*\H}
+		\path[fill=\category!40] (\x,\y)coordinate(\i\j)rectangle++(\B,-\H);
+		\ifnum\j=1 \path (\x,\y)--++(0,-\H)node[\category, midway, sloped, below]{\text}; \fi
+		\ifnum\i=1 \path (\x,\y)++(\Bh,0)node[above]{\time}; \fi
+	}
+}
+
+\path[fill=\family!50] (12)rectangle++(\B,-\H)node[midway]{family};
+\path[fill=\family!80] (13)rectangle++(\B,-\H)node[description]{in love};
+\path[fill=\family!20] (14)rectangle++(\B,-\H)node[description]{tinder};
+\path[fill=\family!60] (15)rectangle++(\B,-\H)node[description]{solid relation};
+
+\path[fill=\work!10] (21)rectangle++(\B,-\H)node[description]{no};
+\path[fill=\work!20] (22)rectangle++(\B,-\H)node[description]{Holz hacken};
+\path[fill=\work!40] (23)rectangle++(\B,-\H)node[description]{HiWi (AmP) und Praktika};
+\path[fill=\work!90] (24)rectangle++(\B,-\H)node[description]{HiWi (AmP, ICT) \\ Fideles \\ PaintBot};
+\path[fill=\work!80] (25)rectangle++(\B,-\H)node[description]{WiMi};
+
+\path[fill=\education!10] (31)rectangle++(\B,-\H)node[description]{HGG};
+\path[fill=\education!20] (32)rectangle++(\B,-\H)node[description]{Abitur};
+\path[fill=\education!60] (33)rectangle++(\B,-\H)node[description]{B. Sc. TUHH};
+\path[fill=\education!80] (34)rectangle++(\B,-\H)node[description]{M. Sc. TUHH};
+\path[fill=\education!30] (35)rectangle++(\B,-\H)node[description]{Übungsleiter};
+
+\path[fill=\hobbies!90] (41)rectangle++(\B,-\H)node[description]{alles};
+\path[fill=\hobbies!100] (42)rectangle++(\B,-\H)node[description]{Skaten, Musik, \\ Festivals , Snowboarden};
+\path[fill=\hobbies!70] (43)rectangle++(\B,-\H)node[description]{Skaten, Feiern, Radfahren};
+\path[fill=\hobbies!30] (44)rectangle++(\B,-\H)node[description]{Skaten, Segeln};\\
+\path[fill=\hobbies!50] (45)rectangle++(\B,-\H)node[description]{Skaten, Lesen, Segeln};
+
+\path[fill=\move!50] (51)rectangle++(\B,-\H)node[description]{Camping mit Family};
+\path[fill=\move!70] (52)rectangle++(\B,-\H)node[description]{Interrail};
+\path[fill=\move!100] (53)rectangle++(\B,-\H)node[description]{Hamburg \\ Costa Rica, Biked the Baltic};
+\path[fill=\move!40] (54)rectangle++(\B,-\H)node[description]{ Peru };
+\path[fill=\move!30] (55)rectangle++(\B,-\H)node[description]{Conferences};
+
+\path[fill=\emotions!50] (61)rectangle++(\B,-\H)node[description]{sorglos};
+\path[fill=\emotions!90] (62)rectangle++(\B,-\H)node[description]{wild};
+\path[fill=\emotions!100] (63)rectangle++(\B,-\H)node[description]{alles ist möglich};
+\path[fill=\emotions!20] (64)rectangle++(\B,-\H)node[description]{hart arbeiten};
+\path[fill=\emotions!50] (65)rectangle++(\B,-\H)node[description]{gelassen};
+
+\end{tikzpicture}
+\end{document}
