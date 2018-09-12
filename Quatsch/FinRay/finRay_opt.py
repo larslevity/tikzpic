@@ -140,14 +140,24 @@ plt.figure('FinRay')
 N = 12
 H = 3.
 L = 1.
+#N = 12
+#H = 10.
+#L = 10.
 
 
 #alpha = np.deg2rad(0)
 
-name = 'gripper_stiff.tex'
+name = 'gripper_test.tex'
 text_file = tikz_makefile(name)
 
-for alpha, xshift in [(np.deg2rad(0), 1.2), (np.deg2rad(0), -1.2)]:
+#for alpha, xshift in [(np.deg2rad(0), 1.2), (np.deg2rad(0), -1.2)]:
+#for alpha, xshift in [(np.deg2rad(1), 1.05), (np.deg2rad(-1), -1.05)]:
+#for alpha, xshift in [(np.deg2rad(2), .9), (np.deg2rad(-2), -.9)]:
+for alpha, xshift in [(np.deg2rad(3), .75), (np.deg2rad(-3), -.75)]:
+#for alpha, xshift in [(np.deg2rad(4), .65), (np.deg2rad(-4), -.65)]:
+#for alpha, xshift in [(np.deg2rad(5), .6), (np.deg2rad(-5), -.6)]:
+#for alpha, xshift in [(np.deg2rad(6), .6), (np.deg2rad(-6), -.6)]:
+
 
     h_ = H/(N+1.)
     beta_ = np.arctan(L/(2.*H))
@@ -193,8 +203,13 @@ for alpha, xshift in [(np.deg2rad(0), 1.2), (np.deg2rad(0), -1.2)]:
         p3.append((p3x, p3y))
     text_file = tikz_drawfinray(p2, p3, text_file)
 
+
+
 tikz_closefile(text_file)
 
+x = [np.cos(alp)*.91 for alp in np.arange(0,2*np.pi, .1)]
+y = [np.sin(alp)*.91 + 1.5 for alp in np.arange(0,2*np.pi, .1)]
+plt.plot(x, y)
 
 
 plt.axis('equal')

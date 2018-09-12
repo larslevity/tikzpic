@@ -1,0 +1,62 @@
+
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+\begin{document}
+\begin{tikzpicture}
+\tikzset{
+solid/.style={draw=blue, fill=blue, thick},
+stretch/.style={red, thick}
+    }
+
+\def\L{3}
+\def\h{.9}
+\def\hs{.05}
+\def\N{5}
+\pgfmathsetmacro{\dx}{\L/\N}
+
+\path (0,0) coordinate(O);
+%% stretch
+\foreach \n in {1,...,\N}{
+	\pgfmathsetmacro{\pos}{(\n-1)/\N}
+	\path (O)--++(\L,0)coordinate[pos=\pos](X);
+	\draw[stretch] (X)rectangle++(\dx,\h);
+}
+%% solid
+\draw[solid] (O)rectangle++(\L,-\hs);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+\begin{scope}[yshift=-2cm]
+
+\def\alp{90}
+\def\blast{10}
+\pgfmathsetmacro{\R}{180*\L/\alp/3.1416}
+\pgfmathsetmacro{\alph}{\alp/2}
+
+\pgfmathsetmacro{\xshift}{\L/2-sin(\alph)*\R}
+\path (\xshift,0) coordinate(O);
+%% stretch
+\draw[stretch] (O)to[out=90+\alph+\blast, in=-90+\alph-\blast]($(O)+(90+\alph:\h)$)coordinate(last);
+\foreach \n in {1,...,\N}{
+	\pgfmathsetmacro{\pos}{(\n)/\N}
+	\pgfmathsetmacro{\dalp}{-\alph + \alp*(\n)/\N}
+	\pgfmathsetmacro{\dalplast}{-\alph + \alp*(\n-1)/\N}
+	\path (O)arc(90+\alph:90-\alph:\R)coordinate[pos=\pos](X);
+	\ifthenelse{\n=\N}{
+		\draw[stretch](X)to[out=90-\alph-\blast, in=-90-\alph+\blast]($(X)+(90-\dalp:\h)$)coordinate(now);
+		}{\draw[stretch] (X)--++(90-\dalp:\h)coordinate(now);}
+	\draw[stretch] (last)to[out=-\dalplast+\blast, in=180-\dalp-\blast](now);
+	\path (now)coordinate(last);
+}
+%% solid
+\draw[solid] (O)arc(90+\alph:90-\alph:\R)--++(-90-\alph:\hs)arc(90-\alph:90+\alph:\R-\hs);
+
+\end{scope}
+
+
+
+
+\end{tikzpicture}
+\end{document}

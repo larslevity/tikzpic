@@ -1,0 +1,65 @@
+
+\documentclass[10pt]{standalone}
+\input{../../tikzpic_packages.tex}
+\begin{document}
+\begin{tikzpicture}
+\tikzset{
+solid/.style={draw=blue, fill=blue, thick},
+stretch/.style={red, thick}
+    }
+
+\def\L{3}
+\def\h{.9}
+\def\b{.5}  % N*b !< L
+\def\hs{.05}
+\def\N{5}
+
+\pgfmathsetmacro{\x}{(\L-\N*\b)/(\N-1)}
+
+
+\path (0,0) coordinate(O);
+%% stretch
+\foreach \n in {1,...,\N}{
+	\pgfmathsetmacro{\pos}{(\n-1)*(\b+\x)/(\L+\x)}
+	\path (O)--++(\L+\x,0)coordinate[pos=\pos](X);
+	\draw[stretch] (X)rectangle++(\b,\h);
+}
+%% solid
+\draw[solid] (O)rectangle++(\L,-\hs);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+\begin{scope}[yshift=-2cm]
+
+\def\alp{90}
+\def\blast{10}
+\pgfmathsetmacro{\R}{180*\L/\alp/3.1416}
+\pgfmathsetmacro{\alph}{\alp/2}
+
+\pgfmathsetmacro{\xshift}{\L/2-sin(\alph)*\R}
+\path (\xshift,0) coordinate(O);
+%% stretch
+
+\foreach \n in {1,...,\N}{
+	\pgfmathsetmacro{\posb}{(\n*\b+(\n-1)*\x)/(\L)}
+	\pgfmathsetmacro{\pos}{(\n-1)*(\b+\x)/(\L)}
+	\pgfmathsetmacro{\dalp}{-\alph + \alp*\pos}
+	\pgfmathsetmacro{\dalpb}{-\alph + \alp*\posb}
+	\path (O)arc(90+\alph:90-\alph:\R)coordinate[pos=\pos](X);%++(1,-\n)node{\pos};
+	\path (O)arc(90+\alph:90-\alph:\R)coordinate[pos=\posb](Xb);%++(1.5,-\n)node{\poslast};
+	
+	\draw[stretch](X)to[out=90-\dalp+\blast, in=-90-\dalp-\blast]($(X)+(90-\dalp:\h)$)coordinate(XX);
+	\draw[stretch](Xb)to[out=90-\dalpb-\blast, in=-90-\dalpb+\blast]($(Xb)+(90-\dalpb:\h)$)coordinate(XXb);
+	\draw[stretch] (XX)to[out=-\dalp+\blast, in=180-\dalpb-\blast](XXb);
+}
+%% solid
+\draw[solid] (O)arc(90+\alph:90-\alph:\R)--++(-90-\alph:\hs)arc(90-\alph:90+\alph:\R-\hs);
+
+\end{scope}
+
+
+
+
+\end{tikzpicture}
+\end{document}
