@@ -78,11 +78,10 @@ def tikz_makefile(name):
 \\begin{tikzpicture}
 \\tikzset{
     scale=2,
-    part/.style={line width = .3mm, color=black},
+    part/.style={line width = .3mm, color=black, line cap=round},
     joint/.style={line width = .3mm, color=black, fill=white},
     grid line/.style={gray},
-    link/.style={line width=.3mm, color=black},
-    baloon/.style={fill=red!20, draw=red!30, line width=.5mm}
+    link/.style={line width=.3mm, color=black}
     }
 """
     text_file = open(name, "w")
@@ -92,7 +91,8 @@ def tikz_makefile(name):
 
 def tikz_closefile(text_file):
     footer = """
-\\draw[baloon] (0,1.5) circle(.91);
+\shade[ball color = black!40, opacity = 0.4] (0,1.5) circle (.91);
+\draw[black!40] (0,1.5) circle(.91);
 \\end{tikzpicture}
 \\end{document}
 """
@@ -150,10 +150,10 @@ L = 1.
 name = 'gripper_test.tex'
 text_file = tikz_makefile(name)
 
-#for alpha, xshift in [(np.deg2rad(0), 1.2), (np.deg2rad(0), -1.2)]:
+#for alpha, xshift in [(np.deg2rad(0), 1.22), (np.deg2rad(0), -1.22)]:
 #for alpha, xshift in [(np.deg2rad(1), 1.05), (np.deg2rad(-1), -1.05)]:
-#for alpha, xshift in [(np.deg2rad(2), .9), (np.deg2rad(-2), -.9)]:
-for alpha, xshift in [(np.deg2rad(3), .75), (np.deg2rad(-3), -.75)]:
+for alpha, xshift in [(np.deg2rad(2), .9), (np.deg2rad(-2), -.9)]:
+#for alpha, xshift in [(np.deg2rad(3), .73), (np.deg2rad(-3), -.73)]:
 #for alpha, xshift in [(np.deg2rad(4), .65), (np.deg2rad(-4), -.65)]:
 #for alpha, xshift in [(np.deg2rad(5), .6), (np.deg2rad(-5), -.6)]:
 #for alpha, xshift in [(np.deg2rad(6), .6), (np.deg2rad(-6), -.6)]:
