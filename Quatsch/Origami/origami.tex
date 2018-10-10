@@ -1,0 +1,88 @@
+
+\documentclass[]{standalone}
+\input{../../tikzpic_packages.tex}
+\usepackage{tikz-3dplot}
+
+
+\begin{document}
+\tdplotsetmaincoords{70.5}{215}
+%\tdplotsetmaincoords{85}{215}
+%\tdplotsetmaincoords{90}{180}
+
+
+\begin{tikzpicture}[
+	tdplot_main_coords,
+	scale=.5,
+	deckel/.style={fill=black!20, line cap=round}
+	]
+
+
+%% Höhe und Winkel um z-Achse als Variablen
+
+\path (0,0,0)coordinate(O);
+%\draw[->] (O)--++(1,0,0)node[above]{$x$};
+%\draw[->] (O)--++(0,1,0)node[below]{$y$};
+%\draw[->] (O)--++(0,0,1)node[above]{$z$};
+
+
+\def\R{1.5}
+\def\dh{1.5}
+\def\n{4}
+%% Block
+\def\b{.2}
+\def\h{.5}
+\pgfmathsetmacro{\l}{\R+\R+\b+\b}
+
+\foreach[count=\m] \xshift/\dh/\n/\arr in {
+	0/1.5/4/latex-,
+	6/2/4/-latex,
+	6/1.95/5/-latex,
+	6/3/4/-latex,
+	6/1.88/7/-
+	}{
+
+	\path[] (O)++(0,\xshift,0) coordinate(O);
+	\pgfmathsetmacro{\dhh}{\dh/2}
+	\pgfmathsetmacro{\yfill}{.5+\m/5/2}
+	
+	\path[deckel] (O)++(-\R-\b,-\R-\b,-\h)coordinate(1)--++(\l,0)coordinate(4)--++(0,\l)coordinate(3)--++(-\l,0)coordinate(2)--cycle;
+	\path[deckel] (O)++(-\R-\b,-\R-\b,0)coordinate(u1)--++(\l,0)coordinate(u4)--++(0,\l)coordinate(u3)--++(-\l,0)coordinate(u2)--cycle;
+	\foreach \i in {2,3}{
+		\pgfmathtruncatemacro{\iminor}{\i-1}
+		\pgfmathsetmacro{\filll}{(60-\iminor*15)*\yfill}
+		\path[fill=black!\filll] (\i)--(\iminor)--(u\iminor)--(u\i)--cycle;
+	}
+
+	\foreach \i in {1,...,\n}{
+		\pgfmathsetmacro{\h}{\i*\dh-\dh}
+		\foreach[count=\j] \a in {0, 60, ..., 300}{
+			\path (O)++(0,0,\h)--++(\a:\R)coordinate(l \i \j); %node{$\bullet$}node[below]{\j};
+			\path (O)++(0,0,\h+\dhh)coordinate(c\i)--++(\a+30:\R)coordinate(u \i \j); %node{$\bullet$}node[above]{\j};
+		}
+		\foreach \k in {1,...,4}{
+			\pgfmathsetmacro{\fillu}{(30+\k*6-\i*3)*\yfill}
+			\pgfmathsetmacro{\filll}{(31+\k*8-\i*1)*\yfill}
+			\pgfmathtruncatemacro{\kminor}{\k-1}
+			\pgfmathtruncatemacro{\kmajor}{mod(\k+1,6)}
+			\path (l \i 6)coordinate(l \i 0) (u \i 6)coordinate(u \i 0);
+	
+			\ifnum\i>1			
+					\pgfmathtruncatemacro{\iminor}{\i-1}
+					\ifnum\k<4 \path[fill=black!\filll] (u \iminor \k)--(l \i \kmajor)--(u \iminor \kmajor)--cycle;  \fi
+					\ifnum\k>1 \path[fill=black!\fillu] (l \i \k)--(u \iminor \k)--(l \i \kmajor)--cycle; \fi
+			\fi
+	
+			\path[fill=black!\fillu] (u \i \k)--(l \i \kmajor)--(u \i \kmajor)--cycle;
+			\ifnum\k>1 \path[fill=black!\filll] (l \i \k)--(u \i \k)--(l \i \kmajor)--cycle;  \fi
+		}
+		\pgfmathsetmacro{\fillu}{(30+3*6-\i*3)*\yfill}
+		\path[fill=black!\fillu] (u \i 3)--(l \i 4)--(u \i 4)--cycle;
+	}
+	\path[deckel](u \n 1)--(u \n 2)--(u \n 3)--(u \n 4)--(u \n 5)--(u \n 6)--cycle;
+
+%	\draw[thick, \arr] (c\n)--++(0,0,1)node[midway, right]{$F_\txt$};
+
+}
+
+\end{tikzpicture}
+\end{document}
