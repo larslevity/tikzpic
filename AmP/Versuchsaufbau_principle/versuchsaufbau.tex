@@ -1,5 +1,5 @@
 %% Definition der KOS
-\documentclass[10pt]{standalone}
+\documentclass[tikz, convert={outfile=\jobname.png}]{standalone}
 \input{../../tikzpic_packages.tex}
 
 
@@ -111,20 +111,41 @@
 \tdplotsetrotatedcoords{0}{\deltaPlane}{90}
 \begin{scope}[tdplot_rotated_coords]
 
+
 % MOUNTING
 \path[fillmounting_side] (K)++(0,\mountingdz)coordinate(MBUR)--++(0,0,\hz+\mountingdz)coordinate(MTUR)--++(0,-\by-\mountingdz-\mountingdz)coordinate(MTLR)--++(0,0,-\hz-\mountingdz)coordinate(MBLR)--cycle;
 \path[fillmounting_front] (MBLR)--++(-\mountingx,0)--++(0,0,\hz+\mountingdz)coordinate(MTLL)--(MTLR)--cycle;
 \path[fillmounting_top] (MTLL)--(MTLR)--(MTUR)--++(-\mountingx,0)--cycle;
 
-% DUT
-\path[filldut_top] (K)++(0,0,\hz)arc(270:270+\betI:\rbI)--++(-90+\betI:\by)arc(270+\betI:270:\rbIe)--++(0,\by);
 
+
+% DUT - Top
+\pgfmathsetmacro{\dx}{cos(\betI/2)*2*\rbIe*sin(\betI/2)}
+\pgfmathsetmacro{\dy}{-\by + sin(\betI/2)*2*\rbIe*sin(\betI/2)}
+\path[filldut_top] (K)++(0,0,\hz)arc(270:270+\betI:\rbI)coordinate(FUL)--($(K)+(\dx,\dy,\hz)$)coordinate(FUR)arc(270+\betI:270:\rbIe)--++(0,\by);
+
+% DUT - Front
+\path[filldut_front] (FUL)--++(0,0,-\hz)--($(FUR)+(0,0,-\hz)$)--(FUR)--cycle;
+
+% DUT - Redraw Top
+\path[filldut_top] (K)++(0,0,\hz)arc(270:270+\betI:\rbI)--($(K)+(\dx,\dy,\hz)$)arc(270+\betI:270:\rbIe)--++(0,\by);
+
+
+
+% DUT - Side
+%\draw (K)circle(.01)node[above]{K};
 \path (K)++(0,-\by)coordinate(LL)++(0,0,\hz)coordinate(LU); % Init LastLower & LastUpper
 \foreach \dp in {.05,.1,..., 1.01}{
-	\path (K)++(0,-\by)arc(270:270+\betI:\rbIe)coordinate[pos=\dp](L);
-	\path[filldut_side] (LU)--(LL)--(L)--++(0,0,\hz)--cycle;
-	\path (L)coordinate(LL) ++ (0,0,\hz)coordinate(LU);
+	\pgfmathsetmacro{\dbetI}{\dp*\betI}
+	\pgfmathsetmacro{\dbetIl}{(\dp-.05)*\betI}
+	\pgfmathsetmacro{\dxl}{cos(\dbetIl/2)*2*\rbIe*sin(\dbetIl/2)}
+	\pgfmathsetmacro{\dyl}{-\by + sin(\dbetIl/2)*2*\rbIe*sin(\dbetIl/2)}
+	\pgfmathsetmacro{\dx}{cos(\dbetI/2)*2*\rbIe*sin(\dbetI/2)}
+	\pgfmathsetmacro{\dy}{-\by + sin(\dbetI/2)*2*\rbIe*sin(\dbetI/2)}
+	\path[filldut_side] ($(K)+(\dxl,\dyl)$)--++(0,0,\hz)--($(K)+(\dx,\dy,\hz)$)--++(0,0,-\hz)--cycle;
 }
+
+
 % Nicht dehnbare Schicht
 \draw[solid] (K)++(0,0,\hz)coordinate(K)arc(270:270+\betI:\rbI)coordinate(BETI);
 % Define Pos of IMU Coord Sys

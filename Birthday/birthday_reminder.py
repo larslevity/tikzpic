@@ -17,7 +17,7 @@
 
 import time
 import os
-
+import subprocess
 
 birthdayFile = 'birthdayfile.txt'
 
@@ -59,9 +59,14 @@ def createBirthdayEmail(email, age, name, surname, sex='m'):
 #    body = '<html><body>' + body + '<br></body></html>'
 #    print body
     subject = "Die Geometrie der Wolken"
-    os.system("thunderbird -compose to='" + email + "',subject=" + subject +
-              ",body='" + body + "'")
-
+    try:
+        subprocess.call(
+            "thunderbird -compose to='" + email + "',subject=" + subject +
+            ",body='" + body + "'")
+    except OSError:
+        os.system(
+            "icedove -compose to='" + email + "',subject=" + subject +
+            ",body='" + body + "'")
 
 if __name__ == '__main__':
     checkTodaysBirthdays()

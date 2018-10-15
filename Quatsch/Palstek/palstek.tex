@@ -1,0 +1,89 @@
+\documentclass{standalone}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+\usepackage{tikz-3dplot}
+\begin{document}
+
+% The colour of the xagons:
+\newcommand{\colA}{white}
+\newcommand{\colB}{black}
+
+%\tdplotsetmaincoords{50}{20}
+\tdplotsetmaincoords{50}{20}
+\begin{tikzpicture}[
+	tdplot_main_coords,
+	circ/.style={fill=purple!100, draw=purple!80},
+	circ2/.style={fill=orange!100, draw=orange!70}
+	]
+
+
+%\coordinate (O) at (1,2,0);
+%\draw[->] (O)--++(1,0,0)node[right]{$x$};
+%\draw[->] (O)--++(0,1,0)node[right]{$y$};
+%\draw[->] (O)--++(0,0,1)node[left]{$z$};
+
+
+
+\def\R{.5}
+\def\ds{.05}		% delta s - between the circles
+
+\path (2,0,0) coordinate(C2);
+\def\lastbii{0}
+\foreach[count=\i] \db in {0,1,...,180}{
+	\pgfmathsetmacro{\bii}{\lastbii+1}
+	
+	\pgfmathsetmacro{\dbcalc}{\bii-\lastbii}
+	\tdplotsetrotatedcoords{90+\bii}{-90}{0}
+	\pgfmathsetmacro{\dy}{cos(\bii)*\ds}
+	\pgfmathsetmacro{\dx}{-sin(\bii)*\ds}
+	\path[] (C2)--++(\dx,\dy,0)coordinate(C2);
+
+	\draw[tdplot_rotated_coords, circ2] (C2)circle(\R);
+	\pgfmathsetmacro{\save}{\bii}
+	\global\let\lastbii\save
+}
+
+
+
+
+
+\path (0,0,0) coordinate(C);
+\def\lastb{0}
+\foreach[count=\i] \db in {0,1,...,359}{
+	\pgfmathsetmacro{\b}{\lastb+1}
+	\tdplotsetrotatedcoords{0}{\b}{0}
+	\pgfmathsetmacro{\dz}{cos(\b)*\ds}
+	\pgfmathsetmacro{\dx}{sin(\b)*\ds}
+	\path (C)--++(\dx,0,\dz)coordinate(C);
+
+	\draw[tdplot_rotated_coords, circ] (C)circle(\R);
+	\pgfmathsetmacro{\save}{\b}
+	\global\let\lastb\save
+%	
+%	\pgfmathsetmacro{\xx}{\i/90}
+%	\pgfmathsetmacro{\bb}{\b/1000}
+%	\draw (O)++(\xx,0,\bb)circle(.01);
+}
+
+
+
+\foreach[count=\i] \db in {181,182,...,359}{
+	\pgfmathsetmacro{\bii}{\lastbii+1}
+	
+	\pgfmathsetmacro{\dbcalc}{\bii-\lastbii}
+	\tdplotsetrotatedcoords{90+\bii}{-90}{0}
+	\pgfmathsetmacro{\dy}{cos(\bii)*\ds}
+	\pgfmathsetmacro{\dx}{-sin(\bii)*\ds}
+	\path[] (C2)--++(\dx,\dy,0)coordinate(C2);
+
+	\draw[tdplot_rotated_coords, circ2] (C2)circle(\R);
+	\pgfmathsetmacro{\save}{\bii}
+	\global\let\lastbii\save
+}
+
+
+
+
+\end{tikzpicture}
+\end{document}

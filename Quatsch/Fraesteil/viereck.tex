@@ -1,18 +1,18 @@
-\documentclass{standalone}
+\documentclass[tikz, convert={outfile=\jobname.png}]{standalone}
 \usepackage{amsmath,tikz}
 \usepackage{xcolor}
 \usetikzlibrary{backgrounds,calc}
 \usepackage{tikz-3dplot}
 \begin{document}
 % The colour of the xagons:
-\newcommand{\colA}{white};
-\newcommand{\colB}{black};
+\newcommand{\colA}{white}
+\newcommand{\colB}{black}
 
 \tdplotsetmaincoords{40}{230}
 \begin{tikzpicture}[tdplot_main_coords,background rectangle/.style={fill=\colA},show background rectangle]
 
-\def\position{10/100}
-\def\alph{5.82};
+\pgfmathsetmacro{\position}{10/100}
+\def\alph{5.82}
 
 \coordinate (center) at (0,0,0);
 \coordinate (1) at ($(center)+(120:2)$);
