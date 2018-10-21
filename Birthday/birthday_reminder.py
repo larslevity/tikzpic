@@ -19,7 +19,7 @@ import time
 import os
 import subprocess
 
-birthdayFile = 'birthdayfile.txt'
+birthdayFile = '/home/ls/Git/tikzpic/Birthday/birthdayfile.txt'
 
 
 def checkTodaysBirthdays():
