@@ -18,6 +18,7 @@ import time
 import os
 import subprocess
 
+
 birthdayFile = '/home/ls/Git/tikzpic/Birthday/birthdayfile.txt'
 
 
@@ -61,11 +62,11 @@ def createBirthdayEmail(email, age, name, surname, sex='m'):
     try:
         subprocess.call(
             "thunderbird -compose to='" + email + "',subject=" + subject +
-            ",body='" + body + "'")
+            ",body='" + body + "'&")
     except OSError:
         os.system(
             "icedove -compose to='" + email + "',subject=" + subject +
-            ",body='" + body + "'")
+            ",body='" + body + "'&")
 
 if __name__ == '__main__':
     checkTodaysBirthdays()
