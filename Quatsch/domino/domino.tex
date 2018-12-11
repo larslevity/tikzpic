@@ -10,25 +10,35 @@
 
 \tikzdeclarecoordinatesystem{3D}{%
   \tikzset{3D/.cd,#1}%
-  \pgfpoint{sin(\yy)*(\xx)}{-((\xx)/75)^2+(\zz)/100*(\xx)}%
+  \pgfpoint{sin(\yy)*(\xx)}{-((\xx)/83)^2+(\zz)/100*(\xx)}%
 }
 
 \begin{document}
+\newdimen\ex
+\newdimen\ey
+\newdimen\xx
+\newdimen\xy
+\newdimen\wx
+\newdimen\wy
+
+
 \begin{tikzpicture}[line join=round, very thin,
 	help/.style={help lines, color=white},
 	line/.style={draw, color=white!10!black},
 	circline/.style={draw},
 	background rectangle/.style={fill=black}, 
-	show background rectangle
+	show background rectangle,
+	scale=7
 ]
+	\path[clip] (0,0)rectangle(21cm,29.7cm);
   \def\e{700}
   \foreach \x [evaluate={\i=mod(\x+90,360); \j=int((\i<180)*2-1); \t=5;
     \sc=\x/\e; \n=int((\e-\x)/15+1); \X=\x/\e;}, count=\c] in {10,25,...,\e} {
 
 	\foreach \px [count=\cpx] in {0,.05, ..., 1.01}{
-		\pgfmathsetmacro{\XX}{\X*6}
-		\pgfmathsetmacro{\ZZ}{.5*\X*sin(\px*360)*sin(\X*360)}
-		\begin{scope}[shift={(3D cs:x=\x,y={.5*sin(\x)})}]
+		\pgfmathsetmacro{\XX}{\X*3}
+		\pgfmathsetmacro{\ZZ}{.4*\X*sin(\px*360)*sin(\X*360)}
+		\begin{scope}[shift={(3D cs:x=\x,y={.4*sin(\x)})}]
 			\path (-\XX/2,0)--++(\XX,0)coordinate[pos=\px](X\c\cpx);
 			\path (X\c\cpx)++(0,\ZZ)coordinate(Z\c\cpx);
 			\path[help] (-\XX/2,0)--++(\XX,0);
@@ -46,16 +56,25 @@
 			\ifnum\cpx>1
 			\pgfmathtruncatemacro{\cpxm}{\cpx-1}
 			\pgfmathtruncatemacro{\cm}{\c-1};
-			\path (Z\cm\cpxm)--(Z\c\cpx)coordinate[midway](X);
 			\pgfmathsetmacro{\red}{101-\X*100}
 			\pgfmathsetmacro{\gree}{\px*40}
 			\pgfmathsetmacro{\yell}{\X*50}
-			\path[shift={(3D cs:x=\x,y={0})}, 
-				xslant=sin(\X*360-10)*sin(\px*360+90),
-				%yslant=sin(\px*360),
-				circline,
-				color={rgb:red,\red;green,\gree;yellow,\yell}] 
-				(X)circle(.1*\X);
+			% Paths
+			\path (Z\cm\cpxm)--(Z\c\cpx)coordinate[midway](M);
+			\path (Z\cm\cpxm)--(Z\cm\cpx)coordinate[midway](M1);
+			\path (Z\cm\cpx)--(Z\c\cpx)coordinate[midway](M2);
+\draw[color={rgb:red,\red;green,\gree;yellow,\yell}] 
+	let \p1=(M), \p2=(M1), \p3=(M2), 
+	% t0 
+	 \n2={.5*atan2((2*((\x3-\x1)*(\x2-\x1)+(\y3-\y1)*(\y2-\y1))),((\x3-\x1)*(\x3-\x1)+(\y3-\y1)*(\y3-\y1)-((\x2-\x1)*(\x2-\x1)+(\y2-\y1)*(\y2-\y1))))},
+	% a
+	 \n3={sqrt( ((\x3-\x1)*cos(\n2)+(\x2-\x1)*sin(\n2))^2 + ((\y3-\y1)*cos(\n2)+(\y2-\y1)*sin(\n2))^2)},
+	% b
+	 \n4={sqrt(((\x3-\x1)*cos(\n2+90)+(\x2-\x1)*sin(\n2+90))^2 + ((\y3-\y1)*cos(\n2+90)+(\y2-\y1)*sin(\n2+90))^2))},
+	 % Angle
+	 \n6={atan2( (\y3-\y1)*cos(\n2+90)+(\y2-\y1)*sin(\n2+90), (\x3-\x1)*cos(\n2+90)+(\x2-\x1)*sin(\n2+90)}
+  in (M) ellipse [x radius=\n3, y radius=\n4,rotate=\n6+90];
+
 		\fi\fi
 		}
 
