@@ -101,7 +101,7 @@
 
 %% Simplify
 
-\path (DR)++(0, 1) node[above](GRAPH){
+\path (DR)++(0, 1.4) node[above](GRAPH){
 	\begin{tikzpicture}[scale=1.5]
 		\path (0,0)node[circle, fill=\colstart](start){\includegraphics[width=.7cm]{student2.png}};
 		\path (1,0)node[cross, fill=\colnode](1){1};
@@ -109,7 +109,7 @@
 		\path (3,0)node[cross, fill=\colnode](b){b};
 		\path (4,0)node[cross, fill=\colnode](f){f};
 		\path (5,0)node[cross, fill=\colnode](j){j};
-		\path (7,0)node[minimum height=1cm, fill=\colDR, rounded corners=1mm](DR){DR. DONE};
+		%\path (7,0)node[minimum height=1cm, fill=\colDR, rounded corners=1mm](DR){DR. DONE};
 		\path (2,-1)node[cross, fill=\colnode](h){h};
 		\path (3,-1)node[cross, fill=\colnode](c){c};
 		\path (4,-1)node[cross, fill=\colnode](e){e};
@@ -144,7 +144,7 @@
 		\draw[filledLine={\coljg}] (j)-- (g);
 		\draw[filledLine={\colgg}] (g.west)-|++(-.35,-.7)-|(g);
 		%9
-		\draw[filledLine={\coljDR}] (j)-- (DR);
+		%\draw[filledLine={\coljDR}] (j)-- (DR);
 		
 		%%
 		\draw[filledLine={\coliik}] (2)-- (k);
@@ -153,6 +153,14 @@
 };
 
 
+\draw[filledLine={\coljDR}] (DR.north)|-++(6.4, .6)|-++(-1, 6);
+
+\path (-7, 8)node[right, align=left, scale=1.5]{
+	\textit{Der \"ubersichtliche Weg} \\
+	\textit{zur Promotion} \\
+	\textit{in den Ingenieurswissenschaften}};
+	
+\path (2.5, 4.6)node[right, align=left, scale=1.2]{\textit{Nicolaj Baramsky \& Arthur Seibel}};
 
 \end{tikzpicture}
 \end{document}
