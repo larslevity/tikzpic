@@ -1,0 +1,66 @@
+\documentclass[10pt]{standalone}
+
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{lmodern}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+
+
+\begin{document}
+\begin{tikzpicture}[
+scale=5, 
+]
+
+
+\draw[very thick] (-.2,0)--(.2,0);
+\foreach \x in {-.15, -.1, ..., .16}{
+	\draw (\x,0)--++(-.05,-.05);
+}
+
+
+\def\L{1}
+\def\Alp{60}
+\pgfmathsetmacro{\R}{\L*180/\Alp/3.14159}
+\draw[line width = .5mm] (0,0)arc(180:180-\Alp:\R)coordinate(X);
+\draw[fill=black] (X)circle(.01);
+
+
+\foreach[count=\i] \dl in {.9, 1.1}{
+	\foreach[count=\j] \dalp in {-5, 5}{
+		\pgfmathsetmacro{\l}{\L*\dl}
+		\pgfmathsetmacro{\alp}{(\Alp+\dalp)}
+		\pgfmathsetmacro{\R}{\l*180/\alp/3.14159}
+		\draw[help lines] (0,0)arc(180:180-\alp:\R) coordinate(\i\j);%node[right, scale=.2]{\dl - \dalp (\i\j)};
+		
+
+		\draw[help lines] (0,0)--(\R,0)coordinate(X)--++(180-\alp:\R);
+		\ifnum\i=1
+			\draw[latex-latex] (X)++(180:.3)arc(180:180-\alp:.3);
+			\ifnum\j=1
+				\path (X)++(180 - \alp/2 :.35)node[rotate=90-\alp/2]{$\alpha - \Delta \alpha$};
+			\fi
+			\ifnum\j=2
+				\path (X)++(180 - \alp/2 :.35)node[rotate=90-\alp/2]{$\alpha + \Delta \alpha$};
+			\fi
+		\fi
+
+		\ifnum\i=1 \ifnum\j=2
+			\draw[|<->|] (\R,0)++(-.95*\R,0)arc(180:180-\alp:\R*.95);
+			\path (\R,0)++(180-\alp/2:\R*.86)node[rotate=90-\alp/2]{$\ell \cdot \Delta \ell ~~ (<1)$};
+		\fi\fi
+		\ifnum\i=2 \ifnum\j=1
+			\draw[|<->|] (\R,0)++(-1.03*\R,0)arc(180:180-\alp:\R*1.03);
+			\path (\R,0)++(180-\alp/2:\R*1.08)node[rotate=90-\alp/2]{$\ell \cdot \Delta \ell ~~(>1)$};
+		\fi\fi		
+	}
+} 
+
+\draw[fill=gray, opacity=.3] (11)--(12)--(22)--(21)--cycle;
+
+
+\end{tikzpicture}
+\end{document}
