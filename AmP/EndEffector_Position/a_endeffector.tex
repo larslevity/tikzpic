@@ -1,0 +1,197 @@
+%% Definition der KOS
+\documentclass[tikz, convert={outfile=\jobname.png}]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fadings}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{matrix,fit, backgrounds}
+\usepackage{bm}
+
+
+
+\begin{document}
+
+\def\deltaPlane{0}	% Angle of inclined plane
+
+%\tdplotsetmaincoords{\deltaPlane}{90}   % View on walking plane
+\tdplotsetmaincoords{90}{90}		   	% nice 3d view
+
+\begin{tikzpicture}[tdplot_main_coords,
+	scale=1,
+	cs_arrow/.style={->},
+	cs_arrow_light/.style={->},
+	plane/.style={fill=lightgray!50, opacity=.7},
+	help line/.style={thin, gray},
+	angle arrow/.style={stealth-stealth},
+	gvec/.style={-stealth, thick},
+	coord_split/.style={densely dashed, darkgray, stealth-},
+	fillmounting_top/.style={fill=blue!30},
+	fillmounting_front/.style={fill=blue!35},
+	fillmounting_side/.style={fill=blue!40},
+	filldut_top/.style={fill=red!30},
+	filldut_front/.style={fill=red!35},
+	filldut_side/.style={fill=red!40},
+	shadow/.style={gray, path fading=fade out, fill},
+	radius/.style={-stealth, thick}
+]
+
+%\path[clip, tdplot_screen_coords] (-1.5,-2)rectangle(5.5,2.5);
+
+% ........................................................
+%%% Definitions
+% ........................................................
+    \tikzfading[name=fade out, inner color=transparent!10,
+         outer color=transparent!90]
+
+
+% Orientation
+\def\betI{110}	% Angle of Leg
+\pgfmathsetmacro{\betIh}{\betI*.5}
+
+% Geometry
+\def\hx{5}	% length of legs
+\def\hy{.7}  % change only with line width of stretch
+\def\gvecl{1.6}	% Length of g-vec
+\def\axscale{.8}	% Skalierung der splitted G-vecs
+
+% 3d Geometry
+\def\hz{.7}
+\def\by{.8}
+\def\mountingdz{.1}
+\def\mountingx{1}
+\def\shadow{.3}
+
+\def\planeb{8}	% Breite Laufeebene
+\def\planeh{3.8}  % Hoehe Laufebene
+
+%%% Calculations
+\def\pi{3.1416}
+\pgfmathsetmacro{\rbI}{\hx/\betI*180/\pi}
+\pgfmathsetmacro{\rbIe}{(\hx)/\betI*180/\pi+\by}
+%\def\rbIe{6.3025}
+
+\pgfmathsetmacro{\deltah}{\deltaPlane*.5}
+\pgfmathsetmacro{\hyh}{.5*\hy}
+\pgfmathsetmacro{\hxh}{\hx/2}
+
+
+%%% Draw Initial Coord Sys
+\path (0,0)coordinate(0);%node[above left]{\{0\}};
+
+%\draw[cs_arrow] (0)--++(1,0,0)node[below]{$x_0$};
+%\draw[cs_arrow] (0)--++(0,1,0)node[below]{$y_0$};
+%\draw[cs_arrow] (0)--++(0,0,1)node[above]{$z_0$};
+\path (0)++(\planeh*.5,3,0)coordinate(K);
+
+
+
+% ........................................................
+%%% Draw the Robot
+% ........................................................
+
+\def\phi{0}
+
+\tdplotsetrotatedcoords{\phi}{\deltaPlane-90}{0}
+\begin{scope}[tdplot_rotated_coords]
+
+	% MOUNTING
+	%\path
+	\path[fillmounting_top] (K)++(0,\mountingdz)coordinate(MBUR)--++(0,0,\hz+\mountingdz)coordinate(MTUR)--++(0,-\by-\mountingdz-\mountingdz)coordinate(MTLR)--++(0,0,-\hz-\mountingdz)coordinate(MBLR)--cycle;
+	\path[fillmounting_front] (MTUR)--++(-\mountingx,0)--++(0,0,-\hz-\mountingdz)coordinate(MTLL)--++(\mountingx,0)coordinate(MTUL)--cycle;
+	\path[fillmounting_top] (MTLL)--(MTUL)--(MBLR)--++(-\mountingx,0)--cycle;
+	
+
+	% ........................................................
+	%%% Draw Walking Plane
+	% ........................................................
+
+	\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
+	\begin{scope}[tdplot_rotated_coords]
+		\path[plane] (0)++(\planeh,0,0)--++(-\planeh,0)--++(0,\planeb)--++(\planeh,0)coordinate(2)--cycle;
+
+	\end{scope}	
+	
+	
+	% DUT - Top
+	\pgfmathsetmacro{\dx}{sin(\betI)*\rbIe}
+	\pgfmathsetmacro{\dy}{-\by + \rbIe*(1-cos(\betI))}
+	\path[filldut_top] (K)arc(270:270+\betI:\rbI)coordinate(FUL)--($(K)+(\dx,\dy,0)$)coordinate(FUR)arc(270+\betI:270:\rbIe)--++(0,\by);
+	
+	
+	% DUT - Side
+	%\draw (K)circle(.01)node[above]{K};
+	\path (K)++(0,0)coordinate(LL)++(0,0,\hz)coordinate(LU); % Init LastLower & LastUpper
+	\foreach \dp in {.05,.1,..., 1.01}{
+		\pgfmathsetmacro{\dbetI}{\dp*\betI}
+		\pgfmathsetmacro{\dbetIl}{(\dp-.05)*\betI}
+		\pgfmathsetmacro{\dxl}{cos(\dbetIl/2)*2*\rbI*sin(\dbetIl/2)}
+		\pgfmathsetmacro{\dyl}{sin(\dbetIl/2)*2*\rbI*sin(\dbetIl/2)}
+		\pgfmathsetmacro{\dx}{cos(\dbetI/2)*2*\rbI*sin(\dbetI/2)}
+		\pgfmathsetmacro{\dy}{sin(\dbetI/2)*2*\rbI*sin(\dbetI/2)}
+		\path[filldut_side] ($(K)+(\dxl,\dyl)$)--++(0,0,\hz)--($(K)+(\dx,\dy,\hz)$)--++(0,0,-\hz)--cycle;
+	}
+	
+	% DUT - Side 2
+	%\draw (K)circle(.01)node[above]{K};
+	\path (K)++(0,-\by)coordinate(LL)++(0,0,\hz)coordinate(LU); % Init LastLower & LastUpper
+	\foreach \dp in {.05,.1,..., 1.01}{
+		\pgfmathsetmacro{\dbetI}{\dp*\betI}
+		\pgfmathsetmacro{\dbetIl}{(\dp-.05)*\betI}
+		\pgfmathsetmacro{\dxl}{cos(\dbetIl/2)*2*\rbIe*sin(\dbetIl/2)}
+		\pgfmathsetmacro{\dyl}{sin(\dbetIl/2)*2*\rbIe*sin(\dbetIl/2)}
+		\pgfmathsetmacro{\dx}{cos(\dbetI/2)*2*\rbIe*sin(\dbetI/2)}
+		\pgfmathsetmacro{\dy}{sin(\dbetI/2)*2*\rbIe*sin(\dbetI/2)}
+		\path[filldut_side] ($(K)+(\dxl,-\by+\dyl)$)--++(0,0,\hz)--($(K)+(\dx,\dy-\by,\hz)$)--++(0,0,-\hz)--cycle;
+	}
+	
+	% DUT - Front
+	\path[filldut_front] (FUL)--++(0,0,\hz)--($(FUR)+(0,0,\hz)$)--(FUR)--cycle;
+
+	% DUT - Redraw Top
+	\path[filldut_top] (K)arc(270:270+\betI:\rbI)--($(K)+(\dx,\dy,0)$)arc(270+\betI:270:\rbIe)--++(0,\by);
+
+	
+	% Nicht dehnbare Schicht
+	\draw[solid] (K)arc(270:270+\betI:\rbI)coordinate(BETI);
+	% Define Pos of IMU Coord Sys
+	\path (K)++(0,-\by);
+	\path(BETI)++(-90+\betI:\by)coordinate(BETI);
+
+
+	% ........................................................
+	%%% Draw the RADIUS
+	% ........................................................
+	
+	\draw [help line] (K)--++(0,\rbI)coordinate(S)--++(0,.2);
+	\draw [help line] (S)++(90+\betI:.2)--++(-90+\betI:\rbI+.2);
+	\draw [angle arrow] (S)++(-90+\betI:.8)arc(-90+\betI:-90:.8);
+	\path (S)++(-90+\betIh:.5)node{$\alpha$};
+	\draw[radius] (S)--++(-90+\betI:\rbI)coordinate(E)node[pos=.6, right]{$R$};
+	\path[fill=black] (S)circle(.04)node[below]{$(0, R, 0)$};
+	\path[fill=black] (E)circle(.04)node[right]{$(0, R(1-\cos\alpha), R\sin\alpha)$};
+		
+	
+	% K (Aufhaengung)
+	\draw[cs_arrow_light] (K)--++(1,0,0)node[above left]{$z_1$};
+	\draw[cs_arrow_light] (K)--++(0,1,0)node[above]{$y_1$};
+	%\draw[cs_arrow_light] (K)--++(0,0,-1)node[above]{$x_1$};	
+	
+%	\draw[cs_arrow_light] (K)--++(1,0,0)node[above right]{$x_1$};
+%	\draw[cs_arrow_light] (K)--++(0,1,0)node[above]{$y_1$};
+%	\draw[cs_arrow_light] (K)--++(0,0,1)node[above]{$z_1$};
+	%\path (K)node[above left]{$\{1\}$};
+
+
+
+
+
+
+\end{scope}
+
+
+% ........................................................
+\end{tikzpicture}
+% ........................................................
+
+
+\end{document}
