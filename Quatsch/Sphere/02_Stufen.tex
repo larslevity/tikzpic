@@ -1,0 +1,185 @@
+%% Kugel 1. verschiedene beschreibungsarten
+
+\documentclass[tikz, convert={outfile=\jobname.png}]{standalone}
+\input{../../tikzpic_packages.tex}
+\usepackage{tikz-3dplot}
+
+
+\def\stufen{2}
+
+\begin{document}
+\tdplotsetmaincoords{10}{20}
+
+\begin{tikzpicture}[tdplot_main_coords]
+\pgfmathtruncatemacro{\r}{\stufen}
+
+
+%% Höhe und Winkel um z-Achse als Variablen
+
+\coordinate (B) at (0,0,0);
+%\draw[->] (B)--++(1,0,0)node[right]{$x$};
+%\draw[->] (B)--++(0,1,0)node[above]{$y$};
+%\draw[->] (B)--++(0,0,1)node[below]{$z$};
+%
+
+%% Stufe 0 -- oberster Punkt der Kugel
+\path (B)++(0,0,\r) coordinate (Htop);
+
+
+
+%%Aktuelle Stufe = 1
+\def\stufe{1}
+
+\pgfmathtruncatemacro{\winkelschritte}{360/(2*(2^\stufe))}
+\pgfmathtruncatemacro{\nPunkte}{2*(2^\stufe)}
+\pgfmathtruncatemacro{\hact}{\r-\stufe}
+\newcounter{counter}
+\setcounter{counter}{0}
+
+\foreach \h in {\hact}{
+	\foreach \phivar in {0,\winkelschritte,...,360}{
+		\pgfmathsetmacro{\xcoordB}{sqrt(\r^2-(\h)^2)*cos(\phivar)}
+		\pgfmathsetmacro{\ycoordB}{sqrt(\r^2-(\h)^2)*sin(\phivar)}		
+		\pgfmathsetmacro{\zcoordB}{\h}	
+		\pgfmathtruncatemacro{\n}{\the\value{counter}}
+		\path (\xcoordB,\ycoordB,\zcoordB)coordinate(H_\stufe_phi_\n);%node[]{$H_\stufe\phi_\n$};
+		\addtocounter{counter}{1}
+		
+	}	
+	\pgfmathtruncatemacro{\ende}{\nPunkte-1}
+	\foreach \i in {0,1,...,\ende}{
+	\pgfmathtruncatemacro{\next}{\i+1}
+	\draw[fill=blue!60,opacity=.1] (H_\stufe_phi_\i)--(H_\stufe_phi_\next)--(Htop)--cycle;		
+	}	
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Foreach schleife ab stufe 2 bis endstufe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\foreach \stufe in {2,3,...,\stufen}{
+%% Setze Punkte
+\pgfmathsetmacro{\winkelschritte}{360/(2*(2^\stufe))}
+\pgfmathtruncatemacro{\nPunkte}{2*(2^\stufe)}
+\pgfmathtruncatemacro{\h}{\r-\stufe}
+
+\setcounter{counter}{0}
+
+	\foreach \phivar in {0,\winkelschritte,...,360}{
+		\pgfmathsetmacro{\xcoordB}{sqrt(\r^2-(\h)^2)*cos(\phivar)}
+		\pgfmathsetmacro{\ycoordB}{sqrt(\r^2-(\h)^2)*sin(\phivar)}		
+		\pgfmathsetmacro{\zcoordB}{\h}	
+		\pgfmathtruncatemacro{\n}{\the\value{counter}}
+		\path (\xcoordB,\ycoordB,\zcoordB)coordinate(H_\stufe_phi_\n);%node[]{$H_\stufe\phi_{\n}$};
+		\addtocounter{counter}{1}
+	}	
+	
+	%% Zeichne Dreiecke A
+	\pgfmathtruncatemacro{\ende}{\nPunkte-1}
+	\foreach \i in {0,1,...,\ende}{
+		\pgfmathtruncatemacro{\next}{\i+1}
+		\pgfmathtruncatemacro{\vorherigeStufe}{\stufe-1}
+		\pgfmathsetmacro{\XX}{mod(\next,2)}
+		\ifthenelse{0=\XX}{\pgfmathtruncatemacro{\n}{\next*.5}}{\pgfmathtruncatemacro{\n}{\i*.5}}
+		\draw[fill=blue!60,opacity=.1] (H_\stufe_phi_\i)--(H_\stufe_phi_\next)--(H_\vorherigeStufe_phi_\n)--cycle;		
+	}
+}
+
+
+
+
+
+%------------------------------------------------------
+%---- 		Kugel Unten
+%------------------------------------------------------
+
+
+
+
+
+%% Stufe 0 -- unterster Punkt der Kugel
+\path (B)++(0,0,-\r) coordinate (Htop);
+
+
+
+%%Aktuelle Stufe = 1
+\def\stufe{1}
+
+\pgfmathtruncatemacro{\winkelschritte}{360/(2*(2^\stufe))}
+\pgfmathtruncatemacro{\nPunkte}{2*(2^\stufe)}
+\pgfmathtruncatemacro{\hact}{-\r+\stufe}
+%\newcounter{counter}
+\setcounter{counter}{0}
+
+\foreach \h in {\hact}{
+	\foreach \phivar in {0,\winkelschritte,...,360}{
+		\pgfmathsetmacro{\xcoordB}{sqrt(\r^2-(\h)^2)*cos(\phivar)}
+		\pgfmathsetmacro{\ycoordB}{sqrt(\r^2-(\h)^2)*sin(\phivar)}		
+		\pgfmathsetmacro{\zcoordB}{\h}	
+		\pgfmathtruncatemacro{\n}{\the\value{counter}}
+		\path (\xcoordB,\ycoordB,\zcoordB)coordinate(H_\stufe_phi_\n);%node[]{$H_\stufe\phi_\n$};
+		\addtocounter{counter}{1}
+		
+	}	
+	\pgfmathtruncatemacro{\ende}{\nPunkte-1}
+	\foreach \i in {0,1,...,\ende}{
+	\pgfmathtruncatemacro{\next}{\i+1}
+	\draw[fill=blue!60,opacity=.1] (H_\stufe_phi_\i)--(H_\stufe_phi_\next)--(Htop)--cycle;		
+	}	
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Foreach schleife ab stufe 2 bis endstufe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\foreach \stufe in {2,3,...,\stufen}{
+%% Setze Punkte
+\pgfmathsetmacro{\winkelschritte}{360/(2*(2^\stufe))}
+\pgfmathtruncatemacro{\nPunkte}{2*(2^\stufe)}
+\pgfmathtruncatemacro{\h}{-\r+\stufe}
+
+\setcounter{counter}{0}
+
+	\foreach \phivar in {0,\winkelschritte,...,360}{
+		\pgfmathsetmacro{\xcoordB}{sqrt(\r^2-(\h)^2)*cos(\phivar)}
+		\pgfmathsetmacro{\ycoordB}{sqrt(\r^2-(\h)^2)*sin(\phivar)}		
+		\pgfmathsetmacro{\zcoordB}{\h}	
+		\pgfmathtruncatemacro{\n}{\the\value{counter}}
+		\path (\xcoordB,\ycoordB,\zcoordB)coordinate(H_\stufe_phi_\n);%node[]{$H_\stufe\phi_{\n}$};
+		\addtocounter{counter}{1}
+	}	
+	
+	%% Zeichne Dreiecke A
+	\pgfmathtruncatemacro{\ende}{\nPunkte-1}
+	\foreach \i in {0,1,...,\ende}{
+		\pgfmathtruncatemacro{\next}{\i+1}
+		\pgfmathtruncatemacro{\vorherigeStufe}{\stufe-1}
+		\pgfmathsetmacro{\XX}{mod(\next,2)}
+		\ifthenelse{0=\XX}{\pgfmathtruncatemacro{\n}{\next*.5}}{\pgfmathtruncatemacro{\n}{\i*.5}}
+		\draw[fill=blue!60,opacity=.1] (H_\stufe_phi_\i)--(H_\stufe_phi_\next)--(H_\vorherigeStufe_phi_\n)--cycle;		
+	}
+}
+
+
+
+
+%%-------------------------------------------
+%% Gerüst:
+%%-------------------------------------------
+
+\draw[blue!20] (0,0)circle(\r);
+\foreach \angle in {0,45,...,180}{
+	\tdplotsetrotatedcoords{\angle}{90}{90}
+	\draw[tdplot_rotated_coords,color=blue!20] (-\r,0)arc(180:0:\r);
+	\draw[tdplot_rotated_coords,color=blue!20] (-\r,0)arc(0:180:-\r);
+	}
+
+
+
+
+\end{tikzpicture}
+\end{document}

@@ -5,8 +5,8 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Origami/origami.png)
 
 ## [Playing with a Sphere](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/)
-![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/Versuch_Dreieck_2.png)
-
+|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/02_Stufen.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/05_Stufen.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/10_Stufen.png)|
+|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
 
 ## [Xagons - rotated and shifted](https://github.com/larslevity/tikzpic/blob/master/Quatsch/xagons/)
 ![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/xagons/xagons.png)
