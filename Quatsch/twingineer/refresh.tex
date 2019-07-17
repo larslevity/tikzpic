@@ -1,0 +1,14 @@
+\documentclass[]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\begin{tikzpicture}[blue!30,line width = .7mm]
+
+\draw[->] (0,0)++(30:.5)arc(30:180:.5);
+\draw[->] (0,0)++(210:.5)arc(210:360:.5);
+
+\path(-.68,0)--(.68,0);
+
+\end{tikzpicture}
+\end{document}

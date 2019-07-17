@@ -35,6 +35,9 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Block Diagram of a PID Controller](https://github.com/larslevity/tikzpic/blob/master/MA/Circuit_PID/)
 ![Example 8](https://github.com/larslevity/tikzpic/blob/master/MA/Circuit_PID/pid_anti_windup.png)
 
+## [What is a Digital Twin?](https://github.com/larslevity/tikzpic/blob/master/Quatsch/twingineer/)
+|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/twingineer/sketch2.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/twingineer/sketch3.png)|
+|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 ## [Rotated Pyramide](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Fraesteil/)
 ![Example 9](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Fraesteil/viereck.png)
 

@@ -1,0 +1,127 @@
+\documentclass[]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{graphicx}
+
+
+\def\digicol{blue!30}
+\def\physcol{black!80}
+
+
+\begin{document}
+\begin{tikzpicture}[
+%	scale = .33,
+	rec/.style = {inner sep = 6pt,
+				minimum width=.5cm,
+				minimum height=.5cm,
+				draw, rectangle, fill=white,
+				align = center
+				},
+	circ/.style = {inner sep = 1pt,
+				minimum width=.2cm,
+				minimum height=.2cm,
+				draw, circle, align=center,
+				fill=white},
+	digi/.style = {\digicol,
+				line width = .5mm},
+	phys/.style = {\physcol,
+				rounded corners = 2mm,
+				line width = .5mm},
+	border/.style = {line width = 1mm,
+				triangle 60-triangle 60, gray}
+]
+
+
+
+\path (0,0) node[digi, circ, scale=3](DT){Digital \\ Twin};
+
+
+%% GUI
+\draw[digi] (DT.215)--++(225:2)--++(180:3)node[digi, circ, scale=1.5](GUI){
+	User \\ Interface \\
+	\includegraphics[scale=1]{user_control.pdf}
+};
+
+\draw[digi] (GUI.270)--++(225:3)--++(180:1)node[digi, circ](GUI3){
+	Tuning
+};
+\draw[digi] (GUI.180)--++(180:1)--++(135:1)--++(180:2)node[digi, circ](GUI4){
+	Monitoring
+};
+
+
+
+%% Design Pattern
+\draw[digi] (DT.180)--++(180:1)--++(135:.4)--++(180:5)node[digi, circ, scale=1.5](DesignPattern){
+	Design \\ Pattern
+};
+
+
+%% Model
+\draw[digi] (DT.135)--++(180:2)--++(135:2)--++(180:2)node[digi, circ, scale=1.5](Model){\hspace{.1mm}
+	Model \\
+	\includegraphics[scale=1]{mass_spring_damper.pdf}
+};
+
+\draw[digi] (Model.90)--++(135:1)--++(180:2)node[digi, circ](Model3){
+	(Real-time) \\ System \\ Identification
+};
+
+
+%% user Manual
+\draw[digi] (DT.270)--++(270:1)--++(215:.5)--++(270:2)node[digi, circ, scale=1.5](Container){
+	Container
+};
+\draw[digi] (Container.180)--++(225:2)--++(180:2)node[digi, circ](Container2){
+	User \\ Manual
+};
+
+
+
+
+
+%%%%%% Physical Twin
+
+\path (10,0) node[phys, rec, scale=3](PT){Physical \\ Twin};
+
+%% Mechanics
+\draw[phys] (PT)|-++(45:5)node[phys,rec](Mechanics){
+	\includegraphics[scale=2]{mechanics.pdf}
+};
+\draw[phys] (Mechanics)|-++(3,2)node[phys, rec](Mechanics2){
+	Mechanics
+};
+
+
+%% Perception
+\draw[phys] (PT)--++(0:5)node[phys,rec](Perception){
+	\includegraphics[scale=1]{perception.pdf}
+};
+\draw[phys] (Perception)|-++(3,2)node[phys, rec](Perception2){
+	Perception
+};
+\draw[phys] (Perception)--++(3,0)node[phys, rec](Perception3){
+	Sensors
+};
+
+
+%% Enviroment
+\draw[phys] (PT)|-++(-45:5)node[phys,rec, scale=1.5](Enviroment){
+	Enviroment
+};
+
+
+
+%%%%%%%% Interface
+
+\draw[dashed, gray] (5,3)coordinate(border)--++(0,-6); 
+
+\draw[border] (border)++(-1,.5)--++(2,0) node[midway, above=.5cm, scale=2]{Cloud Service};
+
+
+
+
+\end{tikzpicture}
+
+\end{document}

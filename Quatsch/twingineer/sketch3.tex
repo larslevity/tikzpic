@@ -1,0 +1,89 @@
+\documentclass[tikz,convert={outfile=\jobname.png}]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows, calc}
+\usepackage{graphicx}
+
+
+\def\digicol{blue!30}
+\def\physcol{black!80}
+
+
+\begin{document}
+\begin{tikzpicture}[
+%	scale = .33,
+	rec/.style = {inner sep = 6pt,
+				minimum width=3cm,
+				minimum height=2cm,
+				draw, rectangle, fill=white,
+				align = center
+				},
+	circ/.style = {inner sep = 2pt,
+				minimum width=2cm,
+				minimum height=.2cm,
+				draw, circle, align=center,
+				fill=white},
+	digi/.style = {\digicol,
+				line width = .5mm},
+	phys/.style = {\physcol,
+				rounded corners = 2mm,
+				line width = .5mm},
+	border/.style = {line width = 1mm,
+				triangle 60-triangle 60, gray},
+	input/.style = {line width = 1.5mm}
+]
+
+
+
+
+%%%%%% Digital Twin
+
+\path (0,0) node[digi, circ, scale=3](DT){Digital \\ Twin};
+
+
+
+
+
+
+
+%%%%%% Physical Twin
+
+\path (10,0) node[phys, rec, scale=3](PT){Physical \\ Twin};
+
+
+
+
+%%%%%%%%% Input
+
+\draw[digi, fill, rounded corners=2mm] (14.2, 2.8)coordinate(x)rectangle (13.1,-.4);
+
+\draw[<-, phys] (PT.0)++(.1,0)--++(4,0)node[midway, above, scale=1.5, align = center]{observable \\ enviroment};
+
+\draw[<-, phys] (PT.25)++(.1,0)--++(4,0)node[midway, above, scale=1.5, align = center]{user \\ input};
+
+\draw[<-, phys] (PT.-25)++(.1,0)--++(4,0)node[midway, above, scale=1.5, align = center]{unobservable \\ enviroment};
+
+
+%%%%%%%%% Interface
+%
+
+%
+%\draw[border] (border)++(-1,.5)--++(2,0) node[midway, above=.5cm, scale=2]{Cloud Service};
+%
+
+%%%% Cloud
+
+\path (5,5) node[](cloud){\includegraphics[width=3cm]{cloud.pdf}};
+
+\draw[digi, ->, rounded corners=7mm] (x)++(-.3,.1)|-(cloud.10)node[pos=.75, above]{user input};
+\draw[digi, ->, rounded corners=2mm] (x)++(-.8,.1)|-(cloud.-10)
+node[pos=.75, below]{observable enviroment};
+
+\draw[digi, ->, rounded corners=2mm] (cloud.190)-|(DT.84);
+\draw[digi, ->, rounded corners=7mm] (cloud.170)-|(DT.96);
+
+
+
+\end{tikzpicture}
+
+\end{document}

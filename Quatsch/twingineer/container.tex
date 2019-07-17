@@ -1,0 +1,18 @@
+\documentclass[]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\begin{tikzpicture}[blue!30, very thick]
+
+%\draw[rounded corners=3pt, thick] (0,0)rectangle(1,1);
+
+\draw (0,0)--++(.5,0)coordinate(UL)--++(0,.5)coordinate(OL)--++(-.5,0)coordinate(OR)--cycle;
+\draw (UL)--++(.5,.4)--++(0,.5)coordinate(H)--++(-.5,0)--(OR);
+
+\draw (H)--(OL) ;
+
+\path (0,1);
+
+\end{tikzpicture}
+\end{document}

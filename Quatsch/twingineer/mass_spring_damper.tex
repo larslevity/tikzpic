@@ -1,0 +1,17 @@
+\documentclass[]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\begin{tikzpicture}[blue!30, very thick]
+
+%\draw[rounded corners=3pt, thick] (0,0)rectangle(1,1);
+
+	\draw (.3,0)--++(0,.1)--++(-.1,.05)--++(.2,.1)--++(-.2,.1)--++(.2,.1)--++(-.1,.05)--++(0,0.1);
+
+	\draw (.7,0)--++(0,.3) ++(-.08,0)--++(.16,0) ++ (-.08,.3)--++(0,-.1)++(-.1,-.3)--++(0,.3)--++(.2,0)--++(0,-.3);
+	\draw[rounded corners=.5mm] (.1,.6)rectangle(.9,1);
+\path (0,1.1);
+
+\end{tikzpicture}
+\end{document}

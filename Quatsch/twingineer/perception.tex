@@ -1,0 +1,25 @@
+
+\documentclass[]{standalone}
+\usepackage{tikz}
+
+
+\begin{document}
+
+\def\eyepath{(-3,0) .. controls (-2,2) and (2,2) .. (3,0) .. controls (2,-2) and (-2,-2) .. (-3,0)--cycle;}
+
+
+\begin{tikzpicture}[scale=0.25, black!80]
+
+\draw[-latex, very thick, rounded corners=1mm] (-2, 3.6) -| ++(2,-2);
+\draw[-latex, very thick, rounded corners=1mm] (2, -3.8) -| ++(-2,2);
+
+\clip\eyepath;
+\filldraw[color=black!80] (-.1,.2) circle (1.5);
+\fill[color=black!90] (-.1,.2) circle (0.7);
+%\fill[color=black!85] (.3,.5) circle (0.2);
+\draw[very thick, black!80]\eyepath;
+\end{tikzpicture}
+
+
+
+\end{document}

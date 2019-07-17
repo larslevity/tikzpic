@@ -1,0 +1,18 @@
+\documentclass[]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\begin{tikzpicture}[black!80, very thick]
+
+\fill[gray] (0,.3)++(110:.3)++(0,.2)--++(0,-.2)arc(110:430:.3)--++(0,.2);
+
+\draw (0,.3)++(110:.3)++(0,.5)--++(0,-.5)arc(110:430:.3)--++(0,.5)coordinate(x);
+\foreach \y in {.1,.2,.3,.4}{
+	\draw (x)++(0,-\y)--++(-.1,0);
+	}
+
+\path (0,1.15);
+
+\end{tikzpicture}
+\end{document}

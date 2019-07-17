@@ -1,0 +1,32 @@
+\documentclass[]{standalone}
+\usepackage{tikz}
+\newcommand{\asymcloud}[2][.1]{%
+\begin{scope}[#2]
+\pgftransformscale{#1}%    
+\pgfpathmoveto{\pgfpoint{261 pt}{115 pt}} 
+  \pgfpathcurveto{\pgfqpoint{70 pt}{107 pt}}
+                 {\pgfqpoint{137 pt}{291 pt}}
+                 {\pgfqpoint{260 pt}{273 pt}} 
+  \pgfpathcurveto{\pgfqpoint{78 pt}{382 pt}}
+                 {\pgfqpoint{381 pt}{445 pt}}
+                 {\pgfqpoint{412 pt}{410 pt}}
+  \pgfpathcurveto{\pgfqpoint{577 pt}{587 pt}}
+                 {\pgfqpoint{698 pt}{488 pt}}
+                 {\pgfqpoint{685 pt}{366 pt}}
+  \pgfpathcurveto{\pgfqpoint{840 pt}{192 pt}}
+                 {\pgfqpoint{610 pt}{157 pt}}
+                 {\pgfqpoint{610 pt}{157 pt}}
+  \pgfpathcurveto{\pgfqpoint{531 pt}{39 pt}}
+                 {\pgfqpoint{298 pt}{51 pt}}
+                 {\pgfqpoint{261 pt}{115 pt}}
+\pgfusepath{fill,stroke}         
+\end{scope}}    
+\begin{document}
+ \begin{tikzpicture}
+
+ \node[blue!30] (cloud) at (0,0) {\tikz \asymcloud{fill=blue!20,thick};};
+
+
+\end{tikzpicture}
+
+\end{document}  

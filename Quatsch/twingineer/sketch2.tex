@@ -1,0 +1,167 @@
+\documentclass[tikz,convert={outfile=\jobname.png}]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows, calc}
+\usepackage{graphicx}
+
+
+\def\digicol{blue!30}
+\def\physcol{black!80}
+
+
+\begin{document}
+\begin{tikzpicture}[
+%	scale = .33,
+	rec/.style = {inner sep = 6pt,
+				minimum width=2.1cm,
+				minimum height=.5cm,
+				draw, rectangle, fill=white,
+				align = center
+				},
+	circ/.style = {inner sep = 2pt,
+				minimum width=2cm,
+				minimum height=.2cm,
+				draw, circle, align=center,
+				fill=white},
+	digi/.style = {\digicol,
+				line width = .5mm},
+	phys/.style = {\physcol,
+				rounded corners = 2mm,
+				line width = .5mm},
+	border/.style = {line width = 1mm,
+				triangle 60-triangle 60, gray},
+	input/.style = {line width = 1.5mm}
+]
+
+
+
+
+\draw[digi, fill, rounded corners=2mm] (17.8, 7.8)rectangle (14.1,.4);
+
+
+
+
+\path (0,0) node[digi, circ, scale=3](DT){Digital \\ Twin};
+
+
+%% GUI
+\draw[digi] (DT) ++ (-6,6)node[digi, circ, scale=1.5](GUI){
+	User \\ Interface \\
+	\includegraphics[width=1cm]{user_control.pdf}
+};
+
+\draw[digi] (DT.90)--++(0,1)--($(GUI.0)+(1,0)$)--(GUI.0);
+
+%\draw[digi] (GUI.190)--++(225:2)--++(180:1)node[digi, circ](GUI3){
+%	Remote \\ Control
+%};
+%\draw[digi] (GUI.180)--++(180:1)--++(135:1)--++(180:2)node[digi, circ](GUI4){
+%	Monitoring
+%};
+
+
+%% Container
+\draw[digi] (DT)++(-6,2)node[digi, circ, scale=1.5](Container){
+	Container \\
+	\includegraphics[width=1cm]{container.pdf}
+};
+\draw[digi] (DT.150)--++(-.4,0)--($(Container.0)+(.4,0)$)--(Container.0);
+
+%\draw[digi] (Container.190)--++(225:.8)--++(180:2)node[digi, circ](Container2){
+%	User \\ Manual
+%};
+%\draw[digi] (Container.170)--++(135:.8)--++(180:3)node[digi, circ](Container2){
+%	Sensor \\ History
+%};
+
+
+
+%% Model
+\draw[digi] (DT)++(-6,-2)node[digi, circ, scale=1.5](Model){\hspace{.1mm}
+	Model \\
+	\includegraphics[width=1cm]{mass_spring_damper.pdf}
+};
+
+\draw[digi] (DT.210)--++(-.4,0)--($(Model.0)+(.4,0)$)--(Model.0);
+
+%\draw[digi] (Model.180)--++(135:1)--++(180:2)node[digi, circ](Model3){
+%	(Real-time) \\ System \\ Identification
+%};
+
+
+
+
+
+%% Model Update
+\draw[digi] (DT)++(-6, -6)node[digi, circ, scale=1.5](Update){
+	Model \\ Update \\
+	\includegraphics[width=.8cm]{refresh.pdf}
+};
+\draw[digi] (DT.-90)--++(0,-1)--($(Update.0)+(1,0)$)--(Update.0);
+
+
+
+
+
+
+
+%%%%%% Physical Twin
+
+\path (10,0) node[phys, rec, scale=3](PT){Physical \\ Twin};
+
+%% UI
+\draw[phys] (PT)|-++(6,6)node[phys,rec, scale=1.5](UI){
+	User \\ Interface \\
+	\includegraphics[width=1cm]{UI.pdf}
+};
+
+
+%% Perception
+\draw[phys] (PT)--++(6,2)node[phys,rec, scale=1.5](Perception){
+	Perception \\
+	\includegraphics[width=.8cm]{eye.pdf}
+};
+%\draw[phys] (Perception)--++(3,0)node[phys, rec](Perception3){
+%	Sensors
+%};
+
+
+%% Mechanics
+\draw[phys] (PT)--++(6,-2)node[phys,rec, scale=1.5](Mechanics){
+	Mechanics \\
+	\includegraphics[width=1cm]{mechanics.pdf}
+};
+
+\draw[phys, ->] (Mechanics) --(Perception);
+
+%% Enviroment
+\draw[phys] (PT)|-++(6,-6)node[phys,rec, scale=1.5](Enviroment){
+	Enviroment \\
+	\includegraphics[width=.7cm]{aging.pdf}
+};
+
+
+
+%%%%%%%%% Input
+
+\draw[<-, phys] (Perception.0)++(.1,0)--++(4,0)node[midway, above, scale=1.5, align = center]{observable \\ enviroment};
+
+\draw[<-, phys] (UI.0)++(.1,0)--++(4,0)node[midway, above, scale=1.5, align = center]{user \\ input};
+
+\draw[<-, phys] (Enviroment.0)++(.1,0)--++(4,0)node[midway, above, scale=1.5, align = center]{unobservable \\ enviroment};
+
+\draw[dashed, gray] (6,8)rectangle(18,-8); 
+
+
+%%%%%%%%% Interface
+%
+
+%
+%\draw[border] (border)++(-1,.5)--++(2,0) node[midway, above=.5cm, scale=2]{Cloud Service};
+%
+
+
+
+\end{tikzpicture}
+
+\end{document}
