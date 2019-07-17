@@ -25,6 +25,12 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Principle Sketch of a GUI for analyzing correlations between different values](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/analyzer.png)
 
+## [Pgf Semi Log Axis](https://github.com/larslevity/tikzpic/blob/master/AmP/Hoerkurve/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/AmP/Hoerkurve/Hoerkurven.png)
+
+## [Testbench for Screws](https://github.com/larslevity/tikzpic/blob/master/AmP/Schraubenpruefstand/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/AmP/Schraubenpruefstand/Schraubenpruefstand.png)
+
 ## [Template for building a Longboard](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LongboardBau/)
 ![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LongboardBau/schablone2.png)
 
