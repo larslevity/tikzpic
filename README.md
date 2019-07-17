@@ -25,15 +25,12 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Principle Sketch of a GUI for analyzing correlations between different values](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/analyzer.png)
 
+## [Visualization of a Path Planning Algorithm](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Pathplanner/)
+![Example 5](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Pathplanner/dec_28.png)
 
 ## [Principle Sketch of Fast Fourier Transformation](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/)
 |![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/fft.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/fft2.png)|
 |---------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-
-
-## [Design Chart, or template for any other fancy block diagram](https://github.com/larslevity/tikzpic/blob/master/AmP/Design_Methodology_detailed_farbe/)
-![Example 7](https://github.com/larslevity/tikzpic/blob/master/AmP/Design_Methodology_detailed_farbe/Design_Methodology.png)
-
 
 ## [Block Diagram of a PID Controller](https://github.com/larslevity/tikzpic/blob/master/MA/Circuit_PID/)
 ![Example 8](https://github.com/larslevity/tikzpic/blob/master/MA/Circuit_PID/pid_anti_windup.png)
@@ -44,4 +41,5 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Story of a Ballon](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LuftBallon/)
 ![Example 10](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LuftBallon/ballon.png)
 
-
+## [Design Chart, or template for any other fancy block diagram](https://github.com/larslevity/tikzpic/blob/master/AmP/Design_Methodology_detailed_farbe/)
+![Example 7](https://github.com/larslevity/tikzpic/blob/master/AmP/Design_Methodology_detailed_farbe/Design_Methodology.png)
