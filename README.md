@@ -4,6 +4,10 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Origami Towers](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Origami/)
 ![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Origami/origami.png)
 
+
+## [Structure helps to reach your goals](https://github.com/larslevity/tikzpic/blob/master/Quatsch/DrDone/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/DrDone/drdone2.png)
+
 ## [Playing with a Sphere](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/)
 |![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/02_Stufen.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/05_Stufen.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Sphere/10_Stufen.png)|
 |------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
@@ -22,7 +26,7 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/analyzer.png)
 
 
-## [Principle Sketch of Fast Fourier Transformation](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/)
+## [Principle Sketch of Fast Fourier Transformation](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/)
 |![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/fft.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/fft2.png)|
 |---------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
 

@@ -1,0 +1,166 @@
+\documentclass[tikz, convert={outfile=\jobname.png}]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{fadings}
+\usetikzlibrary{arrows, decorations.markings}
+\usepackage{graphicx}
+\usetikzlibrary{backgrounds}
+
+\def\colnode{yellow!10}
+\def\colstart{olive!50}
+\def\colDR{blue!40}
+
+
+
+\def\coliik{red!50}
+\def\colia{orange!50}
+\def\colah{blue!60}
+\def\colhh{purple!60}
+\def\colhc{red!70}
+\def\colab{purple!70}
+\def\colbc{orange!70}
+\def\colcd{green!70}
+\def\coldi{blue!80}
+\def\colii{green!80}
+\def\colde{purple!80}
+\def\colce{orange!80}
+\def\colbf{red!80}
+\def\colfe{blue!40}
+\def\colfj{green!80}
+\def\coljg{purple!40}
+\def\colgg{red!40}
+\def\coljDR{orange!40}
+\def\colkk{green!50}
+
+\def\background{olive!20}
+
+\begin{document}
+\begin{tikzpicture}[
+	cross/.style={fill, minimum width=1cm, circle},
+	start/.style={fill, minimum width=2.4cm, circle},
+	DONE/.style={fill, minimum width=1cm, rectangle, scale=3, rounded corners=4.5mm},
+	filledLine/.style 2 args={
+		line width = 1mm, \background, double distance=2mm, rounded corners=4.5mm,
+   		preaction = {draw},
+   		postaction = {draw,line width=2mm, #1}},
+   	background rectangle/.style={fill=\background},
+   	show background rectangle
+]
+
+\path (0, 0)	node[start, fill=\colstart](start){\includegraphics[width=1.5cm]{student2.png}};
+\path (-1.5,0) 	node[cross, fill=\colnode](1){1};
+\path (0,-1.5) 	node[cross, fill=\colnode](2){2};
+
+\path (12, 0)	node[DONE, fill=\colDR](DR){GOAL};
+
+
+\path (-2, -4)	node[cross, fill=\colnode](a){a};
+\path (0, -5)	node[cross, fill=\colnode](b){b};
+\path (3, -4)	node[cross, fill=\colnode](c){c};
+\path (5, 1)	node[cross, fill=\colnode](d){d};
+\path (4, 3)	node[cross, fill=\colnode](e){e};
+\path (-1, 3)	node[cross, fill=\colnode](f){f};
+\path (-5, 2)	node[cross, fill=\colnode](g){g};blue
+\path (-6, -1)	node[cross, fill=\colnode](h){h};
+\path (-6, -6)	node[cross, fill=\colnode](i){i};
+\path (7, -6)	node[cross, fill=\colnode](j){j};
+\path (8, 3)	node[cross, fill=\colnode](k){k};
+
+
+%1
+\draw[filledLine={\colia}] (1) -|++(-1.5,-1)-| (a);
+%2
+\draw[filledLine={\colah}] (a)--++(-1, 0) |- (h);
+\draw[filledLine={\colhh}] (h)--++(0, 1.3)-|++(3.5,-3.3)--++(-5,0) |- (h);
+%3
+\draw[filledLine={\colab}] (a) -| (b);
+\draw[filledLine={\colhc}] (h)|-++(5, -1)|-++(2,-1.5) |-++(1,1) |- (c);
+%4
+\draw[filledLine={\colbc}] (b) -| (c);
+\draw[filledLine={\colcd}] (c)--++(0,1.5) -| (d);
+\draw[filledLine={\coldi}] (d)--++(-1, 0) |- (i);
+\draw[filledLine={\colii}] (i)--++(0, -1) -|++(1.5, 4.5)--++(-2.5,0)|- (i);
+%5
+\draw[filledLine={\colbf}] (b)-|++(-3.5, 6.5) -| (f);
+\draw[filledLine={\colce}] (c)-|++(1.5, 3) -|++(-1.5, 2) -| (e);
+\draw[filledLine={\colde}] (d) |- (e);
+%6
+\draw[filledLine={\colfe}] (f) -- (e);
+%7
+\draw[filledLine={\colfj}] (f)-|++(-1,-1) -|++(4,-3.75) -| (j);
+%8
+\draw[filledLine={\coljg}] (j)-|++(-1,1.5)-|++(-1,-2) -|++(-10.1,5) -|++(1,2) -| (g);
+\draw[filledLine={\colgg}] (g)-|++(-2,1) -|++(4.5,-2)--++(-1.5,0) |- (g);
+%9
+\draw[filledLine={\coljDR}] (j)|-++(1,-1) |-++(-5,8.8)|-++(-1,1.8) --++(0,1) -| (DR);
+
+%%
+\draw[filledLine={\coliik}] (2)|-++(6,-1.5)|- (k);
+\draw[filledLine={\colkk}] (k)|-++(1,-1) |-++(-6.5,-2)--++(0,4)  -| (k);
+
+
+%% Simplify
+
+\path (DR)++(3, -8) node[above](GRAPH){
+	\begin{tikzpicture}[scale=1.5]
+		\path (0,0)node[circle, fill=\colstart](start){\includegraphics[width=.7cm]{student2.png}};
+		\path (1,0)node[cross, fill=\colnode](1){1};
+		\path (2,0)node[cross, fill=\colnode](a){a};
+		\path (3,0)node[cross, fill=\colnode](b){b};
+		\path (4,0)node[cross, fill=\colnode](f){f};
+		\path (5,0)node[cross, fill=\colnode](j){j};
+		%\path (7,0)node[minimum height=1cm, fill=\colDR, rounded corners=1mm](DR){DR. DONE};
+		\path (2,-1)node[cross, fill=\colnode](h){h};
+		\path (3,-1)node[cross, fill=\colnode](c){c};
+		\path (4,-1)node[cross, fill=\colnode](e){e};
+		\path (5,-1)node[cross, fill=\colnode](g){g};
+		\path (3,-2)node[cross, fill=\colnode](d){d};
+		\path (3,-3)node[cross, fill=\colnode](i){i};
+		\path (-1,0)node[cross, fill=\colnode](2){2};
+		\path (-1,-1)node[cross, fill=\colnode](k){k};
+		
+		%1
+		\draw[filledLine={\colia}] (1) -- (a);
+		%2
+		\draw[filledLine={\colah}] (a)-- (h);
+		\draw[filledLine={\colhh}] (h.west)-|++(-.35,-.7)-|(h);
+		%3
+		\draw[filledLine={\colab}] (a) -- (b);
+		\draw[filledLine={\colhc}] (h)-- (c);
+		%4
+		\draw[filledLine={\colbc}] (b) -- (c);
+		\draw[filledLine={\colcd}] (c)--(d);
+		\draw[filledLine={\coldi}] (d)--(i);
+		\draw[filledLine={\colii}] (i.west)-|++(-.35,-.7)-|(i);
+		%5
+		\draw[filledLine={\colbf}] (b)-- (f);
+		\draw[filledLine={\colce}] (c)-- (e);
+		\draw[filledLine={\colde}] (d) -- (e);
+		%6
+		\draw[filledLine={\colfe}] (f) -- (e);
+		%7
+		\draw[filledLine={\colfj}] (f)-- (j);
+		%8
+		\draw[filledLine={\coljg}] (j)-- (g);
+		\draw[filledLine={\colgg}] (g.west)-|++(-.35,-.7)-|(g);
+		%9
+		%\draw[filledLine={\coljDR}] (j)-- (DR);
+		
+		%%
+		\draw[filledLine={\coliik}] (2)-- (k);
+		\draw[filledLine={\colkk}] (k.west)-|++(-.35,-.7)-|(k);
+	\end{tikzpicture}
+};
+
+
+\draw[filledLine={\coljDR}] (DR.east)-|++(5.95, -1.6);
+
+%\path (-7, 8)node[right, align=left, scale=1.5]{
+%	\textit{Der \"ubersichtliche Weg} \\
+%	\textit{zur Promotion} \\
+%	\textit{in den Ingenieurswissenschaften}};
+	
+%\path (2.5, 4.6)node[right, align=left, scale=1.2]{\textit{Nicolaj Baramsky \& Arthur Seibel}};
+
+\end{tikzpicture}
+\end{document}
