@@ -22,6 +22,11 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/analyzer.png)
 
 
+## [Principle Sketch of Fast Fourier Transformation](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/)
+|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/fft.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FFT/fft2.png)|
+|---------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+
+
 ## [Design Chart, or template for any other fancy block diagram](https://github.com/larslevity/tikzpic/blob/master/AmP/Design_Methodology_detailed_farbe/)
 ![Example 7](https://github.com/larslevity/tikzpic/blob/master/AmP/Design_Methodology_detailed_farbe/Design_Methodology.png)
 
