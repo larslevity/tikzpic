@@ -12,8 +12,8 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/xagons/xagons.png)
 
 ## [A Experimental Setup](https://github.com/larslevity/tikzpic/blob/master/AmP/Versuchsaufbau_principle/)
-![Example 4a](https://github.com/larslevity/tikzpic/blob/master/AmP/Versuchsaufbau_principle/versuchsaufbau.png)
-![Example 4b](https://github.com/larslevity/tikzpic/blob/master/AmP/EndEffector_Position/b_endeffector_plain.png)
+| ![Example 4a](https://github.com/larslevity/tikzpic/blob/master/AmP/Versuchsaufbau_principle/versuchsaufbau.png) | ![Example 4b](https://github.com/larslevity/tikzpic/blob/master/AmP/EndEffector_Position/b_endeffector_plain.png) |
+|------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 
 ## [I2C Master reads Slave - Sequence](https://github.com/larslevity/tikzpic/blob/master/MA/Signal_I2C/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Signal_I2C/i2c_read_demo.png)
