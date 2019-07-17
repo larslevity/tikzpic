@@ -31,6 +31,9 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Pgf Semi Log Axis](https://github.com/larslevity/tikzpic/blob/master/AmP/Hoerkurve/)
 ![Example](https://github.com/larslevity/tikzpic/blob/master/AmP/Hoerkurve/Hoerkurven.png)
 
+## [Two Rings](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Palstek/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Palstek/palstek.png)
+
 ## [Testbench for Screws](https://github.com/larslevity/tikzpic/blob/master/AmP/Schraubenpruefstand/)
 ![Example](https://github.com/larslevity/tikzpic/blob/master/AmP/Schraubenpruefstand/Schraubenpruefstand.png)
 
