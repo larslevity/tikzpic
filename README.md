@@ -22,6 +22,9 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [I2C Master reads Slave - Sequence](https://github.com/larslevity/tikzpic/blob/master/MA/Signal_I2C/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Signal_I2C/i2c_read_demo.png)
 
+## [Finray Gripper](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FinRay/)
+![Example 5](https://github.com/larslevity/tikzpic/blob/master/Quatsch/FinRay/gripper.png)
+
 ## [Principle Sketch of a GUI for analyzing correlations between different values](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/analyzer.png)
 
