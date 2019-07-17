@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\input{../PGFTikZ.tex}
+
+\begin{document}
+
+\begin{tikzpicture}[scale=2]
+
+\begin{scope}[xshift=0]
+\coordinate (O) at (0,0);
+\fill[pattern=north east lines] (-.25,0)rectangle(.25,-.2);
+\draw (-.25,0)--(.25,0);
+
+\draw [very thick] (O)to[out = 90,in=260] (.2,2) coordinate (X);
+\draw [very thick,color=gray!20,-latex] ($(X)+(0,.8)$)-- ++(0,-.7) node [midway,right]{$F$};
+\path  (.2,1)node[right]{I};
+
+\path (0,-.5) node {$0.25$};
+
+\end{scope}
+
+\begin{scope}[xshift=30]
+\coordinate (O) at (0,0);
+\fill[pattern=north east lines] (-.25,0)rectangle(.25,-.2);
+\draw (-.25,0)--(.25,0);
+
+\draw (-.1,0)--(0,.2)coordinate(A)--(.1,0);			%% Festlager
+\draw[fill=white] (A) circle (.05);
+
+\draw [very thick] (A)to[out = 120,in=240] (0,2) coordinate (X);
+\draw [very thick,color=gray!20,-latex] ($(X)+(0,.8)$)-- ++(0,-.7) node [midway,right]{$F$};
+\path  (.0,1)node[right]{II};
+
+\draw (X)--++(.2,.1)--++(0,-.2)--cycle;														%% Loslager
+\draw (X)++(.2,.15)--++(0,-.3);
+\draw (X)++(.25,.15)--++(0,-.3);
+\fill[pattern=north west lines] (X)++(.25,.15)rectangle ($(X)+(.35,-.15)$);
+
+
+
+\draw[fill=white] (X) circle (.05);
+\draw[fill=white] (A) circle (.05);
+
+\path (0,-.5) node {$1$};
+
+\end{scope}
+
+
+\begin{scope}[xshift=60]
+\coordinate (O) at (0,0);
+\fill[pattern=north east lines] (-.25,0)rectangle(.25,-.2);
+\draw (-.25,0)--(.25,0);
+
+
+\draw [very thick] (O)to[out = 90,in=220] (0,2) coordinate (X);
+\draw [very thick,color=gray!20,-latex] ($(X)+(0,.8)$)-- ++(0,-.7) node [midway,right]{$F$};
+\path  (.0,1)node[right]{III};
+
+\draw (X)--++(.2,.1)--++(0,-.2)--cycle;														%% Loslager
+\draw (X)++(.2,.15)--++(0,-.3);
+\draw (X)++(.25,.15)--++(0,-.3);
+\fill[pattern=north west lines] (X)++(.25,.15)rectangle ($(X)+(.35,-.15)$);
+
+
+
+\draw[fill=white] (X) circle (.05);
+
+\path (0,-.5) node {$2.046$};
+
+\end{scope}
+
+
+\begin{scope}[xshift=90]
+\coordinate (O) at (0,0);
+\fill[pattern=north east lines] (-.25,0)rectangle(.25,-.2);
+\draw (-.25,0)--(.25,0);
+
+\draw [very thick] (O)to[out = 90,in=270] (-.2,.9) coordinate (X1);
+\draw [very thick] (X1)to[out = 90,in=270] (0,1.8) coordinate (X2);
+\draw [very thick] (X2)to[out = 90,in=270] (0,2) coordinate (X);
+\draw [very thick,color=gray!20,-latex] ($(X)+(0,.8)$)-- ++(0,-.7) node [midway,right]{$F$};
+\path  (.0,1)node[right]{IV};
+
+\draw (-.1,2.1)|-(-.5,1.8);
+\fill[pattern= north east lines](-.1,2.1)rectangle(-.5,1.8);
+
+\draw (.1,2.1)|-(.5,1.8);
+\fill[pattern= north east lines](.1,2.1)rectangle(.5,1.8);
+
+\path (0,-.5) node {$4$};
+
+\end{scope}
+
+
+
+\draw[very thin] (-.9,0)--(-1.1,0);
+\draw[very thin] (-.9,2)--(-1.1,2);
+\draw[very thin, latex-latex] (-1,0)--(-1,2)node [midway,fill=white,rectangle]{$l$};
+
+\path (-1,-.5) node {$\beta = $};
+
+
+\end{tikzpicture}
+
+
+\end{document}

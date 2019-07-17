@@ -1,0 +1,23 @@
+\documentclass[12pt]{article}
+\input{../PGFTikZ.tex}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+\draw[fill=gray!10](-1.8,-1)arc(180:0:1.8)--cycle;
+
+
+\draw[-latex] (0,-1)--++(40:1.8)node[right]{$R$};
+
+\draw(0,0)circle(.1)node[right]{$C$} coordinate (C);
+\draw[-latex] (C)--(-2.2,0)node[below]{$y$};
+\draw[-latex] (C)--(0,-1.5)node[right]{$z$};
+
+
+
+
+\end{tikzpicture}
+
+
+\end{document}

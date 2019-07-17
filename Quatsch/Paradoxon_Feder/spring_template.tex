@@ -1,0 +1,47 @@
+\documentclass[]{article}
+\input{../PGFTikZ.tex}
+
+\begin{document}
+\begin{tikzpicture}
+% FederMAKRO_______________
+
+%	SECHS PARAMETER:
+				%% 1. x-Koord. Start
+				%% 2. y-Koord. Start
+				%% 3. Arbeitslänge
+				%% 4. Windungen
+				%% 5. Drahtbreite
+				%% 6. Außendurchmesser
+
+\renewcommand{\L}{\l+\D};		% Arbeitslänge
+\renewcommand{\l}{8cm}			 %{\L - \D} % wirksame Länge
+\newcommand{\D}{3cm};			% Mittlerer Duchmesser
+\renewcommand{\d}{0.1cm};		%Drahtdurchmesser	
+\newcommand{\n}{12};				%wirksame Windungen
+\pgfmathsetmacro{\m}{\n-1} 				%   {\n-1};	
+\newcommand{\steigung}{atan(\l/2/\n/\D)};
+\coordinate(Start) at (0,0) ;	% Startpunkt
+\coordinate(LO) at ($(Start) + (-\D/2,-\D/2)$);
+\coordinate(RO) at ($(Start) + (\D/2,-\D/2-\l/\n/2)$);
+\coordinate(RU) at ($(LO) + (\D,-\l-\l/\n/2)$);
+
+\newcommand{\feder}{ 
+				%%%ENDEN%%
+		\draw[rounded corners=\d*3/2] (LO)--++(\D/2+\d/2 ,\l/4/\n)--($(Start)+(\d/2,0)$);
+		\draw[rounded corners=\d] ($(LO)+(0,\d)$)--++(\D/2-\d/2,\l/4/\n)--($(Start)+(-\d/2,0)$);
+		\draw[rounded corners=\d] (RU)--++(-\D/2+\d/2 ,-\l/4/\n)--($(Start)+(\d/2,-\l-\D)$);
+		\draw[rounded corners=\d*3/2] ($(RU)+(0,\d)$)--++(-\D/2-\d/2,-\l/4/\n)--($(Start)+(-\d/2,-\l-\D)$);			
+				%%%Hintere Federteile
+		\foreach \x in {0,1,2,...,\m}{		
+			\draw ($(RO)+(0,-\l/\n*\x)$)--++(-\D,-\l/\n/2)arc(-90-\steigung:-270-\steigung:\d/2)--++(\D,\l/\n/2)arc(+90-\steigung:-90-\steigung:\d/2);
+			}	
+				%%% Voredere Federteile
+		\foreach \x in {0,1,...,\n}{		
+			\draw[fill=white] ($(LO)+(0,-\l/\n*\x)$)--++(\D,-\l/\n/2)arc(-90-\steigung:90-\steigung:\d/2)--++(-\D,\l/\n/2)arc(+90-\steigung:270-\steigung:\d/2)--cycle;				
+			}		
+		};
+		
+\feder
+		
+\end{tikzpicture}
+\end{document}

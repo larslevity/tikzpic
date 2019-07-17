@@ -1,0 +1,68 @@
+\documentclass{minimal}
+\usepackage{amsmath,tikz}
+\usepackage{xcolor}
+\usetikzlibrary{backgrounds,calc}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}%
+
+\begin{document}
+\begin{tikzpicture}[background rectangle/.style={fill=black},show background rectangle]
+
+% center coordinate from what all begins
+\coordinate (center) at (0,0);
+% the radius of the circle in which the buildings grow
+\newcommand{\rad}{10};
+\draw[white] (center)circle(\rad);
+% Tiefenebenen
+\newcommand{\n}{20}
+
+
+% Try to rotate octagons. first give names to the start points:
+
+\coordinate (a) at ($(center)+(0:\rad)$);
+\coordinate (b) at ($(center)+(45:\rad)$);
+\coordinate (c) at ($(center)+(90:\rad)$);
+\coordinate (d) at ($(center)+(135:\rad)$);
+\coordinate (e) at ($(center)+(180:\rad)$);
+\coordinate (f) at ($(center)+(215:\rad)$);
+\coordinate (g) at ($(center)+(270:\rad)$);
+\coordinate (h) at ($(center)+(315:\rad)$);
+
+\foreach \i in {1,...,\n}
+{
+	\pgfmathsetmacro{\tiefe}{100-\i/\n*30}
+	\pgfmathsetmacro{\posi}{\i/\n*0.3}
+	\draw[black!\tiefe,fill=black!\tiefe] (a)--(b)--(c)--(d)--(e)--(f)--(g)--(h)--cycle;
+	% new startpoints:
+	\path
+		(a) coordinate (x)
+		-- (b) coordinate[pos=\posi] (a)
+		-- (c) coordinate[pos=\posi] (b)
+		-- (d) coordinate[pos=\posi] (c)
+		-- (e) coordinate[pos=\posi] (d)
+		-- (f) coordinate[pos=\posi] (e)
+		-- (g) coordinate[pos=\posi] (f)
+		-- (h) coordinate[pos=\posi] (g)
+		-- (x) coordinate[pos=\posi] (h);
+}
+
+% The startpoints of the triangle
+\coordinate (A) at ($(center)+(90:\rad)$);
+\coordinate (B) at ($(center)+(-30:\rad)$);
+\coordinate (C) at ($(center)+(210:\rad)$);
+
+\foreach \i in {1,...,\n}
+	{
+	\pgfmathsetmacro{\tiefe}{\i*120/\n}
+	\pgfmathsetmacro{\posi}{\i/\n*0.3}
+	\draw[black!90,fill=black!\tiefe] (A)--(B)--(C)--cycle;
+	\path 
+		(A) coordinate (X) 
+		-- (B) coordinate[pos=\posi] (A)
+		-- (C) coordinate[pos=\posi] (B)
+		-- (X) coordinate[pos=\posi] (C);
+	}
+
+\end{tikzpicture}
+\end{document}

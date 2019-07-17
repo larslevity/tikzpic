@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\input{../PGFTikZ.tex}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+\draw[fill=gray!10] (0,0) ellipse (2 and 1.3);
+
+\draw[very thin] (2.2,0)--(2.4,0);
+\draw[very thin] (2.2,1.3)--(2.4,1.3);
+\draw[latex-latex]  (2.3,0)--(2.3,1.3)node[midway,fill=white,rectangle]{$b$};
+
+\draw[very thin] (0,1.4)--(0,1.6);
+\draw[very thin] (2,1.4)--(2,1.6);
+\draw[latex-latex]  (0,1.5)--(2,1.5)node[midway,fill=white,rectangle]{$a$};
+
+\draw(0,0)circle(.1)node[right]{$C$} coordinate (C);
+\draw[-latex] (C)--(-2.2,0)node[below]{$y$};
+\draw[-latex] (C)--(0,-1.5)node[right]{$z$};
+
+
+
+
+\end{tikzpicture}
+
+
+\end{document}

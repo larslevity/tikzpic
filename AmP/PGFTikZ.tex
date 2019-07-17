@@ -1,0 +1,56 @@
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest} % "neue" Verbesserungen nutzen
+\pgfplotsset{plot coordinates/math parser=false}
+\usepgflibrary{shadings}
+%
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usetikzlibrary{petri}
+\usetikzlibrary{trees}
+\usetikzlibrary{mindmap}
+\usetikzlibrary{shadows}
+\usetikzlibrary{er}
+\usetikzlibrary{shadings}
+%\usetikzlibrary{}
+%
+\usepackage[ansinew]{inputenc}
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}%
+%
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{pgfplots.groupplots}
+%
+% Eigene Colormap, verläuft von weiß zu schwarz
+\pgfplotsset{%
+colormap={whiteblack}{gray(0cm)=(1); gray(1cm)=(0)}
+}%
+%
+% Strickstärke der Koordinatenachsen
+\pgfplotsset{%
+every axis/.append style={semithick}
+}%
+%
+% Strickstärke der Plots
+\pgfplotsset{%
+every axis plot/.append style={thick}
+}%
+%
+% Schriftgrößen in Plots
+\pgfplotsset{%
+tick label style={font=\small},
+label style={font=\small},
+legend style={font=\small}
+}%
+%
+% "rainbow spectrum" shading
+\pgfdeclareverticalshading{rainbow}{100bp}
+{color(0bp)=(red); color(25bp)=(red); color(35bp)=(yellow);
+color(45bp)=(green); color(55bp)=(cyan); color(65bp)=(blue);
+color(75bp)=(violet); color(100bp)=(violet)}
+%

@@ -1,0 +1,37 @@
+\documentclass[tikz,convert={outfile=\jobname.png}]{standalone}
+\usepackage{tikz}
+
+\begin{document}
+
+%\begin{Huge}
+%\begin{center}
+%
+% SKATEBOARD SKATEBOARD SKATEBOARD SKATEBOARD SKATEBOARD SKATEBOARD SKATEBOARD 
+% 
+%\end{center}
+%\end{Huge}
+%\qquad
+%
+%\quad
+%
+%\quad
+
+\begin{tikzpicture}
+\draw[thin,dash pattern= on 0.5cm off 2cm on 3 cm off 2cm] (-10,0)--(100,0);
+\draw[rounded corners=2cm](0,0)to(0,6)to(50,10)to(60,10) (0,0)--(0,-6)--(50,-10)--(60,-10);
+\draw (85,0) circle(5) ++(60:5)to[out=150,in=0](60,10) (85,0)++(-60:5)to[out=-150,in=0](60,-10);
+
+% hallo Spitze
+
+\draw (85,0)++(40:5)..controls(90+1.4433,0)..(85+3.83,-3.21);
+
+
+% Hallo Bohrungen
+
+\draw (10,0)++(0,4.15/4)circle(0.25)node{+}node[above,align=center]{ \O \, 5 mm \\ \quad}++(5.3/2,0)circle(0.25)node{+} ++(0,-4.15/2)circle(0.25)node{+}++(-5.3/2,0)circle(0.25)node{+}++(5.3/4,4.15/4+18/2)--++(0,-18)++(-2.5,0)rectangle++(5,-5)++(0,18+10)rectangle++(-5,-5);
+
+\draw (85,0)++(0,4.15/4)circle(0.25)node{+}++(5.3/2,0)circle(0.25)node{+} ++(0,-4.15/2)circle(0.25)node{+}++(-5.3/2,0)circle(0.25)node{+}++(5.3/4,4.15/4+18/2)--++(0,-18)++(-2.5,0)rectangle++(5,-5)++(0,18+10)rectangle++(-5,-5);
+
+\end{tikzpicture}
+
+\end{document}

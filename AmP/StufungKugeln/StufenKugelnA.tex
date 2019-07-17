@@ -1,0 +1,26 @@
+%% StufungKugelnA
+
+\documentclass[tikz,convert={outfile=\jobname.png}]{standalone}
+\usepackage{tikz}
+
+
+\begin{document}
+\begin{tikzpicture}
+
+\newcommand{\win}{15};
+
+\foreach \x in {1,2,...,7} {
+\draw (\x,-.2)--(\win:\x/cos{\win})--++(0,.2);
+\draw (\x,\x*tan{0.5*\win}) circle(tan{.5*\win}*\x);
+\draw (\x,\x*tan{0.5*\win}) --++(-0.3,0)--++(.6,0);
+};
+
+\draw[help lines] (-0.2,0)--(8,0);
+\draw[help lines] (180+\win:0.2)--(\win:8/cos{\win});
+
+
+
+% (1+sin(\win/2))/(1-sin(\win/2))
+
+\end{tikzpicture}
+\end{document}

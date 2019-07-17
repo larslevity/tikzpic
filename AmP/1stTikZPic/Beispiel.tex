@@ -1,0 +1,54 @@
+%
+\documentclass[12pt]{article}
+%
+\input{../PGFTikZ.tex} 
+%
+
+%
+
+
+\begin{document}
+%
+\begin{tikzpicture}[line cap=round,line join=round]
+	%
+	\draw[fill=darkgray] (0,0)   rectangle (3,0.6);
+	\node[above] at (1.5,0.6) {$E_1,A_1$};
+	\draw[fill=gray]     (3,0.1) rectangle (6,0.5);
+	\node[above] at (4.5,0.5) {$E_2,A_2$};
+	\draw[thin] (0,1.6) -- (0,-1);
+	\draw[thin] (3,0.6) -- (3,-1);
+	\draw[thin] (6,1.6) -- (6,-1);
+	\draw[stealth-stealth] (0,-0.8) -- (3,-0.8);
+	\node[above] at (1.5,-0.8) {$\ell$};
+	\draw[stealth-stealth] (3,-0.8) -- (6,-0.8);
+	\node[above] at (4.5,-0.8) {$\ell$};
+	\draw[-stealth,very thick] (6,0.3) -- (7,0.3);
+	\node[above] at (6.5,0.4) {$F$};
+	\draw[-stealth] (0,1.4) -- (0.8,1.4);
+	\node[above] at (0.4,1.4) {$u_1$};
+	\draw[-stealth] (3,1.4) -- (3.8,1.4);
+	\node[above] at (3.4,1.4) {$u_2$};
+	\draw[-stealth] (6,1.4) -- (6.8,1.4);
+	\node[above] at (6.4,1.4) {$u$};
+	% Schraffur:
+	\draw[thin] (-0.5,1.6) -- (-0.5,1.6);
+	\draw[thin] (-0.5,1.4) -- (-0.3,1.6);
+	\draw[thin] (-0.5,1.2) -- (-0.1,1.6);
+	\draw[thin] (-0.5,1.0) -- (0,1.5);
+	\draw[thin] (-0.5,0.8) -- (0,1.3);
+	\draw[thin] (-0.5,0.6) -- (0,1.1);
+	\draw[thin] (-0.5,0.4) -- (0,0.9);
+	\draw[thin] (-0.5,0.2) -- (0,0.7);
+	\draw[thin] (-0.5,0.0) -- (0,0.5);
+	\draw[thin] (-0.5,-0.2) -- (0,0.3);
+	\draw[thin] (-0.5,-0.4) -- (0,0.1);
+	\draw[thin] (-0.5,-0.6) -- (0,-0.1);
+	\draw[thin] (-0.5,-0.8) -- (0,-0.3);
+	\draw[thin] (-0.5,-1.0) -- (0,-0.5);
+	\draw[thin] (-0.3,-1.0) -- (0,-0.7);
+	\draw[thin] (-0.1,-1.0) -- (0,-0.9);
+	%
+	%
+\end{tikzpicture}
+%
+\end{document} 

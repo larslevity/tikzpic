@@ -1,0 +1,22 @@
+\documentclass[12pt]{article}
+\input{../PGFTikZ.tex}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+\draw[fill=gray!10](-1.8,-1)rectangle(1.8,1);
+\path  (0,1)node[above]{$b$};
+\path  (1.8,0)node[right]{$h$};
+
+\draw(0,0)circle(.1)node[right]{$C$} coordinate (C);
+\draw[-latex] (C)--(-2.2,0)node[below]{$y$};
+\draw[-latex] (C)--(0,-2)node[right]{$z$};
+
+
+
+
+\end{tikzpicture}
+
+
+\end{document}

@@ -1,0 +1,9 @@
+Moin Arthur,
+
+ich finde ohne Schraffur von Bauteil 6 sieht das ganze ein wenig kahl aus. Deshalb habe ich in den Zeilen 199-211 eine geschrieben.
+Wenn du willst kannst du diese ja wieder einkommentieren.
+
+Arbeitszeit: 4,5 h
+
+MfG 
+Lars 

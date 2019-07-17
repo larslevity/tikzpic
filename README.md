@@ -25,6 +25,15 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 ## [Principle Sketch of a GUI for analyzing correlations between different values](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/MA/Analyzer/analyzer.png)
 
+## [Template for building a Longboard](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LongboardBau/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LongboardBau/schablone2.png)
+
+## [Spring Paradoxon](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Paradoxon_Feder/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Paradoxon_Feder/both.png)
+
+## [Nicomachus' Law](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Nicomachus/)
+![Example](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Nicomachus/nicomachus.png)
+
 ## [Visualization of a Path Planning Algorithm](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Pathplanner/)
 ![Example 5](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Pathplanner/dec_28.png)
 
@@ -40,6 +49,11 @@ Some TikZ/PGF Pics I created. Some Examples as follows
 |--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 ## [Rotated Pyramide](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Fraesteil/)
 ![Example 9](https://github.com/larslevity/tikzpic/blob/master/Quatsch/Fraesteil/viereck.png)
+
+## [Baureihe](https://github.com/larslevity/tikzpic/blob/master/AmP/StufungKugeln/)
+|![Example](https://github.com/larslevity/tikzpic/blob/master/AmP/StufungKugeln/StufenKugelnA.png)|![Example](https://github.com/larslevity/tikzpic/blob/master/AmP/StufungKugeln/StufungKugelnB.png)|
+|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+
 
 ## [Story of a Ballon](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LuftBallon/)
 ![Example 10](https://github.com/larslevity/tikzpic/blob/master/Quatsch/LuftBallon/ballon.png)

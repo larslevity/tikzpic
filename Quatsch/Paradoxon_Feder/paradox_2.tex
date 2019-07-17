@@ -1,0 +1,105 @@
+%% Paradoxon Feder ___2
+
+\documentclass[]{standalone}
+\input{../../tikzpic_packages.tex}
+
+\begin{document}
+\begin{tikzpicture}
+% FederMAKRO_______________
+
+%	SECHS PARAMETER:
+				%% 1. x-Koord. Start
+				%% 2. y-Koord. Start
+				%% 3. Arbeitslänge
+				%% 4. Windungen
+				%% 5. Drahtbreite
+				%% 6. Außendurchmesser
+
+\renewcommand{\L}{\l+\D};		% Arbeitslänge
+\renewcommand{\l}{5cm}			 %{\L - \D} % wirksame Länge
+\newcommand{\D}{3cm};			% Mittlerer Duchmesser
+\renewcommand{\d}{0.2cm};		%Drahtdurchmesser	
+\newcommand{\n}{7};				%wirksame Windungen
+\newcommand{\m}{6} 				%   {\n-1};	
+\newcommand{\steigung}{atan(\l/2/\n/\D)};
+\coordinate(Start) at (0,0) ;	% Startpunkt
+\coordinate(LO) at ($(Start) + (-\D/2,-\D/2)$);
+\coordinate(RO) at ($(Start) + (\D/2,-\D/2-\l/\n/2)$);
+\coordinate(RU) at ($(LO) + (\D,-\l-\l/\n/2)$);
+
+\newcommand{\feder}{ 
+				%%%ENDEN%%
+		\draw[rounded corners=\d*3/2] (LO)--++(\D/2+\d/2 ,\l/4/\n)--($(Start)+(\d/2,0)$);
+		\draw[rounded corners=\d] ($(LO)+(0,\d)$)--++(\D/2-\d/2,\l/4/\n)--($(Start)+(-\d/2,0)$);
+		\draw[rounded corners=\d] (RU)--++(-\D/2+\d/2 ,-\l/4/\n)--($(Start)+(\d/2,-\l-\D)$);
+		\draw[rounded corners=\d*3/2] ($(RU)+(0,\d)$)--++(-\D/2-\d/2,-\l/4/\n)--($(Start)+(-\d/2,-\l-\D)$);			
+				%%%Hintere Federteile
+		\foreach \x in {0,1,2,...,\m}{		
+			\draw ($(RO)+(0,-\l/\n*\x)$)--++(-\D,-\l/\n/2)arc(-90-\steigung:-270-\steigung:\d/2)--++(\D,\l/\n/2)arc(+90-\steigung:-90-\steigung:\d/2);
+			}	
+				%%% Voredere Federteile
+		\foreach \x in {0,1,...,\n}{		
+			\draw[fill=white] ($(LO)+(0,-\l/\n*\x)$)--++(\D,-\l/\n/2)arc(-90-\steigung:90-\steigung:\d/2)--++(-\D,\l/\n/2)arc(+90-\steigung:270-\steigung:\d/2)--cycle;				
+			}		
+		};
+		
+%%%%% Gewicht Makro &&&&&________________________
+%FLASCHE: #1 -> x , #2 -> y , #3 -> breite   höhe = 1.6*#3 , #4 -> options
+\newcommand{\flasche}[4]{
+	\draw[#4,rounded corners=3pt] (#1,#2)--++(#3*1/2,0)--++(0,1*#3)to[]++(-#3*0.4,0.2*#3)--++(0,0.3*#3)--++(0.1*#3,0)--++(0,0.1*#3)--(#1,#2+1.6*#3);
+	\draw[#4,rounded corners=3pt] (#1,#2)--++(-#3*1/2,0)--++(0,1*#3)to[]++(#3*0.4,0.2*#3)--++(0,0.3*#3)--++(-0.1*#3,0)--++(0,0.1*#3)--(#1,#2+1.6*#3);
+		
+	\fill[black,path fading=west,rounded corners=3pt]	(#1,#2)--++(#3*1/2,0)--++(0,1*#3)to[]++(-#3*0.4,0.2*#3)--++(0,0.3*#3)--++(0.1*#3,0)--++(0,0.1*#3)--(#1,#2+1.6*#3)--++(-0.2*#3,0)--++(0,-0.1*#3)--++(0.1*#3,0)--++(0,-0.3*#3)to[]++(-#3*0.4,-0.2*#3)--++(0,-1*#3)--cycle;
+;}
+
+
+%%%%%__________________________________________BILD_________&&&&&&&
+
+\draw[thick] (-3,0)--(3,0);
+\fill[pattern=north east lines] (-3,0)rectangle(3,0.5);
+\draw [fill=black,rounded corners=1pt] (-0.3,0)rectangle(0.3,-0.1);
+\draw [fill=black,rounded corners=1pt] (2.5,0)rectangle(1.9,-0.1);
+
+\feder;
+
+\draw [thick] (-2.6,-8)--(1.5,-8);
+\draw [fill=black,rounded corners=1pt] (-0.3,-8)rectangle(0.3,-8.1);
+\draw [fill=black,rounded corners=1pt] (-2.5,-8)rectangle(-1.9,-8.1);   %%% --> -2.2 geht Schnur ab.
+
+
+%%%% Faden RISS
+\draw [rounded corners,thin] (0,-8)
+  \foreach \i in {1,...,10} {
+    -- ++(rnd*-170:rnd)};
+    
+\draw [rounded corners,thin] (0,-21)
+  \foreach \i in {1,...,15} {
+    -- ++(rnd*170:rnd)};
+
+
+\draw [thick] (-1.5,-21)--(2.6,-21);
+\draw [fill=black,rounded corners=1pt] (-0.3,-21)rectangle(0.3,-21.1);
+\draw [fill=black,rounded corners=1pt] (2.5,-21)rectangle(1.9,-21.1);   %%% --> 2.2 geht Schnur ab.
+
+
+\coordinate(Start) at (0,-21) ;	% Startpunkt
+\coordinate(LO) at ($(Start) + (-\D/2,-\D/2)$);
+\coordinate(RO) at ($(Start) + (\D/2,-\D/2-\l/\n/2)$);
+\coordinate(RU) at ($(LO) + (\D,-\l-\l/\n/2)$);
+
+\feder
+
+\draw [thick] (-2.6,-29)--(1.5,-29);
+\draw [fill=black,rounded corners=1pt] (-0.3,-29)rectangle(0.3,-29.1);
+\draw [fill=black,rounded corners=1pt] (-2.5,-29)rectangle(-1.9,-29.1);   %%% --> -2.2 geht Schnur ab.
+
+\draw[thin](0,-29)--(0,-33+2*1.6);
+\flasche{0}{-33}{2}{} ;
+
+%%%% FADEN &&&&& _____________________________________________________________&&&&&
+\draw[thin](2.2,0)--(2.2,-21);
+\draw[thin](-2.2,-8)--(-2.2,-29);
+
+
+\end{tikzpicture}
+\end{document}
