@@ -1,0 +1,32 @@
+\documentclass[10pt]{standalone}
+
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{lmodern}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+
+
+\begin{document}
+\begin{tikzpicture}[
+scale=1, 
+line/.style={gray, line width=.5mm}
+]
+
+\def\b{140}
+\def\h{90}
+
+\foreach \x in {0,5,...,\b}{
+	\draw[line] (\x,0)node[above, scale=2]{\x}--++(0,-\h);
+}
+\foreach \y in {0,5,...,\h}{
+	\pgfmathtruncatemacro{\yy}{180-\y}
+	\draw[line] (0,-\y)node[left,scale=2]{\y}--++(\b,0)node[right,scale=2]{\yy};
+}
+
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,221 @@
+%% Definition der KOS
+\documentclass[tikz]{standalone}
+\usepackage{tikz, animate}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fadings}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{matrix,fit, backgrounds}
+\usepackage{bm}
+
+
+
+\begin{document}
+
+\def\deltaPlane{0}	% Angle of inclined plane
+
+\tdplotsetmaincoords{0}{90}   % View on walking plane
+%\tdplotsetmaincoords{\deltaPlane}{90}   % View on walking plane
+\tdplotsetmaincoords{75}{120}		   	% nice 3d view
+
+
+
+
+
+
+ \begin{animateinline}[controls,
+        autoplay,buttonsize=1.2em,
+        buttonbg=0.6:0.6:1,buttonfg=0.2:0.2:1,
+        begin={\begin{tikzpicture}[scale=2]\drawaxes},
+        end={\end{tikzpicture}}]{8}
+
+        % Generate frames for -2 ... 2
+        \xdef\pos{-2}
+        \whiledo{\lengthtest{\pos pt < 2.1 pt}}{
+            \drawg{\pos}\newframe
+            \pgfmathsetmacro{\pos}{\pos + 0.1}
+            \xdef\pos{\pos}
+        }
+
+        \drawg{\pos}
+\end{animateinline}
+
+
+
+
+
+\begin{tikzpicture}[tdplot_main_coords,
+	scale=1,
+	cs_arrow/.style={->},
+	cs_arrow_light/.style={->},
+	plane/.style={fill=lightgray!50, opacity=.7},
+	help line/.style={thin, gray},
+	angle arrow/.style={stealth-stealth},
+	gvec/.style={-stealth, thick},
+	coord_split/.style={densely dashed, darkgray, stealth-},
+	shadow/.style={gray, path fading=fade out, fill},
+	radius/.style={-stealth, thick},
+	actuator/.style={line width=1mm, red!40}
+]
+
+
+% ........................................................
+%%% Definitions
+% ........................................................
+    \tikzfading[name=fade out, inner color=transparent!10,
+         outer color=transparent!90]
+
+
+% Orientation
+\def\betI{100}	% Angle of Leg
+\def\phival{-120}
+
+\pgfmathsetmacro{\betIh}{\betI*.5}
+
+% Geometry
+\def\hx{5}	% length of legs
+\def\hy{.7}  % change only with line width of stretch
+
+
+% 3d Geometry
+\def\shadow{.3}
+
+\def\planeb{8}	% Breite Laufeebene
+\def\planeh{3.8}  % Hoehe Laufebene
+
+%%% Calculations
+\def\pi{3.1416}
+\pgfmathsetmacro{\rbI}{\hx/\betI*180/\pi}
+\pgfmathsetmacro{\deltah}{\deltaPlane*.5}
+
+
+%%% Draw Initial Coord Sys
+\path (0,0)coordinate(0);
+\path (0)++(\planeh*.5,3,0)coordinate(K);
+\draw[cs_arrow] (K)--++(1,0,0)node[above left]{$x_0$};
+\draw[cs_arrow] (K)--++(0,1,0)node[above]{$y_0$};
+\draw[cs_arrow] (K)--++(0,0,1)node[above left]{$z_0$};
+
+
+
+%%%% Draw Angle Phi
+\draw[help line] (K)--++(3.6,0);
+\draw[angle arrow] (K)++(-\phival:3.5)arc(-\phival:0:3.5);
+\path (K)++(-\phival*.5:4.1)node{$\phi$};
+
+% ........................................................
+%%% Draw the Robot
+% ........................................................
+
+
+
+\tdplotsetrotatedcoords{90+\phival}{\deltaPlane-90}{0}
+\begin{scope}[tdplot_rotated_coords]
+
+
+	% ........................................................
+	%%% Draw Walking Plane
+	% ........................................................
+
+	\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
+	\begin{scope}[tdplot_rotated_coords]
+		\path[plane] (0)++(\planeh,0,0)--++(-\planeh,0)--++(0,\planeb)--++(\planeh,0)coordinate(2)--cycle;
+	\end{scope}	
+	
+
+	% Nicht dehnbare Schicht
+	\draw[actuator] (K)arc(270:270+\betI:\rbI)coordinate(1);
+
+
+
+	% ........................................................
+	%%% Draw the RADIUS
+	% ........................................................
+	
+	\draw [help line] (K)--++(0,\rbI)coordinate(S)--++(0,1.6);
+	\draw [help line] (S)--++(-90+\betI:\rbI);
+	\draw [angle arrow] (S)++(-90+\betI:.8)arc(-90+\betI:-90:.8);
+	\path (S)++(-90+\betIh:.5)node{$\theta$};
+	\draw[help line] (S)--++(-90+\betI:\rbI);
+		
+	
+	% K (Aufhaengung)
+	\draw[cs_arrow_light] (K)--++(1,0,0)node[below right]{$z_0'$};
+	\draw[cs_arrow_light] (K)--++(0,1,0)node[above]{$x_0'$};
+	\draw[cs_arrow_light] (K)--++(0,0,1)node[above]{$y_0'$};	
+	\path (K)node[below, scale=.4]{$\{0\}$};
+
+\end{scope}
+
+
+
+%%%%% COS 1
+
+%%% Z - Y' - Z''
+\tdplotsetrotatedcoords{90+\phival}{-90}{\betI}
+
+
+\begin{scope}[tdplot_rotated_coords]
+
+%\draw[->] (1)--++(1,0,0) node[left]{$x$};
+%\draw[->] (1)--++(0,1,0) node[left]{$y$};
+%\draw[->] (1)--++(0,0,1) node[left]{$z$};
+
+\draw[->] (1)node[right, scale=.4]{$\{1\}$};
+\draw[->] (1)--++(1,0,0) node[right]{$z_1$};
+\draw[->] (1)--++(0,1,0) node[left]{$x_1$};
+\draw[->] (1)--++(0,0,1) node[above]{$y_1$};
+
+\end{scope}
+
+
+
+
+%%%%% VALIDATE
+\pgfmathsetmacro{\theta}{\betI}
+%\pgfmathsetmacro{\phival}{\phival*(-1)}
+%%\pgfmathsetmacro{\phival}{\phival*(-1)}
+
+
+\def\scale{1}
+
+
+\pgfmathsetmacro{\tx}{( cos(\phival)*( cos(\theta)-1 ) *\hx/\theta*180/\pi)}
+\pgfmathsetmacro{\ty}{( sin(\phival)*( cos(\theta)-1 ) *\hx/\theta*180/\pi)}
+\pgfmathsetmacro{\tz}{(sin(\theta)*\hx/\theta*180/\pi)}
+
+\draw (K)--++(\tx,\ty,\tz)coordinate(1);
+
+\draw[->, red] (K)--++(1,0,0)node[]{$n$};
+\draw[->, red] (K)--++(0,1,0)node[]{$e$};
+\draw[->, red] (K)--++(0,0,1)node[]{$o$};
+
+
+\pgfmathsetmacro{\nx}{(cos(\phival)^2*(cos(\theta)-1)+1)*\scale}
+\pgfmathsetmacro{\ny}{(sin(\phival)*cos(\phival)*(cos(\theta)-1))*\scale}
+\pgfmathsetmacro{\nz}{(cos(\phival)*sin(\theta))*\scale}
+
+\draw[red, ->] (1) --++(\nx,\ny,\nz)node[below]{$n$};
+
+\pgfmathsetmacro{\ex}{(sin(\phival)*cos(\phival)*(cos(\theta)-1))*\scale}
+\pgfmathsetmacro{\ey}{(sin(\phival)^2*(cos(\theta)-1)+1)*\scale}
+\pgfmathsetmacro{\ez}{(sin(\phival)*sin(\theta))*\scale}
+
+\draw[red, ->] (1) --++(\ex,\ey,\ez)node[below]{$e$};
+
+\pgfmathsetmacro{\ox}{(-cos(\phival)*sin(\theta))*\scale}
+\pgfmathsetmacro{\oy}{(-sin(\phival)*sin(\theta))*\scale}
+\pgfmathsetmacro{\oz}{(cos(\theta))*\scale}
+
+\draw[red, ->] (1) --++(\ox,\oy,\oz) node[below]{$o$};
+
+
+
+
+
+
+% ........................................................
+\end{tikzpicture}
+% ........................................................
+
+
+\end{document}
