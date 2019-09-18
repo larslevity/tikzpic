@@ -1,0 +1,122 @@
+\documentclass[tikz]{standalone}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{ifthen}
+
+
+\def\alp{45}
+
+% X -Z'
+\tdplotsetmaincoords{70}{120}
+%\tdplotsetmaincoords{90}{\alp}
+%\tdplotsetmaincoords{90}{0}
+
+
+\begin{document}
+\begin{tikzpicture}[
+	tdplot_main_coords,
+	membrane/.style={fill=lightgray},
+	CNT/.style={color=black, draw, thick},
+	]
+
+% Geometry
+\def\b{2}
+\def\l{5}
+\def\dCNT{.5}
+
+% Bending Radius
+\def\R{1}
+
+
+% Corner of unbended part
+\path(0,0,0) coordinate(C);
+% Corner of bended part
+\path(0,\l*1.2,0) coordinate(C_)coordinate(LL)coordinate(LR);
+
+
+\tdplotsetrotatedcoords{\alp}{0}{0}
+
+
+
+\path (0,0,0) coordinate(O);
+
+\draw[->] (O)--++(1,0,0)node[above]{$x$};
+\draw[->] (O)--++(0,1,0)node[above]{$y$};
+\draw[->] (O)--++(0,0,1)node[above]{$z$};
+
+
+\path[membrane] (C)--++(0,\l,0)--++(\b,0,0)--++(0,-\l,0)--cycle;
+
+\pgfmathsetmacro{\dx}{\dCNT/cos(\alp)}
+\pgfmathsetmacro{\dy}{\dCNT/sin(\alp)}
+
+\pgfmathtruncatemacro{\nx}{\b/\dx}
+\pgfmathsetmacro{\xbar}{\dx*(\nx+1)-\b}
+\pgfmathsetmacro{\ybar}{\xbar/tan(\alp)}
+\pgfmathtruncatemacro{\ny}{(\l-\ybar)/\dy}
+
+
+\foreach \n in {0, ..., \nx}{
+	\pgfmathsetmacro{\yy}{\dx*\n/tan(\alp)}
+	\pgfmathsetmacro{\xx}{\dx*\n}
+	\pgfmathsetmacro{\check}{\l*100-\yy*100}
+	\ifnum0>\check
+		\pgfmathsetmacro{\xx}{tan(\alp)*\l}
+		\pgfmathsetmacro{\yy}{\l}
+	\fi
+	\path[CNT] (C)++(\dx*\n,0,0)--++(-\xx,\yy,0);
+	% calc length
+	\pgfmathsetmacro{\len}{sqrt((\xx)^2 + \yy^2)}
+	% bended part
+	\pgfmathsetmacro{\bet}{\dCNT*\n/\R*180/3.14159}
+	\pgfmathsetmacro{\dxb}{sin(\bet)*\R}
+	\pgfmathsetmacro{\dyb}{sin(\alp)*\dx*\n}
+	\pgfmathsetmacro{\dzb}{\R - cos(\bet)*\R}
+	\begin{scope}[tdplot_rotated_coords]
+		\path[CNT] (C_)++(\dxb, -\dyb, \dzb)node[scale=.3, red]{x}coordinate(L)--++(0, \len, 0)coordinate(R);
+		\draw[membrane] (LL)--(L)--(R)--(LR);
+		\path[CNT] (C_)++(\dxb, -\dyb, \dzb)node[scale=.3, red]{x}coordinate(L)--++(0, \len, 0)coordinate(R);		
+		\path (L)coordinate(LL) (R)coordinate(LR);
+	\end{scope}
+}
+
+\pgfmathsetmacro{\lbar}{\l-\ybar}
+\pgfmathsetmacro{\ybarO}{(\b*tan(\alp)-\ybar)*cos(\alp)}
+%\pgfmathsetmacro{\ybarO}{sqrt(\b^2+\ybar^2-((\nx)*\dCNT)^2)}
+\foreach \n in {0, ..., \ny}{
+	\pgfmathsetmacro{\yy}{\lbar-\dy*\n}
+	\pgfmathsetmacro{\xx}{tan(\alp)*\yy}
+	\pgfmathsetmacro{\check}{\b*100-\xx*100}
+	\ifnum0>\check
+		\pgfmathsetmacro{\xx}{\b}
+		\pgfmathsetmacro{\yy}{\b/tan(\alp)}
+	\fi
+	% calc length
+	\pgfmathsetmacro{\len}{sqrt((\xx)^2 + (\yy)^2)}
+	% draw
+	\path[CNT] (C)++(\b,\ybar+\n*\dy,0)--++(-\xx,\yy,0);
+	% bended part
+	\pgfmathsetmacro{\bet}{\dCNT*180/3.1416/\R*(\nx+1+\n)}
+	\pgfmathsetmacro{\dxb}{sin(\bet)*\R}
+	\pgfmathsetmacro{\dyb}{cos(\alp)*\dy*\n}
+	\pgfmathsetmacro{\dzb}{\R - cos(\bet)*\R}
+	\begin{scope}[tdplot_rotated_coords]
+		\path[CNT] (C_)++(\dxb, \dyb-\ybarO, \dzb)node[scale=.3]{x}coordinate(L)--++(0, \len, 0)coordinate(R);
+		\draw[membrane] (LL)--(L)--(R)--(LR);
+		\path[CNT] (C_)++(\dxb, \dyb-\ybarO, \dzb)node[scale=.3]{x}coordinate(L)--++(0, \len, 0)coordinate(R);		
+		\path (L)coordinate(LL) (R)coordinate(LR);
+	\end{scope}
+}
+% Last Point:
+\pgfmathsetmacro{\ylast}{cos(\alp)*(\l-tan(\alp)*\b)}
+\pgfmathsetmacro{\bet}{180/3.1416/\R*(\b/cos(\alp)+sin(\alp)*(\l-tan(\alp)*\b))}
+\pgfmathsetmacro{\xlast}{sin(\bet)*\R}
+\pgfmathsetmacro{\zlast}{\R - cos(\bet)*\R}
+\begin{scope}[tdplot_rotated_coords]
+\path (C_)++(\xlast,\ylast,\zlast)coordinate(last);
+\end{scope}
+\draw[membrane] (LL)--(last)--(LR);
+
+\end{tikzpicture}
+\end{document}

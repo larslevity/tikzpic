@@ -15,15 +15,38 @@
 
 
 % Orientation
-\def\betI{80}	% Angle of Leg
-\def\phival{240}
+\def\betI{150}	% Angle of Leg
+\def\phival{60}
 
 % X -Z'
 \tdplotsetmaincoords{0}{90}   % View on walking plane
 \tdplotsetmaincoords{90}{\phival}   % View on bending plane plane
 \tdplotsetmaincoords{-\betI+180}{\phival+90}   % View on tip plane
 
-\tdplotsetmaincoords{75}{120}		   	% nice 3d view
+%\tdplotsetmaincoords{75}{120}		   	% nice 3d view
+
+
+
+
+
+%
+% \begin{animateinline}[controls,
+%        autoplay,buttonsize=1.2em,
+%        buttonbg=0.6:0.6:1,buttonfg=0.2:0.2:1,
+%        begin={\begin{tikzpicture}[scale=2]\drawaxes},
+%        end={\end{tikzpicture}}]{8}
+%
+%        % Generate frames for -2 ... 2
+%        \xdef\pos{-2}
+%        \whiledo{\lengthtest{\pos pt < 2.1 pt}}{
+%            \drawg{\pos}\newframe
+%            \pgfmathsetmacro{\pos}{\pos + 0.1}
+%            \xdef\pos{\pos}
+%        }
+%
+%        \drawg{\pos}
+%\end{animateinline}
+
 
 
 
@@ -31,10 +54,10 @@
 \begin{tikzpicture}[tdplot_main_coords,
 	scale=1,
 	cs_arrow/.style={->},
-	cs_arrow_light/.style={-latex, help lines},
+	cs_arrow_light/.style={->, help lines},
 	plane/.style={fill=lightgray!50, opacity=.7},
 	help line/.style={thin, gray},
-	angle arrow/.style={stealth-},
+	angle arrow/.style={stealth-stealth},
 	gvec/.style={-stealth, thick},
 	coord_split/.style={densely dashed, darkgray, stealth-},
 	shadow/.style={gray, path fading=fade out, fill},
@@ -52,14 +75,12 @@
 
 
 
-
-
 \pgfmathsetmacro{\betIh}{\betI*.5}
 
 % Geometry
 \def\hx{5}	% length of legs
 \def\hy{.7}  % change only with line width of stretch
-\def\d{.8}  % distance of dx dy
+
 
 % 3d Geometry
 \def\shadow{.3}
@@ -73,31 +94,13 @@
 \pgfmathsetmacro{\deltah}{\deltaPlane*.5}
 
 
-% ........................................................
-%%% Draw Walking Plane
-% ........................................................
-
-\path (0,0)coordinate(0);
-
-\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
-\begin{scope}[tdplot_rotated_coords]
-	\path[plane] (0)++(\planeh,0,0)--++(-\planeh,0)--++(0,\planeb)--++(\planeh,0)coordinate(2)--cycle;
-\end{scope}	
-
-
-
-
 %%% Draw Initial Coord Sys
-
+\path (0,0)coordinate(0);
 \path (0)++(\planeh*.5,3,0)coordinate(K);
-%\draw[cs_arrow] (K)--++(1,0,0)node[above left]{$x_0$};
-%\draw[cs_arrow] (K)--++(0,1,0)node[above]{$y_0$};
-%\draw[cs_arrow] (K)--++(0,0,1)node[above left]{$z_0$};
+\draw[cs_arrow] (K)--++(1,0,0)node[above left]{$x_0$};
+\draw[cs_arrow] (K)--++(0,1,0)node[above]{$y_0$};
+\draw[cs_arrow] (K)--++(0,0,1)node[above left]{$z_0$};
 
-\draw[fill=blue] (K)++(\d,0,0)circle(.1)coordinate(01) node[below left, scale=.5]{1};
-\draw[fill=orange] (K)++(0,\d,0)circle(.1)coordinate(03)node[right, scale=.5]{3};
-\draw[fill=green] (K)++(-\d,0,0)circle(.1)coordinate(02)node[above right, scale=.5]{2};
-\draw[fill=yellow] (K)++(0,-\d,0)circle(.1)coordinate(04)node[left, scale=.5]{4};
 
 
 %%%% Draw Angle Phi
@@ -105,20 +108,30 @@
 \draw[angle arrow] (K)++(180+\phival:1.5)arc(180+\phival:180:1.5);
 \path (K)++(180+\phival*.5:2.3)node{$\phi$};
 
-
-
-
-
 % ........................................................
 %%% Draw the Robot
 % ........................................................
 
 
+
 \tdplotsetrotatedcoords{90+\phival}{\deltaPlane-90}{0}
 \begin{scope}[tdplot_rotated_coords]
 
+
+	% ........................................................
+	%%% Draw Walking Plane
+	% ........................................................
+
+	\tdplotsetrotatedcoords{0}{\deltaPlane}{0}
+	\begin{scope}[tdplot_rotated_coords]
+		\path[plane] (0)++(\planeh,0,0)--++(-\planeh,0)--++(0,\planeb)--++(\planeh,0)coordinate(2)--cycle;
+	\end{scope}	
+	
+
 	% Nicht dehnbare Schicht
 	\draw[actuator] (K)arc(270:270+\betI:\rbI)coordinate(1);
+
+
 
 	% ........................................................
 	%%% Draw THETA
@@ -129,12 +142,12 @@
 	\draw [angle arrow] (S)++(-90+\betI:.8)arc(-90+\betI:-90:.8);
 	\path (S)++(-90+\betIh:.5)node{$\theta$};
 	\draw[help line] (S)--++(-90+\betI:\rbI);
-
+		
 	
 	% K (Aufhaengung)
-%	\draw[cs_arrow_light] (K)--++(1,0,0)node[below right]{$x_0'$};
-%	\draw[cs_arrow_light] (K)--++(0,1,0)node[above]{$y_0'$};
-%	\draw[cs_arrow_light] (K)--++(0,0,1)node[above]{$z_0'$};	
+	\draw[cs_arrow_light] (K)--++(1,0,0)node[below right]{$z_0'$};
+	\draw[cs_arrow_light] (K)--++(0,-1,0)node[above]{$x_0'$};
+	\draw[cs_arrow_light] (K)--++(0,0,-1)node[above]{$y_0'$};	
 	\path (K)node[below, scale=.4]{$\{0\}$};
 
 \end{scope}
@@ -143,60 +156,28 @@
 
 %%%%% COS 1
 
-\tdplotsetrotatedcoords{90+\phival}{-90}{0}
+%%% Z - Y' - Z''
+\tdplotsetrotatedcoords{90+\phival}{-90}{\betI}
+
+
 \begin{scope}[tdplot_rotated_coords]
-	\pgfmathsetmacro{\rbLi}{(\hx+\d*\betI*\pi/180*cos(\phival))/\betI*180/\pi}
-	\pgfmathsetmacro{\rbLii}{(\hx-\d*\betI*\pi/180*cos(\phival))/\betI*180/\pi}
-	\pgfmathsetmacro{\rbLiii}{(\hx+\d*\betI*\pi/180*sin(\phival))/\betI*180/\pi}
-	\pgfmathsetmacro{\rbLiiii}{(\hx-\d*\betI*\pi/180*sin(\phival))/\betI*180/\pi}
 
-	\draw[blue] (01)arc(270:270+\betI:\rbLi);
-	\draw[green] (02)arc(270:270+\betI:\rbLii);
-	\draw[orange] (03)arc(270:270+\betI:\rbLiii);
-	\draw[yellow] (04)arc(270:270+\betI:\rbLiiii);
+%	\draw[->] (1)--++(1,0,0) node[left]{$x$};
+%	\draw[->] (1)--++(0,1,0) node[left]{$y$};
+%	\draw[->] (1)--++(0,0,1) node[left]{$z$};
+%	
+	\draw[->] (1)node[right, scale=.4]{$\{1\}$};
+	\draw[-latex, dashed] (1)--++(1,0,0) node[right]{$z_1$};
+	\draw[-latex, dashed] (1)--++(0,-1,0) node[left]{$x_1$};
+	\draw[-latex, dashed] (1)--++(0,0,-1) node[above]{$y_1$};
+
 \end{scope}
-
-
 
 %%%%%%%% CIRCLE
-\draw[fill=gray, opacity=.4] (K) circle(1);
-\tdplotsetrotatedcoords{\phival}{-\betI}{-\phival}
+\draw[fill=gray, opacity=.4] (K) circle(.2);
+\tdplotsetrotatedcoords{\phival}{-\betI}{0}
 \begin{scope}[tdplot_rotated_coords]
-	\draw[fill=gray, opacity=.4] (1) circle(1);
-	\draw[fill=blue] (1)++(\d,0,0)circle(.1)coordinate(11);
-	\draw[fill=orange] (1)++(0,\d,0)circle(.1)coordinate(13);
-	\draw[fill=green] (1)++(-\d,0,0)circle(.1)coordinate(12);
-	\draw[fill=yellow] (1)++(0,-\d,0)circle(.1)coordinate(14);
-\end{scope}
-
-
-
-
-%%% Z - Y' - Z''
-\tdplotsetrotatedcoords{\phival}{-\betI}{-\phival}
-\begin{scope}[tdplot_rotated_coords]
-
-	\path (1)node[right, scale=.4]{$\{1\}$};
-%	\draw[-latex, dashed] (1)--++(1,0,0) node[right]{$x_1$};
-%	\draw[-latex, dashed] (1)--++(0,1,0) node[left]{$y_1$};
-%	\draw[-latex, dashed] (1)--++(0,0,1) node[above]{$z_1$};
-
-	\draw[dashed] (1) ++ (\phival:1)--++(180+\phival:2);
-	\draw[dashed] (1) ++ (90+\phival:1)--++(270+\phival:2);
-	\draw[stealth-] (1)++(\phival+180:.5)arc(\phival+180:180:.5);
-	\path (1)++(180+\phival/2:.7)node[scale=.7]{$\phi$};
-	\draw[help line] (1) --++(180:.6);
-
-	\pgfmathsetmacro{\di}{-\d*cos(\phival)}
-	\pgfmathsetmacro{\dii}{\d*cos(\phival)}
-	\pgfmathsetmacro{\diii}{-\d*sin(\phival)}
-	\pgfmathsetmacro{\diiii}{\d*sin(\phival)}
-
-	\draw[->] (11)--++(\phival:\di);
-	\draw[->] (12)--++(\phival:\dii);
-	\draw[->] (13)--++(\phival:\diii);
-	\draw[->] (14)--++(\phival:\diiii);
-
+	\draw[fill=gray, opacity=.4] (1) circle(.2);
 \end{scope}
 
 
@@ -215,30 +196,30 @@
 \pgfmathsetmacro{\ty}{( sin(\phival)*( cos(\theta)-1 ) *\hx/\theta*180/\pi)}
 \pgfmathsetmacro{\tz}{( sin(\theta)*\hx/\theta*180/\pi)}
 
-\draw[dashed, help lines] (K)--++(\tx,\ty,\tz)coordinate(1);
+\draw (K)--++(\tx,\ty,\tz)coordinate(1);
 
-\draw[->, red] (K)--++(1,0,0)node[left]{$n_{i-1}$};
-\draw[->, red] (K)--++(0,1,0)node[right]{$e_{i-1}$};
-\draw[->, red] (K)--++(0,0,1)node[above]{$o_{i-1}$};
+\draw[->, red] (K)--++(1,0,0)node[]{$n$};
+\draw[->, red] (K)--++(0,1,0)node[]{$e$};
+\draw[->, red] (K)--++(0,0,1)node[]{$o$};
 
 
 \pgfmathsetmacro{\nx}{(cos(\phival)*cos(\phival)*(cos(\theta)-1)+1)*\scale}
 \pgfmathsetmacro{\ny}{(sin(\phival)*cos(\phival)*(cos(\theta)-1))*\scale}
 \pgfmathsetmacro{\nz}{(cos(\phival)*sin(\theta))*\scale}
 
-\draw[red, ->] (1) --++(\nx,\ny,\nz)node[below, align=right]{$n_i$}; % \\ \nx \\ \ny \\ \nz};
+\draw[red, ->] (1) --++(\nx,\ny,\nz)node[below, align=right]{$n$}; % \\ \nx \\ \ny \\ \nz};
 
 \pgfmathsetmacro{\ex}{(sin(\phival)*cos(\phival)*(cos(\theta)-1))*\scale}
 \pgfmathsetmacro{\ey}{(sin(\phival)*sin(\phival)*(cos(\theta)-1)+1)*\scale}
 \pgfmathsetmacro{\ez}{(sin(\phival)*sin(\theta))*\scale}
 
-\draw[red, ->] (1) --++(\ex,\ey,\ez)node[below]{$e_i$};
+\draw[red, ->] (1) --++(\ex,\ey,\ez)node[below]{$e$};
 
 \pgfmathsetmacro{\ox}{(-cos(\phival)*sin(\theta))*\scale}
 \pgfmathsetmacro{\oy}{(-sin(\phival)*sin(\theta))*\scale}
 \pgfmathsetmacro{\oz}{(cos(\theta))*\scale}
 
-\draw[red, ->] (1) --++(\ox,\oy,\oz) node[below]{$o_i$};
+\draw[red, ->] (1) --++(\ox,\oy,\oz) node[below]{$o$};
 
 
 
