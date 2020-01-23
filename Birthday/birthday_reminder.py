@@ -27,7 +27,7 @@ def checkTodaysBirthdays():
     today = time.strftime('%d.%m.%Y')
     day, month, year = today.split('.')
     flag = 0
-    notifier = 'notify-send "Birthdays Today: '
+    notifier = 'notify-send "'
     for line in fileName:
         birthday, firstname, surname, sex, email = line.split(' ')
         bday, bmonth, byear = birthday.split('.')
@@ -35,6 +35,8 @@ def checkTodaysBirthdays():
             if bday == day:
                 if flag == 1:
                     notifier += ' - '
+                elif flag == 0:
+                    notifier += 'Birthdays today: '
                 flag = 1
                 notifier += firstname + ' ' + surname
                 try:
@@ -53,12 +55,12 @@ def checkTodaysBirthdays():
 
 
 def createBirthdayEmail(email, age, name, surname, sex='m'):
-    body = "Liebe{} {} \nzu deinem {} Geburtstag wuensche ich alles Gute!\n".format(
+    body = "Liebe{} {},\nzu deinem {} Geburtstag wuensche ich alles Gute!\n".format(
            'r' if sex == 'm' else '', name, str(age) + '.' if age else '')
     body += "\nHalt die Ohren steif \ndein Lars"
 #    body = '<html><body>' + body + '<br></body></html>'
 #    print body
-    subject = "Die Geometrie der Wolken"
+    subject = "Viel ist auch immer mehr"
     try:
         subprocess.call(
             "thunderbird -compose to='" + email + "',subject=" + subject +
