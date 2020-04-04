@@ -16,7 +16,6 @@ Type=Application
 
 import time
 import os
-import subprocess
 
 
 birthdayFile = '/home/ls/Git/Documents/Dokumente/birthdayfile.txt'
@@ -55,14 +54,14 @@ def checkTodaysBirthdays():
 
 
 def createBirthdayEmail(email, age, name, surname, sex='m'):
-    body = "Liebe{} {},\nzu deinem {} Geburtstag wuensche ich alles Gute!\n".format(
+    body = "Liebe{} {}\nzu deinem {} Geburtstag wuensche ich alles Gute!\n".format(
            'r' if sex == 'm' else '', name, str(age) + '.' if age else '')
     body += "\nHalt die Ohren steif \ndein Lars"
 #    body = '<html><body>' + body + '<br></body></html>'
 #    print body
     subject = "Viel ist auch immer mehr"
     try:
-        subprocess.call(
+        os.system(
             "thunderbird -compose to='" + email + "',subject=" + subject +
             ",body='" + body + "'&")
     except OSError:
