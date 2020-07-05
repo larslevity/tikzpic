@@ -1,0 +1,183 @@
+%% Definition der KOS
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{xcolor}
+
+
+\tdplotsetmaincoords{60}{290}
+\tdplotsetmaincoords{60}{250}
+
+%\tdplotsetmaincoords{0}{0}
+
+
+
+
+% Sun Position
+\def\sunPhi{110} 	
+\def\sunTheta{70}
+
+\begin{document}
+
+\def\N{6}
+\foreach[count=\idx] \sunPhi/\sunTheta in {60/10, 100/30, 146/50, 220/48, 266/25, 300/10}{
+
+
+
+\begin{tikzpicture}[tdplot_main_coords,
+	remember picture,
+	scale=1,
+	cs_arrow/.style={-latex, thick},
+	cs_arrow_light/.style={-latex, gray},
+	help line/.style={thin, lightgray},
+	angle arrow/.style={|-latex, blue},
+	label/.style={blue},
+	pathsun/.style={draw=yellow!90!black, fill=yellow},
+	sun/.style={draw=yellow!80!black, fill=yellow, circle, minimum width=1cm},
+	beam/.style={line width=1mm, -stealth},
+	mirrow/.style={draw=black, fill=blue!40},
+	mirror_cs/.style={scale=.8},
+	qi_cs/.style={scale=.8},
+]
+
+% Heliostat
+\def\alp{10}   % Orientation of Heliostat
+\def\z{-1.5}		% frame position
+\def\ell{1}
+
+
+
+
+
+% static sun path
+\def\phimin{60}
+\def\phimax{300}
+\def\spread{2}  % spread of static sun path
+\def\R{8}
+
+
+
+% Labels
+\def\labelR{2}
+
+
+
+
+
+
+
+%%% Draw Initial Coord Sys
+\path (0,0,0) coordinate(0);
+\draw[cs_arrow_light] (0)--++(10,0,0)node[above]{north};
+%\draw[cs_arrow_light] (0)--++(-10,0,0)node[below]{south};
+\draw[cs_arrow_light] (0)--++(0,10,0)node[left]{west};
+\draw[cs_arrow_light] (0)--++(0,-10,0)node[right]{east};
+
+
+
+%%%% Draw the Heliostat
+\draw[help line] (0,0,\z) coordinate(H)--++(\labelR+.2,0);
+\draw[angle arrow] (H)++(0:\labelR*.8)arc(0:-\alp:\labelR*.8);
+\path (H)++(-\alp/2:\labelR*.8+.3)node[label]{$\alpha$};
+\tdplotsetrotatedcoords{-\alp}{0}{0}  % zy'z''
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow] (H)--++(5,0,0)node[left]{$x_0$};
+\draw[cs_arrow] (H)--++(0,5,0)node[below]{$y_0$};
+\draw[cs_arrow] (H)--++(0,0,-\z+\R)node[above]{$z_0$};
+\path (0)++(5,0)coordinate(H_);
+\end{scope}
+
+%%% Mirror
+\pgfmathsetmacro{\heliophi}{-\alp+\sunPhi}
+\pgfmathsetmacro{\qi}{\heliophi/2}
+\pgfmathsetmacro{\qii}{90-\sunTheta/2}
+
+
+% q1
+\def\s{1.5}
+\draw[angle arrow, red] (H)++(-\alp:\labelR*\s)arc(-\alp:-\alp-\qi:\labelR*\s);
+\path (H)++(-\alp-\qi/2:\labelR*\s+.3)node[label, red]{$q_1$};
+\tdplotsetrotatedcoords{-\alp-\qi}{0}{0}  % zy'z''
+\begin{scope}[tdplot_rotated_coords]
+\draw[cs_arrow, thin] (H)--++(3.5,0,0)node[left, mirror_cs]{$x_1$};
+\draw[cs_arrow, thin] (H)--++(0,3.5,0)node[below, mirror_cs]{$y_1$};
+\draw[cs_arrow, thin] (H)--++(0,0,.4)node[right, mirror_cs]{$z_1$};
+\end{scope}
+
+
+% q2
+\tdplotsetrotatedcoords{-\alp-\qi}{\qii}{0}  % zy'z''
+\begin{scope}[tdplot_rotated_coords]
+\draw[mirrow] (0)++(-\ell/2,-\ell/2)--++(\ell,0)--++(0,\ell)--++(-\ell,0)--cycle;
+\draw[cs_arrow, very thin] (0)--++(1,0,0)node[near end, sloped, above, mirror_cs]{$x_2$};
+\draw[cs_arrow, very thin] (0)--++(0,1,0)node[near end, sloped, above, mirror_cs]{$y_2$};
+\draw[cs_arrow, very thin] (0)--++(0,0,1)node[near end, sloped, above, mirror_cs]{$z_2$};
+\end{scope}
+
+
+\tdplotsetrotatedcoords{90-\alp-\qi}{270}{-90}  % zy'z''
+\def\s{.5}
+\draw[help line] (0)--++(-\alp-\qi:\labelR*\s*1.1);
+\begin{scope}[tdplot_rotated_coords]
+\draw[angle arrow, orange] (0)++(0:\labelR*\s)arc(0:-\qii:\labelR*\s);
+\path (0)++(-\qii/2:\labelR*\s+.3)node[label, orange]{$q_2$};
+%\draw[cs_arrow, very thin] (0)--++(2,0,0)node[left, mirror_cs]{$x_3$};
+%\draw[cs_arrow, very thin] (0)--++(0,2,0)node[below, mirror_cs]{$y_3$};
+%\draw[cs_arrow, very thin] (0)--++(0,0,2)node[above, mirror_cs]{$z_3$};
+\end{scope}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%% Path of Sun
+\pgfmathsetmacro{\Rii}{sin(\phimax)/sin(\phimax+\spread)*\R}
+\draw[pathsun] (0)++(-\phimin:\R)arc(-\phimin:-\phimax:\R)arc(-\phimax-\spread:-\phimin+\spread:\Rii);
+
+%% Sun Position
+\draw[angle arrow] (0)++(0:\labelR)arc(0:-\sunPhi:\labelR);
+\path (0)++(-\sunPhi/2:\labelR+.3)node[label]{$\varphi$};
+\tdplotsetrotatedcoords{90-\sunPhi}{270}{-90}  % zy'z''
+\begin{scope}[tdplot_rotated_coords]
+%\draw[cs_arrow] (0)--++(.5,0,0)node[right]{$x$};
+%\draw[cs_arrow] (0)--++(0,.5,0)node[left]{$y$};
+%\draw[cs_arrow] (0)--++(0,0,.5)node[above]{$z$};
+\draw[help line] (0)--++(\R,0)arc(0:\sunTheta:\R)coordinate(S);
+\path (S) node[sun]{~~~~}; 
+\draw[angle arrow] (0)++(0:\labelR*1.8)arc(0:\sunTheta:\labelR*1.8);
+\path (0)++(\sunTheta/2:\labelR*1.8+.3)node[label]{$\theta$};
+\draw[beam, yellow] (S)--(0);
+\draw[beam, yellow] (0)--(H_);
+
+\end{scope}
+
+
+\begin{scope}[tdplot_screen_coords]
+\draw[help line] (current bounding box.north east)++(-4, -2)coordinate(X)node[left]{0}--++(4, 0);
+\draw[cs_arrow] (X)++(0,-1.1)--++(0,2.2)node[above]{\textcolor{red}{$q_1$}, \textcolor{orange}{$q_2$}};
+\draw[cs_arrow] (X)++(0,-1)node[left, help line]{-90}--++(4.2,0)node[right]{$t$};
+\draw[help line] (X)++(0,1)node[left]{90}--++(4,0);
+
+
+\pgfmathsetmacro{\x}{(\idx-1)/(\N-1)*4}
+\path (X)++(\x,\qi/90)coordinate(q1\idx)node[red]{$\times$};
+\path (X)++(\x,\qii/90)coordinate(q2\idx)node[orange]{$\times$};
+\pgfmathtruncatemacro{\time}{(\idx-1)*3 + 6}
+\draw (X)++(\x,-1)--++(0,-.1)node[below]{\time};
+
+\ifnum\idx>1
+\foreach \jdx in {2,...,\idx}{
+\pgfmathtruncatemacro{\last}{\jdx-1}
+ \draw[red] (q1\jdx)--(q1\last)node[red]{$\times$};
+  \draw[red] (q2\jdx)--(q2\last)node[orange]{$\times$};}
+\fi
+\end{scope}
+
+\end{tikzpicture}
+
+}
+
+
+
+\end{document}
