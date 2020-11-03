@@ -1,0 +1,74 @@
+%% Definition der KOS
+\documentclass[11pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\begin{document}
+
+\tdplotsetmaincoords{60}{-120}
+
+\begin{tikzpicture}[tdplot_main_coords,scale=2.2, rotate=130.7]
+
+
+
+
+\coordinate (O) at (0,0,0);
+\path[tdplot_screen_coords] (O)++(225:.3)node{};
+\tdplotsetrotatedcoords{0}{0}{0}
+\draw[tdplot_rotated_coords,thick,->] (O) --++ (-3,0,0) node[right]{$z_0=z'$};
+\draw[tdplot_rotated_coords,thick,->] (O) --++ (0,3,0) node[pos=.9, rotate=-30, above]{$y_0$};
+\draw[tdplot_rotated_coords,thick,->] (O) --++ (0,0,3) node[below]{$x_0$};
+\path (0,1.8,0) coordinate(y);
+
+%% Drehung um alpha
+\coordinate (O) at (0,0,0);
+\path[tdplot_screen_coords] (O)++(225:.3)node{};
+\tdplotsetrotatedcoords{-90}{10}{90}
+\draw[tdplot_rotated_coords,dashed] (O) --++ (-2,0,0) node[right]{};
+\draw[tdplot_rotated_coords,dashed] (O) --++ (0,2,0) node[pos=.87, rotate=-41, below right]{$y' = y''$};
+\draw[tdplot_rotated_coords,dashed] (O) --++ (0,0,2.1) node[left]{$x'$};
+\path[tdplot_rotated_coords] (0,1.8,0)coordinate(alphay);
+\tdplotsetrotatedcoords{0}{-90}{0}
+\tdplotdrawarc[tdplot_rotated_coords,help lines]{(O)}{1.8}{80}{-10}{right}{};
+\tdplotdrawarc[tdplot_rotated_coords,-latex]{(O)}{1.8}{90}{90-10}{right}{$\varphi$};
+\tdplotdrawarc[tdplot_rotated_coords,-latex]{(O)}{1.8}{0}{-10}{below}{$\varphi$};
+\foreach \i in {0,.1,...,1.8}{
+\tdplotdrawarc[tdplot_rotated_coords,very thin]{(O)}{\i}{90}{90-10}{right}{};
+\tdplotdrawarc[tdplot_rotated_coords,very thin]{(O)}{\i}{0}{-10}{}{};
+}
+
+
+%% Drehung um beta
+\path[tdplot_screen_coords] (O)++(225:.3)node{};
+\tdplotsetrotatedcoords{-44.561}{14.106}{45.4385}
+\draw[tdplot_rotated_coords,thin,dashed] (O) --++ (-2.5,0,0) node[above]{$z''$};
+\draw[tdplot_rotated_coords,thin,dashed] (O) --++ (0,2,0) node[right]{};
+\draw[tdplot_rotated_coords,thin,dashed] (O) --++ (0,0,2.5) node[above]{};
+\tdplotsetrotatedcoords{-90}{100}{90}
+\tdplotdrawarc[tdplot_rotated_coords,help lines]{(O)}{1.8}{80}{180-10}{right}{};
+\tdplotdrawarc[tdplot_rotated_coords,-latex]{(O)}{1.8}{90}{90-10}{left}{$\theta$};
+\tdplotdrawarc[tdplot_rotated_coords,-latex]{(O)}{1.8}{180}{180-10}{above}{$\theta$};
+\foreach \i in {0,.1,...,1.8}{
+\tdplotdrawarc[tdplot_rotated_coords,very thin]{(O)}{\i}{90}{90-10}{right}{};
+\tdplotdrawarc[tdplot_rotated_coords,very thin]{(O)}{\i}{180}{180-10}{}{};
+}
+
+%% Drehung um gamma
+\path[tdplot_screen_coords] (O)++(225:.3)node{};
+\tdplotsetrotatedcoords{-44.5615}{14.106}{55.4385}
+%\draw[tdplot_rotated_coords,help lines] (O)circle (1.8);
+\draw[tdplot_rotated_coords,->, red, thick] (O) --++ (-3,0,0) node[right]{$z_1$};
+\draw[tdplot_rotated_coords,->, red, thick] (O) --++ (0,3,0) node[below]{$y_1$};
+\draw[tdplot_rotated_coords,->, red, thick] (O) --++ (0,0,3) node[pos=.9, rotate=37, above]{$x_1=x''$};
+%\tdplotsetrotatedcoords{-90}{100}{90}
+\tdplotdrawarc[tdplot_rotated_coords,help lines]{(O)}{1.8}{80}{180-10}{right}{};
+\tdplotdrawarc[tdplot_rotated_coords,latex-]{(O)}{1.8}{90}{90-10}{left}{$\psi$};
+\tdplotdrawarc[tdplot_rotated_coords,latex-]{(O)}{1.8}{180}{180-10}{above}{$\psi$};
+\foreach \i in {0,.1,...,1.8}{
+\tdplotdrawarc[tdplot_rotated_coords,very thin]{(O)}{\i}{90}{90-10}{right}{};
+\tdplotdrawarc[tdplot_rotated_coords,very thin]{(O)}{\i}{180}{180-10}{}{};
+}
+\draw[tdplot_screen_coords,fill=white] (O)circle (.02);
+
+\end{tikzpicture}
+
+\end{document}
