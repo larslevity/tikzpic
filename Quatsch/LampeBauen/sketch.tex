@@ -1,0 +1,42 @@
+%
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\tdplotsetmaincoords{60}{110}
+
+\begin{document}
+
+
+\begin{tikzpicture}[tdplot_main_coords]
+
+
+
+
+\coordinate (O) at (0,0,0);
+
+%\tdplotsetrotatedcoords{0}{0}{0}
+%\draw[thick,->] (O) --++ (-3,0,0) node[right]{$x$};
+%\draw[thick,->] (O) --++ (0,3,0) node[pos=.9, above]{$y$};
+%\draw[thick,->] (O) --++ (0,0,3) node[below]{$z$};
+
+
+
+\draw (0,0,0)circle(6);
+\draw (0,0,-2)circle(6);
+
+\foreach \a in {0, 10, ..., 360}{
+\draw (\a:6) --++(0,0,-2);
+}
+
+
+\foreach \a in {0, 60, ..., 360}{
+\draw (\a:6) --(0,0,6)coordinate(A);
+}
+
+
+\draw (A)--++(0,0,-7)node[yellow, scale=15]{$\bullet$};
+
+
+\end{tikzpicture}
+\end{document}
