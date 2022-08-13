@@ -1,0 +1,102 @@
+
+
+\documentclass[tikz,convert={outfile=\jobname.png}]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{tikz-3dplot}
+\usepackage{bm}
+
+\begin{document}
+\tdplotsetmaincoords{75}{120}
+
+
+\begin{tikzpicture}[
+	tdplot_main_coords,
+	scale=1,
+]
+\def\z{-5} %% z-val of box
+
+\path[tdplot_screen_coords, clip] (-6.3,-1) rectangle(2.2,-7.1);
+
+
+%% World
+\def\index{world};
+\path (6,-3,-6) coordinate(x)coordinate(\index);
+\draw[->, red] (x)--++(1,0,0);
+\draw[->, green] (x)--++(0,1,0);
+\draw[->, blue] (x)--++(0,0,1);
+\path[fill] (x)node[scale=.5]{$\bullet$}node[above right]{$\{\mathrm{\index} \}$};
+
+
+
+%% Box
+\path[fill=blue!40] (-4,-4,\z)--(4,-4,\z)--(4,4,\z)--(-4,4,\z)--cycle;
+\path[fill=blue!60] (4,-4,\z)--(4,4,\z)--(4,4,\z-.5)--(4,-4,\z-.5)--cycle;
+\path[fill=blue!50] (4,4,\z)--(-4,4,\z)--(-4,4,\z-.5)--(4,4,\z-.5)--cycle;
+
+
+
+
+
+%% Tranist
+\def\index{transit};
+\tdplotsetrotatedcoords{0}{20}{20}
+\path (0,1,-2) coordinate(x)coordinate(\index);
+\begin{scope}[tdplot_rotated_coords]
+\draw[->, red] (x)--++(1,0,0);
+\draw[->, green] (x)--++(0,1,0);
+\draw[->, blue] (x)--++(0,0,1);
+\path[fill] (x)node[scale=.5]{$\bullet$}node[below right]{$\bm{p}_{\mathrm{\index}}$};
+\end{scope}
+
+
+%% Grasp
+\def\index{grasp};
+\def\zgrasp{-4.5}
+\path (3,-3.5,\zgrasp) coordinate(x)coordinate(\index);
+\tdplotsetrotatedcoords{-20}{-40}{0}
+\begin{scope}[tdplot_rotated_coords]
+\draw[->, red] (x)--++(1,0,0);
+\draw[->, green] (x)--++(0,1,0);
+\draw[->, blue] (x)--++(0,0,1);
+\path[fill] (x)node[scale=.5]{$\bullet$}node[below right]{$\bm{p}_{\mathrm{\index}}$};
+\end{scope}
+
+
+%% Box Pose
+\def\index{box};
+\path (0,0,\z) coordinate(x)coordinate(\index);
+\draw[->, red] (x)--++(1,0,0);
+\draw[->, green] (x)--++(0,1,0);
+\draw[help lines] (x)--(0,0,\zgrasp+1);
+\draw[->, blue] (x)--++(0,0,1);
+\path[fill] (x)node[scale=.5]{$\bullet$}node[above right]{$\bm{p}_{\mathrm{\index}}$};
+
+
+%% Draw Trajectory
+
+\draw[help lines] (grasp)--(0,0,\zgrasp+.5)coordinate[pos=.7](retract) coordinate[pos=.4](start);
+\draw[help lines] (grasp)--(0,0,\zgrasp)coordinate[pos=.4](end);
+\draw[very thick,-latex, red](grasp)--(retract);
+
+%% draw angle
+\draw[<-] (start)to[bend left=3mm](end);
+\draw (start)++(0,-.1,-.15) --++(0,.5,-.3) node [right]{$10^\circ$};
+
+
+%% retract pose
+\begin{scope}[tdplot_rotated_coords]
+\draw[->, red] (retract)--++(1,0,0);
+\draw[->, green] (retract)--++(0,1,0);
+\draw[->, blue] (retract)--++(0,0,1);
+\path[fill] (retract)node[scale=.5]{$\bullet$}node[below right]{$\bm{p}_{\mathrm{retract}}$};
+\end{scope}
+
+%% extract distance
+
+\draw[|<->|, help lines] ($(grasp)+(0,0,.1)$)--($(retract)+(0,0,.1)$) node[midway, above, sloped] {extract distance};
+
+\end{tikzpicture}
+\end{document}
