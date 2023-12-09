@@ -1,0 +1,64 @@
+% Author: Till Tantau
+% Source: The PGF/TikZ manual
+\documentclass[tikz]{standalone}
+
+\usepackage{tikz}
+\usepackage{xifthen}
+
+
+\begin{document}
+
+
+
+\def\xMax{3}
+\def\N{30}
+\def\angle{35}
+\begin{tikzpicture}[scale=10, rotate=\angle]
+
+\pgfmathsetmacro{\root}{sqrt(2)}
+\def\scale{\root*1.6}
+\path[rotate=-\angle, clip] (0,0)rectangle++(\root*\scale, \scale);
+
+
+% decimals
+%\draw (0,0)--(\xMax,0);
+%\draw (0,1)--(-1,-1);
+%\foreach \x in {0,0.1, ..., \xMax} {
+%	\draw (\x, 0.01)--++(0,-0.02);
+%}
+
+
+% fractals
+\foreach \x in {0, ..., \xMax} {
+	% draw the one
+	\fill[purple, opacity=.1] (\x, 0) circle (1);
+	\foreach \denominator in {2, ..., \N} {
+		\pgfmathtruncatemacro{\bb}{\denominator - 1}
+		\foreach [evaluate={\gcd=gcd(\nominator,\denominator)}] \nominator in {1, ..., \bb} {
+			% for convinience			
+			\pgfmathsetmacro{\r}{1/\denominator * 1/\denominator}
+			\path (\x + \nominator / \denominator, 0)coordinate(c);
+			
+			% test for greatest common divisor			
+			\ifnum \gcd = 1
+				\def\color{pink}
+				\ifnum \nominator = 1 \def\color{purple} \fi
+				\ifnum \nominator = \bb \def\color{purple} \fi
+%				\ifnum \nominator = 3 \def\color{green} \fi
+				\fill[color=\color, opacity=.3] (c) circle(\r);
+%				\path (c) ++ (0,\r) node[above, scale = \r * 4] (label) {$ \frac{\nominator } { \denominator }$} ;
+			\fi			
+
+		}
+	}
+
+}
+
+
+
+
+
+
+\end{tikzpicture}
+
+\end{document}
